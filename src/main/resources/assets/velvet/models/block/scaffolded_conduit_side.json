@@ -1,0 +1,15 @@
+{
+    "textures": {
+        "texture": "velvet:block/scaffolded_conduit_side",
+        "particle": "velvet:block/scaffolded_conduit_side"
+    },
+    "elements": [
+        {   
+            "from": [ 0, 0, 0 ],
+            "to": [ 16, 16, 16 ],
+            "faces": {
+                "north": { "texture": "#texture", "cullface":"north" }
+            }
+        }
+    ]
+}

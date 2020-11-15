@@ -14,6 +14,7 @@ import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import reoseah.velvet.blocks.ConduitBlock;
+import reoseah.velvet.blocks.ScaffoldedConduitBlock;
 import reoseah.velvet.blocks.ScaffoldingBlock;
 
 public final class Velvet implements ModInitializer {
@@ -26,10 +27,11 @@ public final class Velvet implements ModInitializer {
     }
 
     public static final class Blocks {
-        private static final FabricBlockSettings CONDUITS = FabricBlockSettings.of(Material.METAL).nonOpaque().sounds(BlockSoundGroup.LANTERN).breakByHand(true).breakByTool(FabricToolTags.PICKAXES);
+        private static final FabricBlockSettings CONDUITS = FabricBlockSettings.of(Material.METAL).nonOpaque().sounds(BlockSoundGroup.LANTERN).breakByTool(FabricToolTags.PICKAXES);
 
         public static final Block CONDUIT = register("conduit", new ConduitBlock(CONDUITS));
         public static final Block SCAFFOLDING = register("scaffolding", new ScaffoldingBlock(CONDUITS));
+        public static final Block SCAFFOLDED_CONDUIT = register("scaffolded_conduit", new ScaffoldedConduitBlock(CONDUITS));
 
         private static Block register(String name, Block item) {
             return Registry.register(Registry.BLOCK, "velvet:" + name, item);

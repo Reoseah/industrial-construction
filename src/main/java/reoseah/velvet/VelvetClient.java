@@ -7,7 +7,7 @@ import net.minecraft.client.render.RenderLayer;
 public class VelvetClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutoutMipped(), Velvet.Blocks.CONDUIT, Velvet.Blocks.SCAFFOLDING);
+        BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutoutMipped(), Velvet.Blocks.CONDUIT, Velvet.Blocks.SCAFFOLDING, Velvet.Blocks.SCAFFOLDED_CONDUIT);
     }
 
 }

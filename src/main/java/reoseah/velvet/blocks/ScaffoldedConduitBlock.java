@@ -1,22 +1,21 @@
 package reoseah.velvet.blocks;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.BarrelBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.InventoryProvider;
-import net.minecraft.block.ShapeContext;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldAccess;
 
-public class ConduitBlock extends Block implements Conduit {
+public class ScaffoldedConduitBlock extends Block implements Conduit, Scaffolding {
     public static final BooleanProperty DOWN = Properties.DOWN;
     public static final BooleanProperty UP = Properties.UP;
     public static final BooleanProperty NORTH = Properties.NORTH;
@@ -24,52 +23,16 @@ public class ConduitBlock extends Block implements Conduit {
     public static final BooleanProperty EAST = Properties.EAST;
     public static final BooleanProperty WEST = Properties.WEST;
 
-    private static final VoxelShape[] SHAPES;
+    public static final BooleanProperty ATTACHED = Properties.ATTACHED;
 
-    static {
-        VoxelShape center = Block.createCuboidShape(6, 6, 6, 10, 10, 10);
-        float min = 4F / 16F;
-        float max = 12F / 16F;
-        VoxelShape[] connections = new VoxelShape[] {
-                VoxelShapes.cuboid(min, 0, min, max, max, max),
-                VoxelShapes.cuboid(min, min, min, max, 1, max),
-                VoxelShapes.cuboid(min, min, 0, max, max, max),
-                VoxelShapes.cuboid(min, min, min, max, max, 1),
-                VoxelShapes.cuboid(0, min, min, max, max, max),
-                VoxelShapes.cuboid(min, min, min, 1, max, max)
-        };
-
-        SHAPES = new VoxelShape[64];
-        for (int i = 0; i < 64; i++) {
-            VoxelShape shape = center;
-            for (int face = 0; face < 6; face++) {
-                if ((i & 1 << face) != 0) {
-                    shape = VoxelShapes.union(shape, connections[face]);
-                }
-            }
-            SHAPES[i] = shape;
-        }
-    }
-
-    public ConduitBlock(Block.Settings settings) {
+    public ScaffoldedConduitBlock(Block.Settings settings) {
         super(settings);
-        this.setDefaultState(this.getDefaultState().with(DOWN, false).with(UP, false).with(NORTH, false).with(SOUTH, false).with(EAST, false).with(WEST, false));
+        this.setDefaultState(this.getDefaultState().with(DOWN, false).with(UP, false).with(NORTH, false).with(SOUTH, false).with(EAST, false).with(WEST, false).with(ATTACHED, false));
     }
 
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(DOWN, UP, NORTH, SOUTH, EAST, WEST);
-    }
-
-    @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        int i = (state.get(DOWN) ? 1 : 0) |
-                (state.get(UP) ? 2 : 0) |
-                (state.get(NORTH) ? 4 : 0) |
-                (state.get(SOUTH) ? 8 : 0) |
-                (state.get(WEST) ? 16 : 0) |
-                (state.get(EAST) ? 32 : 0);
-        return SHAPES[i];
+        builder.add(DOWN, UP, NORTH, SOUTH, EAST, WEST, ATTACHED);
     }
 
     public boolean connectsTo(BlockView world, BlockPos pos, Direction side, BlockState neighbor) {
@@ -87,12 +50,24 @@ public class ConduitBlock extends Block implements Conduit {
                 .with(WEST, this.connectsTo(world, pos.west(), Direction.WEST, world.getBlockState(pos.west())))
                 .with(EAST, this.connectsTo(world, pos.east(), Direction.EAST, world.getBlockState(pos.east())))
                 .with(NORTH, this.connectsTo(world, pos.north(), Direction.NORTH, world.getBlockState(pos.north())))
-                .with(SOUTH, this.connectsTo(world, pos.south(), Direction.SOUTH, world.getBlockState(pos.south())));
+                .with(SOUTH, this.connectsTo(world, pos.south(), Direction.SOUTH, world.getBlockState(pos.south())))
+                .with(ATTACHED, this.isScaffolding(world, pos.up(), Direction.DOWN, world.getBlockState(pos.up())));
     }
 
     @Override
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState newState, WorldAccess world, BlockPos pos, BlockPos posFrom) {
-        return state.with(getConnectionProperty(direction), this.connectsTo(world, posFrom, direction, newState));
+        return state.with(getConnectionProperty(direction), this.connectsTo(world, posFrom, direction, newState))
+                .with(ATTACHED, this.isScaffolding(world, pos.up(), Direction.DOWN, world.getBlockState(pos.up())));
+    }
+
+    public boolean isScaffolding(BlockView world, BlockPos pos, Direction side, BlockState neighbor) {
+        Block block = neighbor.getBlock();
+        return block instanceof Scaffolding;
+    }
+
+    @Environment(EnvType.CLIENT)
+    public boolean isSideInvisible(BlockState state, BlockState stateFrom, Direction direction) {
+        return stateFrom.getBlock() instanceof Scaffolding ? true : super.isSideInvisible(state, stateFrom, direction);
     }
 
     protected static BooleanProperty getConnectionProperty(Direction direction) {
