@@ -1,0 +1,22 @@
+{
+    "textures": {
+        "texture": "velvet:block/conduit_joint",
+        "particle": "velvet:block/conduit_joint"
+    },
+    "elements": [
+        {   
+			"from": [ 4.99, 4.99, 0 ],
+            "to": [ 11.01, 11.01, 5 ],
+            "faces": {
+                "west":  { "texture": "#texture" }
+            }
+        },
+        {   
+			"from": [ 0, 4.99, 4.99 ],
+            "to": [ 5, 11.01, 11.01 ],
+            "faces": {
+                "north": { "texture": "#texture" }
+            }
+        }
+    ]
+}

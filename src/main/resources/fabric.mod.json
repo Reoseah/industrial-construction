@@ -19,11 +19,14 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.fabricmc.example.ExampleMod"
+      "reoseah.velvet.Velvet"
+    ],
+    "client": [
+      "reoseah.velvet.VelvetClient"
     ]
   },
   "mixins": [
-    "modid.mixins.json"
+    "velvet.mixins.json"
   ],
 
   "depends": {
@@ -32,6 +35,5 @@
     "minecraft": "1.16.x"
   },
   "suggests": {
-    "another-mod": "*"
   }
 }
