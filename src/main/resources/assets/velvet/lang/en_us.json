@@ -1,5 +1,6 @@
 {
     "itemGroup.velvet.main": "Velvet",
     
-    "block.velvet.conduit": "Item Conduit"
+    "block.velvet.conduit": "Item Conduit",
+    "block.velvet.scaffolding": "Iron Scaffolding"
 }

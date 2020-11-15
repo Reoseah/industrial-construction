@@ -1,15 +1,16 @@
 {
     "textures": {
         "texture": "velvet:block/conduit",
+        "top": "velvet:block/conduit_top",
         "particle": "velvet:block/conduit"
     },
     "elements": [
         {   
-			"from": [ 5, 5, 0 ],
-            "to": [ 11, 11, 5 ],
+			"from": [ 4, 4, 0 ],
+            "to": [ 12, 12, 4 ],
             "faces": {
-                "down":  { "texture": "#texture" },
-                "up":    { "texture": "#texture" },
+                "down":  { "texture": "#top" },
+                "up":    { "texture": "#top" },
                 "north": { "texture": "#texture", "cullface":"north" },
                 "west":  { "texture": "#texture" },
                 "east":  { "texture": "#texture" }

@@ -14,6 +14,7 @@ import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import reoseah.velvet.blocks.ConduitBlock;
+import reoseah.velvet.blocks.ScaffoldingBlock;
 
 public final class Velvet implements ModInitializer {
     public static final ItemGroup GROUP = FabricItemGroupBuilder.build(new Identifier("velvet:main"), () -> new ItemStack(Velvet.Items.CONDUIT));
@@ -25,9 +26,10 @@ public final class Velvet implements ModInitializer {
     }
 
     public static final class Blocks {
-        private static final FabricBlockSettings CONDUITS = FabricBlockSettings.of(Material.METAL).nonOpaque().sounds(BlockSoundGroup.LANTERN).breakByHand(true).breakByTool(FabricToolTags.AXES);
+        private static final FabricBlockSettings CONDUITS = FabricBlockSettings.of(Material.METAL).nonOpaque().sounds(BlockSoundGroup.LANTERN).breakByHand(true).breakByTool(FabricToolTags.PICKAXES);
 
         public static final Block CONDUIT = register("conduit", new ConduitBlock(CONDUITS));
+        public static final Block SCAFFOLDING = register("scaffolding", new ScaffoldingBlock(CONDUITS));
 
         private static Block register(String name, Block item) {
             return Registry.register(Registry.BLOCK, "velvet:" + name, item);
@@ -36,6 +38,7 @@ public final class Velvet implements ModInitializer {
 
     public static final class Items {
         public static final Item CONDUIT = register("conduit", new BlockItem(Velvet.Blocks.CONDUIT, new Item.Settings().group(Velvet.GROUP)));
+        public static final Item SCAFFOLDING = register("scaffolding", new BlockItem(Velvet.Blocks.SCAFFOLDING, new Item.Settings().group(Velvet.GROUP)));
 
         private static Item register(String name, Item item) {
             return Registry.register(Registry.ITEM, "velvet:" + name, item);

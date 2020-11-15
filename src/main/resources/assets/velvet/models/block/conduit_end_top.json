@@ -1,7 +1,7 @@
 {
     "textures": {
-        "texture": "velvet:block/conduit",
-        "particle": "velvet:block/conduit"
+        "texture": "velvet:block/conduit_top",
+        "particle": "velvet:block/conduit_top"
     },
     "elements": [
         {   

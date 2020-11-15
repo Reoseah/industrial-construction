@@ -2,6 +2,7 @@ package reoseah.velvet.blocks;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.block.BarrelBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.InventoryProvider;
@@ -29,8 +30,8 @@ public class ConduitBlock extends Block implements Conduit {
 
     static {
         VoxelShape center = Block.createCuboidShape(6, 6, 6, 10, 10, 10);
-        float min = 5F / 16F;
-        float max = 11F / 16F;
+        float min = 4F / 16F;
+        float max = 12F / 16F;
         VoxelShape[] connections = new VoxelShape[] {
                 VoxelShapes.cuboid(min, 0, min, max, max, max),
                 VoxelShapes.cuboid(min, min, min, max, 1, max),
@@ -75,7 +76,7 @@ public class ConduitBlock extends Block implements Conduit {
 
     public boolean connectsTo(BlockView world, BlockPos pos, Direction side, BlockState neighbor) {
         Block block = neighbor.getBlock();
-        return block instanceof Conduit || block instanceof InventoryProvider;
+        return block instanceof Conduit || block instanceof InventoryProvider || block instanceof BarrelBlock;
     }
 
     @Override

@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "attached=false": { "model": "velvet:block/scaffolding" },
+        "attached=true": { "model": "velvet:block/scaffolding_attached" }
+    }
+}
