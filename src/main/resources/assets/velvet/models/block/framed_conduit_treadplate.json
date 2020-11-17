@@ -1,7 +1,7 @@
 {
     "textures": {
-        "texture": "velvet:block/scaffolded_conduit_treadplate",
-        "particle": "velvet:block/scaffolded_conduit_treadplate"
+        "texture": "velvet:block/framed_conduit_treadplate",
+        "particle": "velvet:block/framed_conduit_treadplate"
     },
     "elements": [
         {   

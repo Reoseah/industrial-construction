@@ -102,96 +102,96 @@
         
         {   
         	"when": { "up": false, "attached": false },
-            "apply": { "model": "velvet:block/scaffolded_conduit_end_treadplate", "uvlock": true, "x": 270 }  
+            "apply": { "model": "velvet:block/framed_conduit_end_treadplate", "uvlock": true, "x": 270 }  
         },
         {   
         	"when": { "up": true, "attached": false },
-            "apply": { "model": "velvet:block/scaffolded_conduit_treadplate", "uvlock": true, "x": 270 }  
+            "apply": { "model": "velvet:block/framed_conduit_treadplate", "uvlock": true, "x": 270 }  
         },
         {   
         	"when": { "up": false, "attached": true },
-            "apply": { "model": "velvet:block/scaffolded_conduit_end_attached", "uvlock": true, "x": 270 }  
+            "apply": { "model": "velvet:block/framed_conduit_end_attached", "uvlock": true, "x": 270 }  
         },
         {   
         	"when": { "up": true, "attached": true },
-            "apply": { "model": "velvet:block/scaffolded_conduit_end_attached", "uvlock": true, "x": 270 }  
+            "apply": { "model": "velvet:block/framed_conduit_end_attached", "uvlock": true, "x": 270 }  
         },
         
         {   
         	"when": { "down": true },
-            "apply": { "model": "velvet:block/scaffolded_conduit_attached", "uvlock": true, "x": 90 }  
+            "apply": { "model": "velvet:block/framed_conduit_attached", "uvlock": true, "x": 90 }  
         },
         {   
         	"when": { "down": false },
-            "apply": { "model": "velvet:block/scaffolded_conduit_end_attached", "uvlock": true, "x": 90 }  
+            "apply": { "model": "velvet:block/framed_conduit_end_attached", "uvlock": true, "x": 90 }  
         },
         
         {   
         	"when": { "north": true, "attached": false },
-            "apply": { "model": "velvet:block/scaffolded_conduit_side", "uvlock": true }  
+            "apply": { "model": "velvet:block/framed_conduit_side", "uvlock": true }  
         },
         {   
         	"when": { "north": false, "attached": false },
-            "apply": { "model": "velvet:block/scaffolded_conduit_end_side", "uvlock": true }  
+            "apply": { "model": "velvet:block/framed_conduit_end_side", "uvlock": true }  
         },
         {   
         	"when": { "north": true, "attached": true },
-            "apply": { "model": "velvet:block/scaffolded_conduit_attached", "uvlock": true }  
+            "apply": { "model": "velvet:block/framed_conduit_attached", "uvlock": true }  
         },
         {   
         	"when": { "north": false, "attached": true },
-            "apply": { "model": "velvet:block/scaffolded_conduit_end_attached", "uvlock": true }  
+            "apply": { "model": "velvet:block/framed_conduit_end_attached", "uvlock": true }  
         },
         
         {   
         	"when": { "east": true, "attached": false },
-            "apply": { "model": "velvet:block/scaffolded_conduit_side", "uvlock": true, "y": 90 }  
+            "apply": { "model": "velvet:block/framed_conduit_side", "uvlock": true, "y": 90 }  
         },
         {   
         	"when": { "east": false, "attached": false },
-            "apply": { "model": "velvet:block/scaffolded_conduit_end_side", "uvlock": true, "y": 90 }  
+            "apply": { "model": "velvet:block/framed_conduit_end_side", "uvlock": true, "y": 90 }  
         },
         {   
         	"when": { "east": true, "attached": true },
-            "apply": { "model": "velvet:block/scaffolded_conduit_attached", "uvlock": true, "y": 90 }  
+            "apply": { "model": "velvet:block/framed_conduit_attached", "uvlock": true, "y": 90 }  
         },
         {   
         	"when": { "east": false, "attached": true },
-            "apply": { "model": "velvet:block/scaffolded_conduit_end_attached", "uvlock": true, "y": 90 }  
+            "apply": { "model": "velvet:block/framed_conduit_end_attached", "uvlock": true, "y": 90 }  
         },
         
         {   
         	"when": { "south": true, "attached": false },
-            "apply": { "model": "velvet:block/scaffolded_conduit_side", "uvlock": true, "y": 180 }  
+            "apply": { "model": "velvet:block/framed_conduit_side", "uvlock": true, "y": 180 }  
         },
         {   
         	"when": { "south": false, "attached": false },
-            "apply": { "model": "velvet:block/scaffolded_conduit_end_side", "uvlock": true, "y": 180 }  
+            "apply": { "model": "velvet:block/framed_conduit_end_side", "uvlock": true, "y": 180 }  
         },
         {   
         	"when": { "south": true, "attached": true },
-            "apply": { "model": "velvet:block/scaffolded_conduit_attached", "uvlock": true, "y": 180 }  
+            "apply": { "model": "velvet:block/framed_conduit_attached", "uvlock": true, "y": 180 }  
         },
         {   
         	"when": { "south": false, "attached": true },
-            "apply": { "model": "velvet:block/scaffolded_conduit_end_attached", "uvlock": true, "y": 180 }  
+            "apply": { "model": "velvet:block/framed_conduit_end_attached", "uvlock": true, "y": 180 }  
         },
         
         {   
         	"when": { "west": true, "attached": false },
-            "apply": { "model": "velvet:block/scaffolded_conduit_side", "uvlock": true, "y": 270 }  
+            "apply": { "model": "velvet:block/framed_conduit_side", "uvlock": true, "y": 270 }  
         },
         {   
         	"when": { "west": false, "attached": false },
-            "apply": { "model": "velvet:block/scaffolded_conduit_end_side", "uvlock": true, "y": 270 }  
+            "apply": { "model": "velvet:block/framed_conduit_end_side", "uvlock": true, "y": 270 }  
         },
         {   
         	"when": { "west": true, "attached": true },
-            "apply": { "model": "velvet:block/scaffolded_conduit_attached", "uvlock": true, "y": 270 }  
+            "apply": { "model": "velvet:block/framed_conduit_attached", "uvlock": true, "y": 270 }  
         },
         {   
         	"when": { "west": false, "attached": true },
-            "apply": { "model": "velvet:block/scaffolded_conduit_end_attached", "uvlock": true, "y": 270 }  
+            "apply": { "model": "velvet:block/framed_conduit_end_attached", "uvlock": true, "y": 270 }  
         }
 	]
 }

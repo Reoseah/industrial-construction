@@ -1,5 +1,5 @@
 package reoseah.velvet.blocks;
 
-public interface Scaffolding {
+public interface Frame {
 
 }

@@ -14,9 +14,9 @@
         }
     ],
     "textures": {
-        "particle": "velvet:block/scaffolding_side",
-        "side": "velvet:block/scaffolding_side",
+        "particle": "velvet:block/frame_side",
+        "side": "velvet:block/frame_side",
         "top": "velvet:block/treadplate",
-        "bottom": "velvet:block/scaffolding_bottom"
+        "bottom": "velvet:block/frame_bottom"
     }
 }

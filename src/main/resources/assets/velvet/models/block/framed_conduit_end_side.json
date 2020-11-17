@@ -1,7 +1,7 @@
 {
     "textures": {
-        "texture": "velvet:block/scaffolding_side",
-        "particle": "velvet:block/scaffolding_side"
+        "texture": "velvet:block/frame_side",
+        "particle": "velvet:block/frame_side"
     },
     "elements": [
         {   

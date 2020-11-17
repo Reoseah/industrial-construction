@@ -15,6 +15,7 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldAccess;
+import reoseah.velvet.Velvet;
 
 public class ConduitBlock extends Block implements Conduit {
     public static final BooleanProperty DOWN = Properties.DOWN;
@@ -27,7 +28,7 @@ public class ConduitBlock extends Block implements Conduit {
     private static final VoxelShape[] SHAPES;
 
     static {
-        VoxelShape center = Block.createCuboidShape(6, 6, 6, 10, 10, 10);
+        VoxelShape center = Block.createCuboidShape(4, 4, 4, 12, 12, 12);
         float min = 4F / 16F;
         float max = 12F / 16F;
         VoxelShape[] connections = new VoxelShape[] {
@@ -81,6 +82,10 @@ public class ConduitBlock extends Block implements Conduit {
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         BlockView world = ctx.getWorld();
         BlockPos pos = ctx.getBlockPos();
+        BlockState state = world.getBlockState(pos);
+        if (state.getBlock() == Velvet.Blocks.FRAME) {
+            return Velvet.Blocks.FRAMED_CONDUIT.getPlacementState(ctx);
+        }
         return this.getDefaultState()
                 .with(DOWN, this.connectsTo(world, pos.down(), Direction.DOWN, world.getBlockState(pos.down())))
                 .with(UP, this.connectsTo(world, pos.up(), Direction.UP, world.getBlockState(pos.up())))
@@ -93,6 +98,11 @@ public class ConduitBlock extends Block implements Conduit {
     @Override
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState newState, WorldAccess world, BlockPos pos, BlockPos posFrom) {
         return state.with(getConnectionProperty(direction), this.connectsTo(world, posFrom, direction, newState));
+    }
+
+    @Override
+    public boolean canReplace(BlockState state, ItemPlacementContext context) {
+        return context.getStack().getItem() == Velvet.Items.FRAME || super.canReplace(state, context);
     }
 
     protected static BooleanProperty getConnectionProperty(Direction direction) {

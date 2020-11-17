@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "attached=false": { "model": "velvet:block/frame" },
+        "attached=true": { "model": "velvet:block/frame_attached" }
+    }
+}

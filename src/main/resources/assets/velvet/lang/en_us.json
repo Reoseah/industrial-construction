@@ -2,6 +2,11 @@
     "itemGroup.velvet.main": "Velvet",
     
     "block.velvet.conduit": "Item Conduit",
-    "block.velvet.scaffolding": "Iron Scaffolding",
-    "block.velvet.scaffoldded_conduit": "Item Conduit in Scaffolding"
+    "block.velvet.frame": "Frame",
+    "block.velvet.scaffoldded_conduit": "Item Conduit in Frame",
+    "block.velvet.catwalk": "Catwalk",
+    
+    "item.velvet.wrought_iron_ingot": "Wrought Iron Ingot",
+    "item.velvet.wrought_iron_nugget": "Wrought Iron Nugget",
+    "item.velvet.adjustable_wrench": "Adjustable Wrench"
 }
