@@ -14,7 +14,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldAccess;
 import reoseah.velvet.Velvet;
 
-public class FrameBlock extends Block implements Frame {
+public class FrameBlock extends Block implements FrameConnectable {
     public static final BooleanProperty ATTACHED = Properties.ATTACHED;
 
     public FrameBlock(Block.Settings settings) {
@@ -29,7 +29,7 @@ public class FrameBlock extends Block implements Frame {
 
     public boolean isFrame(BlockView world, BlockPos pos, Direction side, BlockState neighbor) {
         Block block = neighbor.getBlock();
-        return block instanceof Frame;
+        return block instanceof FrameConnectable;
     }
 
     @Override
@@ -49,9 +49,10 @@ public class FrameBlock extends Block implements Frame {
         return state.with(ATTACHED, this.isFrame(world, pos.up(), Direction.DOWN, world.getBlockState(pos.up())));
     }
 
+    @Override
     @Environment(EnvType.CLIENT)
     public boolean isSideInvisible(BlockState state, BlockState stateFrom, Direction direction) {
-        return stateFrom.getBlock() instanceof Frame ? true : super.isSideInvisible(state, stateFrom, direction);
+        return stateFrom.getBlock() instanceof FrameConnectable ? true : super.isSideInvisible(state, stateFrom, direction);
     }
 
     @Override

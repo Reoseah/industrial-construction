@@ -23,66 +23,110 @@ import net.minecraft.world.WorldAccess;
 import reoseah.velvet.Velvet;
 
 public class CatwalkBlock extends Block {
-    public static final VoxelShape SHAPE_FLOOR = Block.createCuboidShape(0, 0, 0, 16, 0.0001, 16);
-    public static final VoxelShape SHAPE_WEST = Block.createCuboidShape(0, 0, 0, 2, 16, 16);
-    public static final VoxelShape SHAPE_EAST = Block.createCuboidShape(14, 0, 0, 16, 16, 16);
-    public static final VoxelShape SHAPE_NORTH = Block.createCuboidShape(0, 0, 0, 16, 16, 2);
-    public static final VoxelShape SHAPE_SOUTH = Block.createCuboidShape(0, 0, 14, 16, 16, 16);
-
-    public static final BooleanProperty NORTH = Properties.NORTH;
     public static final BooleanProperty SOUTH = Properties.SOUTH;
-    public static final BooleanProperty EAST = Properties.EAST;
     public static final BooleanProperty WEST = Properties.WEST;
+    public static final BooleanProperty NORTH = Properties.NORTH;
+    public static final BooleanProperty EAST = Properties.EAST;
 
-    private static final VoxelShape[] SHAPES;
+    private static final VoxelShape[] OUTLINE_SHAPES;
+    private static final VoxelShape[] COLLISION_SHAPES;
     static {
-        SHAPES = new VoxelShape[16];
+        OUTLINE_SHAPES = new VoxelShape[16];
+        COLLISION_SHAPES = new VoxelShape[16];
+
+        VoxelShape floor = Block.createCuboidShape(0, 0, 0, 16, 0.0001, 16);
+
+        VoxelShape south = Block.createCuboidShape(0, 0, 14, 16, 16, 16);
+        VoxelShape west = Block.createCuboidShape(0, 0, 0, 2, 16, 16);
+        VoxelShape north = Block.createCuboidShape(0, 0, 0, 16, 16, 2);
+        VoxelShape east = Block.createCuboidShape(14, 0, 0, 16, 16, 16);
+
+        VoxelShape southCollision = Block.createCuboidShape(0, 0, 15, 16, 24, 16);
+        VoxelShape westCollision = Block.createCuboidShape(0, 0, 0, 1, 24, 16);
+        VoxelShape northCollision = Block.createCuboidShape(0, 0, 0, 16, 24, 1);
+        VoxelShape eastCollision = Block.createCuboidShape(15, 0, 0, 16, 24, 16);
 
         for (int i = 0; i < 16; i++) {
-            VoxelShape shape = SHAPE_FLOOR;
+            VoxelShape outline = floor;
+            VoxelShape collision = floor;
             if ((i & 0b1) != 0) {
-                shape = VoxelShapes.union(shape, SHAPE_SOUTH);
+                outline = VoxelShapes.union(outline, south);
+                collision = VoxelShapes.union(collision, southCollision);
             }
             if ((i & 0b10) != 0) {
-                shape = VoxelShapes.union(shape, SHAPE_WEST);
+                outline = VoxelShapes.union(outline, west);
+                collision = VoxelShapes.union(collision, westCollision);
             }
             if ((i & 0b100) != 0) {
-                shape = VoxelShapes.union(shape, SHAPE_NORTH);
+                outline = VoxelShapes.union(outline, north);
+                collision = VoxelShapes.union(collision, northCollision);
             }
             if ((i & 0b1000) != 0) {
-                shape = VoxelShapes.union(shape, SHAPE_EAST);
+                outline = VoxelShapes.union(outline, east);
+                collision = VoxelShapes.union(collision, eastCollision);
             }
-            SHAPES[i] = shape;
+            OUTLINE_SHAPES[i] = outline;
+            COLLISION_SHAPES[i] = collision;
         }
     }
 
     public CatwalkBlock(Block.Settings settings) {
         super(settings);
 
-        this.setDefaultState(this.getDefaultState().with(NORTH, false).with(SOUTH, false).with(EAST, false).with(WEST, false));
+        this.setDefaultState(this.getDefaultState().with(SOUTH, false).with(WEST, false).with(NORTH, false).with(EAST, false));
     }
 
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(NORTH, SOUTH, EAST, WEST);
+        builder.add(SOUTH, EAST, NORTH, WEST);
     }
 
     @Override
+    public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        int i = (state.get(SOUTH) ? 1 : 0) |
+                (state.get(WEST) ? 2 : 0) |
+                (state.get(NORTH) ? 4 : 0) |
+                (state.get(EAST) ? 8 : 0);
+        return COLLISION_SHAPES[i];
+    }
+
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         int i = (state.get(SOUTH) ? 1 : 0) |
                 (state.get(WEST) ? 2 : 0) |
                 (state.get(NORTH) ? 4 : 0) |
                 (state.get(EAST) ? 8 : 0);
-        return SHAPES[i];
+        return OUTLINE_SHAPES[i];
+    }
+
+    @Override
+    public VoxelShape getSidesShape(BlockState state, BlockView world, BlockPos pos) {
+        int i = (state.get(SOUTH) ? 1 : 0) |
+                (state.get(WEST) ? 2 : 0) |
+                (state.get(NORTH) ? 4 : 0) |
+                (state.get(EAST) ? 8 : 0);
+        return OUTLINE_SHAPES[i];
+    }
+
+    @Override
+    public VoxelShape getVisualShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        int i = (state.get(SOUTH) ? 1 : 0) |
+                (state.get(WEST) ? 2 : 0) |
+                (state.get(NORTH) ? 4 : 0) |
+                (state.get(EAST) ? 8 : 0);
+        return OUTLINE_SHAPES[i];
     }
 
     public boolean hasBorder(BlockView world, BlockPos pos, Direction side) {
         BlockState neighbor = world.getBlockState(pos.offset(side));
         Block block = neighbor.getBlock();
-        if (block instanceof CatwalkBlock) {
+        if (block == this) {
             return false;
         }
-        return !neighbor.isSideSolidFullSquare(world, pos.offset(side), side);
+        if (neighbor.isSideSolidFullSquare(world, pos.offset(side), side)) {
+            return false;
+        }
+        BlockState ground = world.getBlockState(pos.offset(side).down());
+        return ground.getBlock() != Velvet.Blocks.FRAME && ground.getBlock() != Velvet.Blocks.FRAMED_CONDUIT;
     }
 
     @Override
@@ -91,10 +135,10 @@ public class CatwalkBlock extends Block {
         BlockPos pos = ctx.getBlockPos();
 
         return this.getDefaultState()
+                .with(SOUTH, this.hasBorder(world, pos, Direction.SOUTH))
                 .with(WEST, this.hasBorder(world, pos, Direction.WEST))
-                .with(EAST, this.hasBorder(world, pos, Direction.EAST))
                 .with(NORTH, this.hasBorder(world, pos, Direction.NORTH))
-                .with(SOUTH, this.hasBorder(world, pos, Direction.SOUTH));
+                .with(EAST, this.hasBorder(world, pos, Direction.EAST));
     }
 
     @Override
@@ -133,12 +177,12 @@ public class CatwalkBlock extends Block {
 
     protected static BooleanProperty getConnectionProperty(Direction direction) {
         switch (direction) {
-        case NORTH:
-            return NORTH;
         case SOUTH:
             return SOUTH;
         case WEST:
             return WEST;
+        case NORTH:
+            return NORTH;
         case EAST:
         default:
             return EAST;

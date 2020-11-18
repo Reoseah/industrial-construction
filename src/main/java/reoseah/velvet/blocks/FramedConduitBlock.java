@@ -4,10 +4,10 @@ import java.util.List;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.block.BarrelBlock;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.InventoryProvider;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContext;
@@ -19,78 +19,45 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldAccess;
 import reoseah.velvet.Velvet;
+import reoseah.velvet.blocks.entities.ConduitBlockEntity;
 
-public class FramedConduitBlock extends Block implements Conduit, Frame {
-    public static final BooleanProperty DOWN = Properties.DOWN;
-    public static final BooleanProperty UP = Properties.UP;
-    public static final BooleanProperty NORTH = Properties.NORTH;
-    public static final BooleanProperty SOUTH = Properties.SOUTH;
-    public static final BooleanProperty EAST = Properties.EAST;
-    public static final BooleanProperty WEST = Properties.WEST;
-
+public class FramedConduitBlock extends AbstractConduitBlock implements FrameConnectable, BlockEntityProvider {
     public static final BooleanProperty ATTACHED = Properties.ATTACHED;
 
     public FramedConduitBlock(Block.Settings settings) {
         super(settings);
-        this.setDefaultState(this.getDefaultState().with(DOWN, false).with(UP, false).with(NORTH, false).with(SOUTH, false).with(EAST, false).with(WEST, false).with(ATTACHED, false));
+        this.setDefaultState(this.getDefaultState().with(ATTACHED, false));
     }
 
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(DOWN, UP, NORTH, SOUTH, EAST, WEST, ATTACHED);
-    }
-
-    public boolean connectsTo(BlockView world, BlockPos pos, Direction side, BlockState neighbor) {
-        Block block = neighbor.getBlock();
-        return block instanceof Conduit || block instanceof InventoryProvider || block instanceof BarrelBlock;
+        super.appendProperties(builder);
+        builder.add(ATTACHED);
     }
 
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         BlockView world = ctx.getWorld();
         BlockPos pos = ctx.getBlockPos();
-        return this.getDefaultState()
-                .with(DOWN, this.connectsTo(world, pos.down(), Direction.DOWN, world.getBlockState(pos.down())))
-                .with(UP, this.connectsTo(world, pos.up(), Direction.UP, world.getBlockState(pos.up())))
-                .with(WEST, this.connectsTo(world, pos.west(), Direction.WEST, world.getBlockState(pos.west())))
-                .with(EAST, this.connectsTo(world, pos.east(), Direction.EAST, world.getBlockState(pos.east())))
-                .with(NORTH, this.connectsTo(world, pos.north(), Direction.NORTH, world.getBlockState(pos.north())))
-                .with(SOUTH, this.connectsTo(world, pos.south(), Direction.SOUTH, world.getBlockState(pos.south())))
+        return super.getPlacementState(ctx)
                 .with(ATTACHED, this.isFrame(world, pos.up(), Direction.DOWN, world.getBlockState(pos.up())));
     }
 
     @Override
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState newState, WorldAccess world, BlockPos pos, BlockPos posFrom) {
-        return state.with(getConnectionProperty(direction), this.connectsTo(world, posFrom, direction, newState))
+        return super.getStateForNeighborUpdate(state, direction, newState, world, pos, posFrom)
                 .with(ATTACHED, this.isFrame(world, pos.up(), Direction.DOWN, world.getBlockState(pos.up())));
     }
 
     public boolean isFrame(BlockView world, BlockPos pos, Direction side, BlockState neighbor) {
         Block block = neighbor.getBlock();
-        return block instanceof Frame;
+        return block instanceof FrameConnectable;
     }
 
+    @Override
     @Environment(EnvType.CLIENT)
     public boolean isSideInvisible(BlockState state, BlockState stateFrom, Direction direction) {
-        return stateFrom.getBlock() instanceof Frame ? true : super.isSideInvisible(state, stateFrom, direction);
-    }
-
-    protected static BooleanProperty getConnectionProperty(Direction direction) {
-        switch (direction) {
-        case NORTH:
-            return NORTH;
-        case SOUTH:
-            return SOUTH;
-        case WEST:
-            return WEST;
-        case EAST:
-            return EAST;
-        case DOWN:
-            return DOWN;
-        case UP:
-        default:
-            return UP;
-        }
+        return stateFrom.getBlock() instanceof FrameConnectable ? true : super.isSideInvisible(state, stateFrom, direction);
     }
 
     @Override
@@ -113,4 +80,10 @@ public class FramedConduitBlock extends Block implements Conduit, Frame {
                 .with(NORTH, state.get(NORTH))
                 .with(SOUTH, state.get(SOUTH)), 11);
     }
+
+    @Override
+    public BlockEntity createBlockEntity(BlockView world) {
+        return new ConduitBlockEntity();
+    }
+
 }

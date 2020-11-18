@@ -1,8 +1,8 @@
 {
     "textures": {
-        "texture": "velvet:block/conduit",
-        "top": "velvet:block/conduit_top",
-        "particle": "velvet:block/conduit"
+        "texture": "velvet:block/pump",
+        "top": "velvet:block/pump",
+        "particle": "velvet:block/pump"
     },
     "elements": [
         {   
@@ -13,7 +13,7 @@
                 "up":    { "texture": "#top" },
                 "west":  { "texture": "#texture" },
                 "east":  { "texture": "#texture" },
-                "north": { "texture": "#texture", "cullface": "north" }
+                "north": { "texture": "#texture", "cullface":"north" }
             }
         }
     ]
