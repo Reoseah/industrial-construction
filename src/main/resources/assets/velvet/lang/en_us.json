@@ -2,7 +2,7 @@
     "itemGroup.velvet.main": "Velvet",
     
     "block.velvet.conduit": "Item Conduit",
-    "block.velvet.highspeed_conduit": "High-Speed Item Conduit",
+    "block.velvet.pump": "Item Pump",
     "block.velvet.frame": "Frame",
     "block.velvet.scaffoldded_conduit": "Item Conduit in Frame",
     "block.velvet.catwalk": "Catwalk",

@@ -1,7 +1,7 @@
 {
     "textures": {
-        "texture": "velvet:block/item_pump",
-        "particle": "velvet:block/item_pump"
+        "texture": "velvet:block/pump",
+        "particle": "velvet:block/pump"
     },
     "elements": [
         {   
