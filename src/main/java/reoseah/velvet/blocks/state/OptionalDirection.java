@@ -11,10 +11,10 @@ public enum OptionalDirection implements StringIdentifiable {
     NONE(null),
     DOWN(Direction.DOWN),
     UP(Direction.UP),
-    WEST(Direction.WEST),
-    EAST(Direction.EAST),
     NORTH(Direction.NORTH),
-    SOUTH(Direction.SOUTH);
+    SOUTH(Direction.SOUTH),
+    WEST(Direction.WEST),
+    EAST(Direction.EAST);
 
     public final @Nullable Direction direction;
 
@@ -24,7 +24,29 @@ public enum OptionalDirection implements StringIdentifiable {
 
     @Override
     public String asString() {
-        return name().toLowerCase(Locale.ROOT);
+        return this.name().toLowerCase(Locale.ROOT);
+    }
+
+    public static OptionalDirection of(@Nullable Direction direction) {
+        if (direction == null) {
+            return OptionalDirection.NONE;
+        }
+        switch (direction) {
+        case DOWN:
+            return OptionalDirection.DOWN;
+        case UP:
+            return OptionalDirection.UP;
+        case WEST:
+            return OptionalDirection.WEST;
+        case EAST:
+            return OptionalDirection.EAST;
+        case NORTH:
+            return OptionalDirection.NORTH;
+        case SOUTH:
+            return OptionalDirection.SOUTH;
+        default:
+            return OptionalDirection.NONE;
+        }
     }
 
 }

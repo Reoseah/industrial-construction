@@ -25,7 +25,7 @@ public class VelvetClient implements ClientModInitializer {
     public void onInitializeClient() {
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutoutMipped(),
                 Velvet.Blocks.CONDUIT,
-                Velvet.Blocks.PUMP,
+                Velvet.Blocks.EXTRACTOR,
                 Velvet.Blocks.FRAME,
                 Velvet.Blocks.FRAMED_CONDUIT,
                 Velvet.Blocks.CATWALK);
@@ -60,6 +60,7 @@ public class VelvetClient implements ClientModInitializer {
         });
 
         BlockEntityRendererRegistry.INSTANCE.register(Velvet.BlockEntityTypes.CONDUIT, ConduitBlockEntityRenderer::new);
+        BlockEntityRendererRegistry.INSTANCE.register(Velvet.BlockEntityTypes.EXTRACTOR, ConduitBlockEntityRenderer::new);
     }
 
 }

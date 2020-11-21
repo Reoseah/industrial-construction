@@ -19,6 +19,7 @@ import net.fabricmc.fabric.api.server.PlayerStream;
 import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -36,6 +37,22 @@ public class ConduitBlockEntity extends BlockEntity implements Tickable {
 
     public final PriorityQueue<TravellingItem> items = new PriorityQueue<>();
     public final ItemInsertable[] insertables = new ItemInsertable[6];
+
+    public ConduitBlockEntity(BlockEntityType<?> type) {
+        super(type);
+        for (Direction direction : Direction.values()) {
+            this.insertables[direction.getId()] = new ItemInsertable() {
+                @Override
+                public ItemStack attemptInsertion(ItemStack stack, Simulation simulation) {
+                    if (simulation == Simulation.SIMULATE || stack.isEmpty()) {
+                        return ItemStack.EMPTY;
+                    }
+                    ConduitBlockEntity.this.doInsert(stack, direction.getOpposite());
+                    return ItemStack.EMPTY;
+                }
+            };
+        }
+    }
 
     public ConduitBlockEntity() {
         super(Velvet.BlockEntityTypes.CONDUIT);
@@ -100,7 +117,7 @@ public class ConduitBlockEntity extends BlockEntity implements Tickable {
                 EnumSet<Direction> directions = EnumSet.allOf(Direction.class);
                 directions.remove(item.from);
                 for (Direction direction : Direction.values()) {
-                    if (!this.isConnected(direction)) {
+                    if (!this.canSendItems(direction)) {
                         directions.remove(direction);
                     }
                 }
@@ -134,6 +151,10 @@ public class ConduitBlockEntity extends BlockEntity implements Tickable {
         }
     }
 
+    protected boolean canSendItems(Direction direction) {
+        return this.isConnected(direction);
+    }
+
     public void sendToClient(List<TravellingItem> list) {
         PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
         buf.writeBlockPos(this.pos);
@@ -151,7 +172,7 @@ public class ConduitBlockEntity extends BlockEntity implements Tickable {
             }
         }
 
-        PlayerStream.watching(world, pos).forEach(player -> ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, new Identifier("velvet:conduit"), buf));
+        PlayerStream.watching(this.world, this.pos).forEach(player -> ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, new Identifier("velvet:conduit"), buf));
     }
 
     public void doInsert(ItemStack stack, Direction from) {
@@ -159,7 +180,7 @@ public class ConduitBlockEntity extends BlockEntity implements Tickable {
         TravellingItem item = new TravellingItem(stack, from, time, time + (long) Math.ceil(0.5 / SPEED));
         this.items.add(item);
         if (!this.world.isClient) {
-            sendToClient(ImmutableList.of(item));
+            this.sendToClient(ImmutableList.of(item));
         }
     }
 

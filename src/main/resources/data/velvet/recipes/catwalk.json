@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "S S",
+    "S S",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "tag": "c:refined_iron_ingots"
+    },
+    "S": {
+      "item": "velvet:wrought_iron_bar"
+    }
+  },
+  "result": {
+    "item": "velvet:catwalk",
+    "count": 4
+  }
+}

@@ -2,13 +2,14 @@
     "itemGroup.velvet.main": "Velvet",
     
     "block.velvet.conduit": "Item Conduit",
-    "block.velvet.pump": "Item Pump",
+    "block.velvet.extractor": "Item Extractor",
     "block.velvet.frame": "Frame",
     "block.velvet.scaffoldded_conduit": "Item Conduit in Frame",
     "block.velvet.catwalk": "Catwalk",
     
     "item.velvet.wrought_iron_ingot": "Wrought Iron Ingot",
     "item.velvet.wrought_iron_nugget": "Wrought Iron Nugget",
+    "item.velvet.wrought_iron_bar": "Wrought Iron Bar",
     "item.velvet.adjustable_wrench": "Adjustable Wrench",
     "item.velvet.paint_scraper": "Paint Scraper",
     "item.velvet.paint_roller": "Paint Roller"

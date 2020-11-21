@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "c:refined_iron_ingots"
+    },
+    {
+      "item": "minecraft:redstone"
+    },
+    {
+      "item": "velvet:conduit"
+    }
+  ],
+  "result": {
+    "item": "velvet:extractor"
+  }
+}

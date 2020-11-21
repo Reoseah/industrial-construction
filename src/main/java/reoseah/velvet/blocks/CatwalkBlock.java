@@ -90,6 +90,7 @@ public class CatwalkBlock extends Block {
         return COLLISION_SHAPES[i];
     }
 
+    @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         int i = (state.get(SOUTH) ? 1 : 0) |
                 (state.get(WEST) ? 2 : 0) |
