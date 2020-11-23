@@ -11,8 +11,11 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
+import net.minecraft.block.Waterloggable;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.FluidState;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateManager;
@@ -34,9 +37,11 @@ import reoseah.velvet.Velvet;
 import reoseah.velvet.blocks.entities.ExtractorBlockEntity;
 import reoseah.velvet.blocks.state.OptionalDirection;
 
-public class ExtractorBlock extends AbstractConduitBlock implements BlockEntityProvider {
+public class ExtractorBlock extends AbstractConduitBlock implements BlockEntityProvider, Waterloggable {
     public static final EnumProperty<OptionalDirection> DIRECTION = EnumProperty.of("direction", OptionalDirection.class);
     public static final BooleanProperty ENABLED = Properties.ENABLED;
+
+    public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 
     private static final VoxelShape[][] SHAPES = new VoxelShape[7][];
     static {
@@ -77,13 +82,13 @@ public class ExtractorBlock extends AbstractConduitBlock implements BlockEntityP
 
     public ExtractorBlock(Block.Settings settings) {
         super(settings);
-        this.setDefaultState(this.getDefaultState().with(DIRECTION, OptionalDirection.NONE).with(ENABLED, true));
+        this.setDefaultState(this.getDefaultState().with(DIRECTION, OptionalDirection.NONE).with(ENABLED, true).with(WATERLOGGED, false));
     }
 
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         super.appendProperties(builder);
-        builder.add(DIRECTION, ENABLED);
+        builder.add(DIRECTION, ENABLED, WATERLOGGED);
     }
 
     @Override
@@ -128,7 +133,15 @@ public class ExtractorBlock extends AbstractConduitBlock implements BlockEntityP
     }
 
     @Override
+    public FluidState getFluidState(BlockState state) {
+        return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
+    }
+
+    @Override
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState newState, WorldAccess world, BlockPos pos, BlockPos posFrom) {
+        if (state.get(WATERLOGGED)) {
+            world.getFluidTickScheduler().schedule(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+        }
         state = super.getStateForNeighborUpdate(state, direction, newState, world, pos, posFrom);
         if (state.get(DIRECTION) == OptionalDirection.NONE && this.canExtract(state, world, pos, direction)) {
             state = state.with(DIRECTION, OptionalDirection.of(direction));

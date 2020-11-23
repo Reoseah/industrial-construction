@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.PriorityQueue;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -35,10 +34,10 @@ import reoseah.velvet.blocks.AbstractConduitBlock;
 public class ConduitBlockEntity extends BlockEntity implements Tickable {
     public static final double SPEED = 0.05;
 
-    public final PriorityQueue<TravellingItem> items = new PriorityQueue<>();
+    public final List<TravellingItem> items = new ArrayList<>();
     public final ItemInsertable[] insertables = new ItemInsertable[6];
 
-    public ConduitBlockEntity(BlockEntityType<?> type) {
+    protected ConduitBlockEntity(BlockEntityType<?> type) {
         super(type);
         for (Direction direction : Direction.values()) {
             this.insertables[direction.getId()] = new ItemInsertable() {
@@ -55,29 +54,18 @@ public class ConduitBlockEntity extends BlockEntity implements Tickable {
     }
 
     public ConduitBlockEntity() {
-        super(Velvet.BlockEntityTypes.CONDUIT);
-
-        for (Direction direction : Direction.values()) {
-            this.insertables[direction.getId()] = new ItemInsertable() {
-                @Override
-                public ItemStack attemptInsertion(ItemStack stack, Simulation simulation) {
-                    if (simulation == Simulation.SIMULATE || stack.isEmpty()) {
-                        return ItemStack.EMPTY;
-                    }
-                    ConduitBlockEntity.this.doInsert(stack, direction.getOpposite());
-                    return ItemStack.EMPTY;
-                }
-            };
-        }
+        this(Velvet.BlockEntityTypes.CONDUIT);
     }
 
     @Override
     public void fromTag(BlockState state, CompoundTag tag) {
         super.fromTag(state, tag);
+        this.items.clear();
         ListTag list = tag.getList("Items", NbtType.COMPOUND);
+        long time = this.world != null ? this.world.getTime() : 0;
         for (int i = 0; i < list.size(); i++) {
             CompoundTag tag2 = list.getCompound(i);
-            TravellingItem item = new TravellingItem(tag2, 0);
+            TravellingItem item = new TravellingItem(tag2, time);
             if (!item.stack.isEmpty()) {
                 this.items.add(item);
             }
@@ -92,7 +80,6 @@ public class ConduitBlockEntity extends BlockEntity implements Tickable {
         long time = this.world != null ? this.world.getTime() : 0;
         for (TravellingItem item : this.items) {
             list.add(item.toTag(time));
-
         }
         tag.put("Items", list);
 
@@ -103,51 +90,50 @@ public class ConduitBlockEntity extends BlockEntity implements Tickable {
     public void tick() {
         long time = this.world.getTime();
 
-        List<TravellingItem> toAdd = new ArrayList<>();
+        List<TravellingItem> updated = new ArrayList<>();
         for (Iterator<TravellingItem> it = this.items.iterator(); it.hasNext();) {
             TravellingItem item = it.next();
             if (item.timeFinish > time) {
-                break;
-            }
-            it.remove();
-            if (this.world.isClient) {
                 continue;
             }
-            if (item.to == null) {
-                EnumSet<Direction> directions = EnumSet.allOf(Direction.class);
-                directions.remove(item.from);
-                for (Direction direction : Direction.values()) {
-                    if (!this.canSendItems(direction)) {
-                        directions.remove(direction);
+            if (this.world.isClient) {
+                it.remove();
+            } else {
+                if (item.to == null) {
+                    EnumSet<Direction> directions = EnumSet.allOf(Direction.class);
+                    directions.remove(item.from);
+                    for (Direction direction : Direction.values()) {
+                        if (!this.canSendItems(direction)) {
+                            directions.remove(direction);
+                        }
+                    }
+                    List<Direction> destinations = new ArrayList<>(directions);
+                    if (destinations.isEmpty()) {
+                        destinations.add(item.from);
+                    }
+                    item.to = destinations.get(this.world.random.nextInt(destinations.size()));
+                    item.timeStart = time;
+                    item.timeFinish = time + (long) Math.ceil(0.5 / SPEED);
+                    updated.add(item);
+                } else {
+                    ItemInsertable insertable = ItemAttributes.INSERTABLE.getFromNeighbour(this, item.to);
+                    ItemStack excess = insertable.attemptInsertion(item.stack, Simulation.ACTION);
+                    if (excess.isEmpty()) {
+                        it.remove();
+                    } else {
+                        item.stack = excess;
+                        item.from = item.to;
+                        item.to = null;
+                        item.timeStart = time;
+                        item.timeFinish = time + (long) Math.ceil(0.5 / SPEED);
+                        updated.add(item);
                     }
                 }
-                List<Direction> destinations = new ArrayList<>(directions);
-                if (destinations.isEmpty()) {
-                    destinations.add(item.from);
-                }
-                item.to = destinations.get(this.world.random.nextInt(destinations.size()));
-                item.timeStart = time;
-                item.timeFinish = time + (long) Math.ceil(0.5 / SPEED);
-                toAdd.add(item);
-            } else {
-                // TODO will need custom insertion code for pipes
-                // to make items/conduits with different speeds
-                ItemInsertable insertable = ItemAttributes.INSERTABLE.getFromNeighbour(this, item.to);
-                ItemStack excess = insertable.attemptInsertion(item.stack, Simulation.ACTION);
-                if (excess.isEmpty()) {
-                    return;
-                }
-                item.stack = excess;
-                item.from = item.to;
-                item.to = null;
-                item.timeStart = time;
-                item.timeFinish = time + (long) Math.ceil(0.5 / SPEED);
-                toAdd.add(item);
             }
         }
-        this.items.addAll(toAdd);
+        this.markDirty();
         if (!this.world.isClient) {
-            this.sendToClient(toAdd);
+            this.sendToClient(updated);
         }
     }
 
@@ -179,6 +165,7 @@ public class ConduitBlockEntity extends BlockEntity implements Tickable {
         long time = this.world.getTime();
         TravellingItem item = new TravellingItem(stack, from, time, time + (long) Math.ceil(0.5 / SPEED));
         this.items.add(item);
+        this.markDirty();
         if (!this.world.isClient) {
             this.sendToClient(ImmutableList.of(item));
         }
@@ -237,6 +224,10 @@ public class ConduitBlockEntity extends BlockEntity implements Tickable {
                 return source.multiply(1 - interp).add(center.multiply(interp));
             }
         }
-    }
 
+        @Override
+        public String toString() {
+            return "TravellingItem [stack=" + stack + ", from=" + from + ", to=" + to + ", timeStart=" + timeStart + ", timeFinish=" + timeFinish + "]";
+        }
+    }
 }

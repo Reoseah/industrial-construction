@@ -28,7 +28,8 @@ public class VelvetClient implements ClientModInitializer {
                 Velvet.Blocks.EXTRACTOR,
                 Velvet.Blocks.FRAME,
                 Velvet.Blocks.FRAMED_CONDUIT,
-                Velvet.Blocks.CATWALK);
+                Velvet.Blocks.CATWALK,
+                Velvet.Blocks.FRAMED_GLASS);
 
         ClientSidePacketRegistry.INSTANCE.register(new Identifier("velvet:conduit"), new PacketConsumer() {
             @Override

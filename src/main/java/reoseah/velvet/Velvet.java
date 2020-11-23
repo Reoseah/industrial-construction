@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.Block;
+import net.minecraft.block.GlassBlock;
 import net.minecraft.block.Material;
 import net.minecraft.block.MaterialColor;
 import net.minecraft.block.entity.BlockEntity;
@@ -37,13 +38,14 @@ public final class Velvet implements ModInitializer {
     }
 
     public static final class Blocks {
-        private static final FabricBlockSettings WROUGHT_IRON = FabricBlockSettings.of(Material.METAL, MaterialColor.BROWN).strength(2F).nonOpaque().sounds(BlockSoundGroup.LANTERN).breakByTool(FabricToolTags.PICKAXES);
+        private static final FabricBlockSettings WROUGHT_IRON = FabricBlockSettings.of(Material.METAL, MaterialColor.BROWN).strength(2F, 10F).nonOpaque().sounds(BlockSoundGroup.LANTERN).breakByTool(FabricToolTags.PICKAXES);
 
         public static final Block CONDUIT = register("conduit", new ConduitBlock(WROUGHT_IRON));
         public static final Block EXTRACTOR = register("extractor", new ExtractorBlock(WROUGHT_IRON));
         public static final Block FRAME = register("frame", new FrameBlock(WROUGHT_IRON));
         public static final Block FRAMED_CONDUIT = register("framed_conduit", new FramedConduitBlock(WROUGHT_IRON));
         public static final Block CATWALK = register("catwalk", new CatwalkBlock(WROUGHT_IRON));
+        public static final Block FRAMED_GLASS = register("framed_glass", new GlassBlock(FabricBlockSettings.of(Material.GLASS).strength(2F, 10F).nonOpaque().sounds(BlockSoundGroup.GLASS).breakByTool(FabricToolTags.PICKAXES)));
 
         private static Block register(String name, Block item) {
             return Registry.register(Registry.BLOCK, "velvet:" + name, item);
@@ -55,6 +57,7 @@ public final class Velvet implements ModInitializer {
         public static final Item EXTRACTOR = register("extractor", new BlockItem(Velvet.Blocks.EXTRACTOR, new Item.Settings().group(Velvet.GROUP)));
         public static final Item FRAME = register("frame", new BlockItem(Velvet.Blocks.FRAME, new Item.Settings().group(Velvet.GROUP)));
         public static final Item CATWALK = register("catwalk", new BlockItem(Velvet.Blocks.CATWALK, new Item.Settings().group(Velvet.GROUP)));
+        public static final Item FRAMED_GLASS = register("framed_glass", new BlockItem(Velvet.Blocks.FRAMED_GLASS, new Item.Settings().group(Velvet.GROUP)));
 
         public static final Item WROUGHT_IRON_INGOT = register("wrought_iron_ingot", new Item(new Item.Settings().group(GROUP)));
         public static final Item WROUGHT_IRON_NUGGET = register("wrought_iron_nugget", new Item(new Item.Settings().group(GROUP)));

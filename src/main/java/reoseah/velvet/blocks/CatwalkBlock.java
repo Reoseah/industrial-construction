@@ -3,7 +3,10 @@ package reoseah.velvet.blocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
+import net.minecraft.block.Waterloggable;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.FluidState;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateManager;
@@ -22,11 +25,12 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import reoseah.velvet.Velvet;
 
-public class CatwalkBlock extends Block {
+public class CatwalkBlock extends Block implements Waterloggable {
     public static final BooleanProperty SOUTH = Properties.SOUTH;
     public static final BooleanProperty WEST = Properties.WEST;
     public static final BooleanProperty NORTH = Properties.NORTH;
     public static final BooleanProperty EAST = Properties.EAST;
+    public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 
     private static final VoxelShape[] OUTLINE_SHAPES;
     private static final VoxelShape[] COLLISION_SHAPES;
@@ -73,12 +77,12 @@ public class CatwalkBlock extends Block {
     public CatwalkBlock(Block.Settings settings) {
         super(settings);
 
-        this.setDefaultState(this.getDefaultState().with(SOUTH, false).with(WEST, false).with(NORTH, false).with(EAST, false));
+        this.setDefaultState(this.getDefaultState().with(SOUTH, false).with(WEST, false).with(NORTH, false).with(EAST, false).with(WATERLOGGED, false));
     }
 
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(SOUTH, EAST, NORTH, WEST);
+        builder.add(SOUTH, EAST, NORTH, WEST, WATERLOGGED);
     }
 
     @Override
@@ -143,7 +147,15 @@ public class CatwalkBlock extends Block {
     }
 
     @Override
+    public FluidState getFluidState(BlockState state) {
+        return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
+    }
+
+    @Override
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState newState, WorldAccess world, BlockPos pos, BlockPos posFrom) {
+        if (state.get(WATERLOGGED)) {
+            world.getFluidTickScheduler().schedule(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+        }
         if (direction.getAxis().isHorizontal()) {
             return state.with(getConnectionProperty(direction), this.hasBorder(world, pos, direction));
         }

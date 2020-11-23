@@ -12,7 +12,7 @@ import reoseah.velvet.blocks.ExtractorBlock;
 import reoseah.velvet.blocks.state.OptionalDirection;
 
 public class ExtractorBlockEntity extends ConduitBlockEntity {
-    private int transferCooldown;
+    protected int transferCooldown;
 
     public ExtractorBlockEntity() {
         super(Velvet.BlockEntityTypes.EXTRACTOR);
@@ -38,11 +38,13 @@ public class ExtractorBlockEntity extends ConduitBlockEntity {
         }
     }
 
+    @Override
     public void fromTag(BlockState state, CompoundTag tag) {
         super.fromTag(state, tag);
         this.transferCooldown = tag.getInt("TransferCooldown");
     }
 
+    @Override
     public CompoundTag toTag(CompoundTag tag) {
         super.toTag(tag);
         tag.putInt("TransferCooldown", this.transferCooldown);

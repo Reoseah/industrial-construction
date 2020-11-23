@@ -1,20 +1,20 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "velvet",
   "version": "${version}",
 
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "Velvet",
+  "description": "Small esthetic item transport mod.",
   "authors": [
-    "Me!"
+    "Reoseah"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://github.com/Reoseah/velvet",
+    "sources": "https://github.com/Reoseah/velvet"
   },
 
   "license": "CC0-1.0",
-  "icon": "assets/modid/icon.png",
+  "icon": "assets/velvet/icon.png",
 
   "environment": "*",
   "entrypoints": {
@@ -32,6 +32,8 @@
   "depends": {
     "fabricloader": ">=0.7.4",
     "fabric": "*",
+    "libblockattributes_core": "*",
+    "libblockattributes_items": "*",
     "minecraft": "1.16.x"
   },
   "suggests": {

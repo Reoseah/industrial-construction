@@ -24,9 +24,11 @@ dependencies {
 
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	modCompile "alexiil.mc.lib:libblockattributes-core:0.8.4"
+	//modCompile "alexiil.mc.lib:libblockattributes-core:0.8.4"
     modCompile "alexiil.mc.lib:libblockattributes-items:0.8.4"
-    modCompile "alexiil.mc.lib:libblockattributes-fluids:0.8.4"
+    //modCompile "alexiil.mc.lib:libblockattributes-fluids:0.8.4"
+    
+    include "alexiil.mc.lib:libblockattributes-all:0.8.4"
 }
 
 processResources {

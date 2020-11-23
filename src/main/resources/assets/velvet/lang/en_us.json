@@ -4,8 +4,9 @@
     "block.velvet.conduit": "Item Conduit",
     "block.velvet.extractor": "Item Extractor",
     "block.velvet.frame": "Frame",
-    "block.velvet.scaffoldded_conduit": "Item Conduit in Frame",
+    "block.velvet.framed_conduit": "Item Conduit in Frame",
     "block.velvet.catwalk": "Catwalk",
+    "block.velvet.framed_glass": "Framed Glass",
     
     "item.velvet.wrought_iron_ingot": "Wrought Iron Ingot",
     "item.velvet.wrought_iron_nugget": "Wrought Iron Nugget",

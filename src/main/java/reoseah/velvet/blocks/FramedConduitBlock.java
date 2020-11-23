@@ -7,7 +7,10 @@ import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Waterloggable;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.fluid.FluidState;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContext;
@@ -21,18 +24,19 @@ import net.minecraft.world.WorldAccess;
 import reoseah.velvet.Velvet;
 import reoseah.velvet.blocks.entities.ConduitBlockEntity;
 
-public class FramedConduitBlock extends AbstractConduitBlock implements FrameConnectable, BlockEntityProvider {
+public class FramedConduitBlock extends AbstractConduitBlock implements FrameConnectable, BlockEntityProvider, Waterloggable {
     public static final BooleanProperty ATTACHED = Properties.ATTACHED;
+    public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 
     public FramedConduitBlock(Block.Settings settings) {
         super(settings);
-        this.setDefaultState(this.getDefaultState().with(ATTACHED, false));
+        this.setDefaultState(this.getDefaultState().with(ATTACHED, false).with(WATERLOGGED, false));
     }
 
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         super.appendProperties(builder);
-        builder.add(ATTACHED);
+        builder.add(ATTACHED, WATERLOGGED);
     }
 
     @Override
@@ -45,6 +49,10 @@ public class FramedConduitBlock extends AbstractConduitBlock implements FrameCon
 
     @Override
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState newState, WorldAccess world, BlockPos pos, BlockPos posFrom) {
+        if (state.get(WATERLOGGED)) {
+            world.getFluidTickScheduler().schedule(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+        }
+
         return super.getStateForNeighborUpdate(state, direction, newState, world, pos, posFrom)
                 .with(ATTACHED, this.isFrame(world, pos.up(), Direction.DOWN, world.getBlockState(pos.up())));
     }
@@ -82,8 +90,12 @@ public class FramedConduitBlock extends AbstractConduitBlock implements FrameCon
     }
 
     @Override
+    public FluidState getFluidState(BlockState state) {
+        return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
+    }
+
+    @Override
     public BlockEntity createBlockEntity(BlockView world) {
         return new ConduitBlockEntity();
     }
-
 }
