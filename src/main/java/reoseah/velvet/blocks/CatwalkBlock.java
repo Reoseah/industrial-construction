@@ -2,6 +2,7 @@ package reoseah.velvet.blocks;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Material;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.Waterloggable;
 import net.minecraft.entity.player.PlayerEntity;
@@ -124,10 +125,10 @@ public class CatwalkBlock extends Block implements Waterloggable {
     public boolean hasBorder(BlockView world, BlockPos pos, Direction side) {
         BlockState neighbor = world.getBlockState(pos.offset(side));
         Block block = neighbor.getBlock();
-        if (block == this) {
+        if (block == this || block == Velvet.Blocks.FRAME || block == Velvet.Blocks.FRAMED_CONDUIT) {
             return false;
         }
-        if (neighbor.isSideSolidFullSquare(world, pos.offset(side), side)) {
+        if (neighbor.isSideSolidFullSquare(world, pos.offset(side), side) && neighbor.getMaterial() != Material.AGGREGATE) {
             return false;
         }
         BlockState ground = world.getBlockState(pos.offset(side).down());

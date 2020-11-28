@@ -47,8 +47,8 @@ public final class Velvet implements ModInitializer {
         public static final Block CATWALK = register("catwalk", new CatwalkBlock(WROUGHT_IRON));
         public static final Block FRAMED_GLASS = register("framed_glass", new GlassBlock(FabricBlockSettings.of(Material.GLASS).strength(2F, 10F).nonOpaque().sounds(BlockSoundGroup.GLASS).breakByTool(FabricToolTags.PICKAXES)));
 
-        private static Block register(String name, Block item) {
-            return Registry.register(Registry.BLOCK, "velvet:" + name, item);
+        private static Block register(String name, Block block) {
+            return Registry.register(Registry.BLOCK, "velvet:" + name, block);
         }
     }
 
