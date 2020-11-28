@@ -47,10 +47,10 @@ public class CatwalkBlock extends Block implements Waterloggable {
         VoxelShape north = Block.createCuboidShape(0, 0, 0, 16, 16, 2);
         VoxelShape east = Block.createCuboidShape(14, 0, 0, 16, 16, 16);
 
-        VoxelShape southCollision = Block.createCuboidShape(0.001, 0, 15, 15.999, 20, 15.999);
-        VoxelShape westCollision = Block.createCuboidShape(0.001, 0, 0.001, 1, 20, 15.999);
-        VoxelShape northCollision = Block.createCuboidShape(0.001, 0, 0.001, 15.999, 20, 1);
-        VoxelShape eastCollision = Block.createCuboidShape(15, 0, 0.001, 15.999, 20, 15.999);
+        VoxelShape southCollision = Block.createCuboidShape(0.5, 0, 15, 15.5, 20, 15.5);
+        VoxelShape westCollision = Block.createCuboidShape(0.5, 0, 0.5, 1, 20, 15.5);
+        VoxelShape northCollision = Block.createCuboidShape(0.5, 0, 0.5, 15.5, 20, 1);
+        VoxelShape eastCollision = Block.createCuboidShape(15, 0, 0.5, 15.5, 20, 15.5);
 
         for (int i = 0; i < 16; i++) {
             VoxelShape outline = floor;

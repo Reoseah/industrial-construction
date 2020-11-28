@@ -17,6 +17,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import reoseah.velvet.blocks.CatwalkBlock;
@@ -26,6 +27,8 @@ import reoseah.velvet.blocks.FrameBlock;
 import reoseah.velvet.blocks.FramedConduitBlock;
 import reoseah.velvet.blocks.entities.ConduitBlockEntity;
 import reoseah.velvet.blocks.entities.ExtractorBlockEntity;
+import reoseah.velvet.items.PaintRollerItem;
+import reoseah.velvet.items.PaintScrapperItem;
 
 public final class Velvet implements ModInitializer {
     public static final ItemGroup GROUP = FabricItemGroupBuilder.build(new Identifier("velvet:main"), () -> new ItemStack(Velvet.Items.FRAME));
@@ -61,8 +64,26 @@ public final class Velvet implements ModInitializer {
 
         public static final Item IRON_BAR = register("iron_bar", new Item(new Item.Settings().group(GROUP)));
         public static final Item ADJUSTABLE_WRENCH = register("adjustable_wrench", new Item(new Item.Settings().maxCount(1).group(GROUP)));
-        public static final Item PAINT_SCRAPER = register("paint_scraper", new Item(new Item.Settings().maxCount(1).group(GROUP)));
+        public static final Item PAINT_SCRAPER = register("paint_scraper", new PaintScrapperItem(new Item.Settings().maxDamage(256).group(GROUP)));
         public static final Item PAINT_ROLLER = register("paint_roller", new Item(new Item.Settings().maxCount(1).group(GROUP)));
+
+        private static final Item.Settings PAINTROLLER_SETTINGS = new Item.Settings().maxCount(1).recipeRemainder(Velvet.Items.PAINT_ROLLER).group(GROUP);
+        public static final Item WHITE_PAINT_ROLLER = register("white_paint_roller", new PaintRollerItem(DyeColor.WHITE, PAINTROLLER_SETTINGS));
+        public static final Item ORANGE_PAINT_ROLLER = register("orange_paint_roller", new PaintRollerItem(DyeColor.ORANGE, PAINTROLLER_SETTINGS));
+        public static final Item MAGENTA_PAINT_ROLLER = register("magenta_paint_roller", new PaintRollerItem(DyeColor.MAGENTA, PAINTROLLER_SETTINGS));
+        public static final Item LIGHT_BLUE_PAINT_ROLLER = register("light_blue_paint_roller", new PaintRollerItem(DyeColor.LIGHT_BLUE, PAINTROLLER_SETTINGS));
+        public static final Item YELLOW_PAINT_ROLLER = register("yellow_paint_roller", new PaintRollerItem(DyeColor.YELLOW, PAINTROLLER_SETTINGS));
+        public static final Item LIME_PAINT_ROLLER = register("lime_paint_roller", new PaintRollerItem(DyeColor.LIME, PAINTROLLER_SETTINGS));
+        public static final Item PINK_PAINT_ROLLER = register("pink_paint_roller", new PaintRollerItem(DyeColor.PINK, PAINTROLLER_SETTINGS));
+        public static final Item GRAY_PAINT_ROLLER = register("gray_paint_roller", new PaintRollerItem(DyeColor.GRAY, PAINTROLLER_SETTINGS));
+        public static final Item LIGHT_GRAY_PAINT_ROLLER = register("light_gray_paint_roller", new PaintRollerItem(DyeColor.LIGHT_GRAY, PAINTROLLER_SETTINGS));
+        public static final Item CYAN_PAINT_ROLLER = register("cyan_paint_roller", new PaintRollerItem(DyeColor.CYAN, PAINTROLLER_SETTINGS));
+        public static final Item PURPLE_PAINT_ROLLER = register("purple_paint_roller", new PaintRollerItem(DyeColor.PURPLE, PAINTROLLER_SETTINGS));
+        public static final Item BLUE_PAINT_ROLLER = register("blue_paint_roller", new PaintRollerItem(DyeColor.BLUE, PAINTROLLER_SETTINGS));
+        public static final Item BROWN_PAINT_ROLLER = register("brown_paint_roller", new PaintRollerItem(DyeColor.BROWN, PAINTROLLER_SETTINGS));
+        public static final Item GREEN_PAINT_ROLLER = register("green_paint_roller", new PaintRollerItem(DyeColor.GREEN, PAINTROLLER_SETTINGS));
+        public static final Item RED_PAINT_ROLLER = register("red_paint_roller", new PaintRollerItem(DyeColor.RED, PAINTROLLER_SETTINGS));
+        public static final Item BLACK_PAINT_ROLLER = register("black_paint_roller", new PaintRollerItem(DyeColor.BLACK, PAINTROLLER_SETTINGS));
 
         private static Item register(String name, Item item) {
             return Registry.register(Registry.ITEM, "velvet:" + name, item);

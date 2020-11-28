@@ -6,10 +6,26 @@
     "block.velvet.frame": "Frame",
     "block.velvet.framed_conduit": "Item Conduit in Frame",
     "block.velvet.catwalk": "Catwalk",
-    "block.velvet.framed_glass": "Reinforced Glass",
+    "block.velvet.reinforced_glass": "Reinforced Glass",
     
     "item.velvet.iron_bar": "Iron Bar",
     "item.velvet.adjustable_wrench": "Adjustable Wrench",
     "item.velvet.paint_scraper": "Paint Scraper",
-    "item.velvet.paint_roller": "Paint Roller"
+    "item.velvet.paint_roller": "Paint Roller",
+    "item.velvet.paint_roller.white": "White",
+    "item.velvet.paint_roller.orange": "Orange",
+    "item.velvet.paint_roller.magenta": "Magenta",
+    "item.velvet.paint_roller.light_blue": "Light Blue",
+    "item.velvet.paint_roller.yellow": "Yellow",
+    "item.velvet.paint_roller.lime": "Lime",
+    "item.velvet.paint_roller.pink": "Pink",
+    "item.velvet.paint_roller.gray": "Gray",
+    "item.velvet.paint_roller.light_gray": "Light Gray",
+    "item.velvet.paint_roller.cyan": "Cyan",
+    "item.velvet.paint_roller.purple": "Purple",
+    "item.velvet.paint_roller.blue": "Blue",
+    "item.velvet.paint_roller.brown": "Brown",
+    "item.velvet.paint_roller.green": "Green",
+    "item.velvet.paint_roller.red": "Red",
+    "item.velvet.paint_roller.black": "Black"
 }
