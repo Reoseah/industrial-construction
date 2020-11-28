@@ -5,10 +5,10 @@
   ],
   "key": {
     "#": {
-      "tag": "c:refined_iron_ingots"
+      "tag": "c:iron_ingots"
     },
     "S": {
-      "item": "velvet:wrought_iron_bar"
+      "tag": "c:iron_bars"
     }
   },
   "result": {

@@ -227,7 +227,7 @@ public class ConduitBlockEntity extends BlockEntity implements Tickable {
 
         @Override
         public String toString() {
-            return "TravellingItem [stack=" + stack + ", from=" + from + ", to=" + to + ", timeStart=" + timeStart + ", timeFinish=" + timeFinish + "]";
+            return "TravellingItem [stack=" + this.stack + ", from=" + this.from + ", to=" + this.to + ", timeStart=" + this.timeStart + ", timeFinish=" + this.timeFinish + "]";
         }
     }
 }

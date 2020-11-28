@@ -7,14 +7,14 @@
   ],
   "key": {
     "#": {
-      "tag": "c:refined_iron_ingots"
+      "tag": "c:iron_ingots"
     },
     "G": {
       "item": "minecraft:glass"
     }
   },
   "result": {
-    "item": "velvet:framed_glass",
+    "item": "velvet:reinforced_glass",
     "count": 8
   }
 }

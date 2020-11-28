@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "velvet:framed_glass"
+          "name": "velvet:reinforced_glass"
         }
       ],
       "conditions": [

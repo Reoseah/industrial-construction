@@ -135,7 +135,7 @@ public class CatwalkBlock extends Block implements Waterloggable {
         BlockState ground = world.getBlockState(pos.offset(side).down());
         return ground.getBlock() != Velvet.Blocks.FRAME
                 && ground.getBlock() != Velvet.Blocks.FRAMED_CONDUIT
-                && ground.getBlock() != Velvet.Blocks.FRAMED_GLASS;
+                && ground.getBlock() != Velvet.Blocks.REINFORCED_GLASS;
     }
 
     @Override
