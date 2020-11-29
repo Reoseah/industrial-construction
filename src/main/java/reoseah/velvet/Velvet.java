@@ -1,5 +1,7 @@
 package reoseah.velvet;
 
+import org.jetbrains.annotations.Nullable;
+
 import com.google.common.collect.ImmutableSet;
 
 import net.fabricmc.api.ModInitializer;
@@ -16,6 +18,9 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.recipe.Recipe;
+import net.minecraft.recipe.RecipeSerializer;
+import net.minecraft.recipe.SpecialRecipeSerializer;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
@@ -29,6 +34,7 @@ import reoseah.velvet.blocks.entities.ConduitBlockEntity;
 import reoseah.velvet.blocks.entities.ExtractorBlockEntity;
 import reoseah.velvet.items.PaintRollerItem;
 import reoseah.velvet.items.PaintScrapperItem;
+import reoseah.velvet.recipes.PaintRollerDyeRecipe;
 
 public final class Velvet implements ModInitializer {
     public static final ItemGroup GROUP = FabricItemGroupBuilder.build(new Identifier("velvet:main"), () -> new ItemStack(Velvet.Items.FRAME));
@@ -38,6 +44,7 @@ public final class Velvet implements ModInitializer {
         Velvet.Blocks.CONDUIT.getClass();
         Velvet.Items.CONDUIT.getClass();
         Velvet.BlockEntityTypes.CONDUIT.getClass();
+        Velvet.RecipeSerializers.PAINTROLLER_DYE.getClass();
     }
 
     public static final class Blocks {
@@ -67,7 +74,7 @@ public final class Velvet implements ModInitializer {
         public static final Item PAINT_SCRAPER = register("paint_scraper", new PaintScrapperItem(new Item.Settings().maxDamage(256).group(GROUP)));
         public static final Item PAINT_ROLLER = register("paint_roller", new Item(new Item.Settings().maxCount(1).group(GROUP)));
 
-        private static final Item.Settings PAINTROLLER_SETTINGS = new Item.Settings().maxCount(1).recipeRemainder(Velvet.Items.PAINT_ROLLER).group(GROUP);
+        private static final Item.Settings PAINTROLLER_SETTINGS = new Item.Settings().maxDamage(32).group(GROUP);
         public static final Item WHITE_PAINT_ROLLER = register("white_paint_roller", new PaintRollerItem(DyeColor.WHITE, PAINTROLLER_SETTINGS));
         public static final Item ORANGE_PAINT_ROLLER = register("orange_paint_roller", new PaintRollerItem(DyeColor.ORANGE, PAINTROLLER_SETTINGS));
         public static final Item MAGENTA_PAINT_ROLLER = register("magenta_paint_roller", new PaintRollerItem(DyeColor.MAGENTA, PAINTROLLER_SETTINGS));
@@ -88,6 +95,48 @@ public final class Velvet implements ModInitializer {
         private static Item register(String name, Item item) {
             return Registry.register(Registry.ITEM, "velvet:" + name, item);
         }
+
+        public static Item getPaintRoller(@Nullable DyeColor color) {
+            if (color == null) {
+                return Velvet.Items.PAINT_ROLLER;
+            }
+            switch (color) {
+            case WHITE:
+                return Velvet.Items.WHITE_PAINT_ROLLER;
+            case ORANGE:
+                return Velvet.Items.ORANGE_PAINT_ROLLER;
+            case MAGENTA:
+                return Velvet.Items.MAGENTA_PAINT_ROLLER;
+            case LIGHT_BLUE:
+                return Velvet.Items.LIGHT_BLUE_PAINT_ROLLER;
+            case YELLOW:
+                return Velvet.Items.YELLOW_PAINT_ROLLER;
+            case LIME:
+                return Velvet.Items.LIME_PAINT_ROLLER;
+            case PINK:
+                return Velvet.Items.PINK_PAINT_ROLLER;
+            case GRAY:
+                return Velvet.Items.GRAY_PAINT_ROLLER;
+            case LIGHT_GRAY:
+                return Velvet.Items.LIGHT_GRAY_PAINT_ROLLER;
+            case CYAN:
+                return Velvet.Items.CYAN_PAINT_ROLLER;
+            case PURPLE:
+                return Velvet.Items.PURPLE_PAINT_ROLLER;
+            case BLUE:
+                return Velvet.Items.BLUE_PAINT_ROLLER;
+            case BROWN:
+                return Velvet.Items.BROWN_PAINT_ROLLER;
+            case GREEN:
+                return Velvet.Items.GREEN_PAINT_ROLLER;
+            case RED:
+                return Velvet.Items.RED_PAINT_ROLLER;
+            case BLACK:
+                return Velvet.Items.BLACK_PAINT_ROLLER;
+            default:
+                throw new UnsupportedOperationException();
+            }
+        }
     }
 
     public static final class BlockEntityTypes {
@@ -96,6 +145,14 @@ public final class Velvet implements ModInitializer {
 
         private static <T extends BlockEntity> BlockEntityType<T> register(String name, BlockEntityType<T> type) {
             return Registry.register(Registry.BLOCK_ENTITY_TYPE, "velvet:" + name, type);
+        }
+    }
+
+    public static final class RecipeSerializers {
+        public static final RecipeSerializer<PaintRollerDyeRecipe> PAINTROLLER_DYE = register("crafting_special_paint_roller_dye", new SpecialRecipeSerializer<>(PaintRollerDyeRecipe::new));
+
+        private static <S extends RecipeSerializer<T>, T extends Recipe<?>> S register(String name, S serializer) {
+            return Registry.register(Registry.RECIPE_SERIALIZER, "velvet:" + name, serializer);
         }
     }
 }

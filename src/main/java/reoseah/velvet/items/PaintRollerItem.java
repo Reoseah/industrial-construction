@@ -5,6 +5,7 @@ import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.CauldronBlock;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -19,7 +20,7 @@ import net.minecraft.world.World;
 import reoseah.velvet.Velvet;
 
 public class PaintRollerItem extends Item {
-    public final DyeColor color;
+    protected final DyeColor color;
 
     public PaintRollerItem(DyeColor color, Item.Settings settings) {
         super(settings);
@@ -46,12 +47,15 @@ public class PaintRollerItem extends Item {
             Block stained = state.getBlock() == Blocks.GLASS ? getStainedGlass(this.color) : getColoredTerracota(this.color);
             world.setBlockState(pos, stained.getDefaultState());
             if (context.getPlayer() != null && !context.getPlayer().isCreative()) {
-
                 context.getStack().damage(1, context.getPlayer(), player -> {
                     player.sendToolBreakStatus(context.getHand());
                     player.setStackInHand(context.getHand(), new ItemStack(Velvet.Items.PAINT_ROLLER));
                 });
             }
+            return ActionResult.SUCCESS;
+        } else if (state.getBlock() == Blocks.CAULDRON && state.get(CauldronBlock.LEVEL) > 0 && context.getPlayer() != null) {
+            world.setBlockState(pos, state.with(CauldronBlock.LEVEL, state.get(CauldronBlock.LEVEL) - 1));
+            context.getPlayer().setStackInHand(context.getHand(), new ItemStack(Velvet.Items.PAINT_ROLLER));
             return ActionResult.SUCCESS;
         }
         return super.useOnBlock(context);
@@ -138,5 +142,9 @@ public class PaintRollerItem extends Item {
     @Override
     public boolean isEnchantable(ItemStack stack) {
         return false;
+    }
+
+    public DyeColor getColor() {
+        return color;
     }
 }
