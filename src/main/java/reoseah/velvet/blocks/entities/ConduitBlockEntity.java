@@ -224,10 +224,5 @@ public class ConduitBlockEntity extends BlockEntity implements Tickable {
                 return source.multiply(1 - interp).add(center.multiply(interp));
             }
         }
-
-        @Override
-        public String toString() {
-            return "TravellingItem [stack=" + this.stack + ", from=" + this.from + ", to=" + this.to + ", timeStart=" + this.timeStart + ", timeFinish=" + this.timeFinish + "]";
-        }
     }
 }

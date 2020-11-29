@@ -6,6 +6,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.Waterloggable;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
@@ -14,8 +16,12 @@ import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import reoseah.velvet.Velvet;
 
@@ -23,7 +29,7 @@ public class FrameBlock extends Block implements FrameConnectable, Waterloggable
     public static final BooleanProperty ATTACHED = Properties.ATTACHED;
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 
-    private static final VoxelShape SHAPE = Block.createCuboidShape(0.001, 0, 0.001, 15.999, 16, 15.999);
+    private static final VoxelShape SHAPE = Block.createCuboidShape(0.5, 0, 0.5, 15.5, 16, 15.5);
 
     public FrameBlock(Block.Settings settings) {
         super(settings);
@@ -36,8 +42,23 @@ public class FrameBlock extends Block implements FrameConnectable, Waterloggable
     }
 
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+    public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return SHAPE;
+    }
+
+    @Override
+    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        return VoxelShapes.fullCube();
+    }
+
+    @Override
+    public VoxelShape getSidesShape(BlockState state, BlockView world, BlockPos pos) {
+        return VoxelShapes.fullCube();
+    }
+
+    @Override
+    public VoxelShape getVisualShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        return VoxelShapes.fullCube();
     }
 
     public boolean isFrame(BlockView world, BlockPos pos, Direction side, BlockState neighbor) {
@@ -81,10 +102,18 @@ public class FrameBlock extends Block implements FrameConnectable, Waterloggable
         return context.getStack().getItem() == Velvet.Items.CONDUIT || super.canReplace(state, context);
     }
 
-    @Override
-    public boolean isTranslucent(BlockState state, BlockView world, BlockPos pos) {
-        // TODO Auto-generated method stub
-        return super.isTranslucent(state, world, pos);
+    public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
+        if (entity instanceof PlayerEntity) {
+            PlayerEntity player = (PlayerEntity) entity;
+            player.fallDistance = 0;
+            Vec3d velocity = player.getVelocity();
+            if (entity.isSneaking()) {
+                player.setVelocity(MathHelper.clamp(velocity.getX(), -0.01, 0.01), 0.08, MathHelper.clamp(velocity.getZ(), -0.01, 0.01));
+            } else if (player.horizontalCollision) {
+                player.setVelocity(MathHelper.clamp(velocity.getX(), -0.01, 0.01), 0.2, MathHelper.clamp(velocity.getZ(), -0.01, 0.01));
+            } else {
+                player.setVelocity(MathHelper.clamp(velocity.getX(), -0.01, 0.01), Math.max(velocity.getY(), -0.07), MathHelper.clamp(velocity.getZ(), -0.01, 0.01));
+            }
+        }
     }
-
 }
