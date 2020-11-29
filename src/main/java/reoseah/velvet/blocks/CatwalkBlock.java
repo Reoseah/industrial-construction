@@ -1,16 +1,19 @@
 package reoseah.velvet.blocks;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.Waterloggable;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.screen.ScreenHandlerFactory;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
@@ -133,6 +136,12 @@ public class CatwalkBlock extends Block implements Waterloggable {
         if (neighbor.isSideSolidFullSquare(world, pos.offset(side), side) && neighbor.getMaterial() != Material.AGGREGATE) {
             return false;
         }
+        if (neighbor.getBlock() instanceof BlockEntityProvider) {
+            BlockEntity entity = world.getBlockEntity(pos.offset(side));
+            if (entity instanceof ScreenHandlerFactory) {
+                return false;
+            }
+        }
         BlockState ground = world.getBlockState(pos.offset(side).down());
         return ground.getBlock() != Velvet.Blocks.FRAME
                 && ground.getBlock() != Velvet.Blocks.FRAMED_CONDUIT
@@ -175,10 +184,10 @@ public class CatwalkBlock extends Block implements Waterloggable {
                 boolean inside = false;
                 if (hit.getSide().getAxis() == Axis.X) {
                     double dx = hit.getPos().getX() - hit.getBlockPos().getX();
-                    inside = dx > 0 && dx < 1;
+                    inside = dx >= 0.5 / 16 && dx <= 15.5 / 16;
                 } else {
                     double dz = hit.getPos().getZ() - hit.getBlockPos().getZ();
-                    inside = dz > 0 && dz < 1;
+                    inside = dz >= 0.5 / 16 && dz <= 15.5 / 16;
                 }
                 if (inside) {
                     world.setBlockState(pos, world.getBlockState(pos).cycle(getConnectionProperty(hit.getSide().getOpposite())));

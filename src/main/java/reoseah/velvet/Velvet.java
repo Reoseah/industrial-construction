@@ -30,6 +30,7 @@ import reoseah.velvet.blocks.ConduitBlock;
 import reoseah.velvet.blocks.ExtractorBlock;
 import reoseah.velvet.blocks.FrameBlock;
 import reoseah.velvet.blocks.FramedConduitBlock;
+import reoseah.velvet.blocks.InserterBlock;
 import reoseah.velvet.blocks.entities.ConduitBlockEntity;
 import reoseah.velvet.blocks.entities.ExtractorBlockEntity;
 import reoseah.velvet.items.PaintRollerItem;
@@ -52,6 +53,7 @@ public final class Velvet implements ModInitializer {
 
         public static final Block CONDUIT = register("conduit", new ConduitBlock(IRON_SETTINGS));
         public static final Block EXTRACTOR = register("extractor", new ExtractorBlock(IRON_SETTINGS));
+        public static final Block INSERTER = register("inserter", new InserterBlock(IRON_SETTINGS));
         public static final Block FRAME = register("frame", new FrameBlock(IRON_SETTINGS));
         public static final Block FRAMED_CONDUIT = register("framed_conduit", new FramedConduitBlock(IRON_SETTINGS));
         public static final Block CATWALK = register("catwalk", new CatwalkBlock(IRON_SETTINGS));
@@ -65,6 +67,7 @@ public final class Velvet implements ModInitializer {
     public static final class Items {
         public static final Item CONDUIT = register("conduit", new BlockItem(Velvet.Blocks.CONDUIT, new Item.Settings().group(Velvet.GROUP)));
         public static final Item EXTRACTOR = register("extractor", new BlockItem(Velvet.Blocks.EXTRACTOR, new Item.Settings().group(Velvet.GROUP)));
+        public static final Item INSERTER = register("inserter", new BlockItem(Velvet.Blocks.INSERTER, new Item.Settings().group(Velvet.GROUP)));
         public static final Item FRAME = register("frame", new BlockItem(Velvet.Blocks.FRAME, new Item.Settings().group(Velvet.GROUP)));
         public static final Item CATWALK = register("catwalk", new BlockItem(Velvet.Blocks.CATWALK, new Item.Settings().group(Velvet.GROUP)));
         public static final Item REINFORCED_GLASS = register("reinforced_glass", new BlockItem(Velvet.Blocks.REINFORCED_GLASS, new Item.Settings().group(Velvet.GROUP)));

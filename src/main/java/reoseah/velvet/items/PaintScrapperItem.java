@@ -45,4 +45,9 @@ public class PaintScrapperItem extends Item {
         }
         return super.useOnBlock(context);
     }
+
+    @Override
+    public int getEnchantability() {
+        return 10;
+    }
 }

@@ -26,6 +26,7 @@ public class VelvetClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutoutMipped(),
                 Velvet.Blocks.CONDUIT,
                 Velvet.Blocks.EXTRACTOR,
+                Velvet.Blocks.INSERTER,
                 Velvet.Blocks.FRAME,
                 Velvet.Blocks.FRAMED_CONDUIT,
                 Velvet.Blocks.CATWALK,
