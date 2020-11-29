@@ -102,6 +102,7 @@ public class FrameBlock extends Block implements FrameConnectable, Waterloggable
         return context.getStack().getItem() == Velvet.Items.CONDUIT || super.canReplace(state, context);
     }
 
+    @Override
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
         if (entity instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) entity;
