@@ -4,13 +4,19 @@
         {   "from": [ 0, 0, 0 ],
             "to": [ 16, 0.01, 16 ],
             "faces": {
-                "up":  { "texture": "#top" },
-                "down":  { "texture": "#top" }
+                "up":  { "texture": "#texture" },
+                "down":  { "texture": "#texture" }
+            }
+        },
+        {   "from": [ 0, 0, 0 ],
+            "to": [ 16, 0, 16 ],
+            "faces": {
+                "up":  { "texture": "#texture" }
             }
         }
     ],
     "textures": {
         "particle": "velvet:block/treadplate",
-        "top": "velvet:block/treadplate"
+        "texture": "velvet:block/treadplate"
     }
 }

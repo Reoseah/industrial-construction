@@ -4,7 +4,7 @@
   "version": "${version}",
 
   "name": "Velvet",
-  "description": "Small esthetic item transport mod.",
+  "description": "Small highly esthetic item transport and building mod.",
   "authors": [
     "Reoseah"
   ],
@@ -19,10 +19,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "reoseah.velvet.Velvet"
+      "reoseah.velvet.VelvetInitializer"
     ],
     "client": [
-      "reoseah.velvet.VelvetClient"
+      "reoseah.velvet.VelvetInitializer"
     ]
   },
   "mixins": [

@@ -1,12 +1,9 @@
 package reoseah.velvet;
 
-import java.util.Set;
-
 import org.jetbrains.annotations.Nullable;
 
 import com.google.common.collect.ImmutableSet;
 
-import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
@@ -37,18 +34,11 @@ import reoseah.velvet.blocks.entities.ConduitBlockEntity;
 import reoseah.velvet.blocks.entities.ExtractorBlockEntity;
 import reoseah.velvet.items.PaintRollerItem;
 import reoseah.velvet.items.PaintScrapperItem;
+import reoseah.velvet.items.WrenchItem;
 import reoseah.velvet.recipes.PaintRollerDyeRecipe;
 
-public final class Velvet implements ModInitializer {
+public final class Velvet {
     public static final ItemGroup GROUP = FabricItemGroupBuilder.build(new Identifier("velvet:main"), () -> new ItemStack(Velvet.Items.FRAME));
-
-    @Override
-    public void onInitialize() {
-        Velvet.Blocks.CONDUIT.getClass();
-        Velvet.Items.CONDUIT.getClass();
-        Velvet.BlockEntityTypes.CONDUIT.getClass();
-        Velvet.RecipeSerializers.PAINTROLLER_DYE.getClass();
-    }
 
     public static final class Blocks {
         private static final FabricBlockSettings IRON_SETTINGS = FabricBlockSettings.of(Material.METAL, MaterialColor.GRAY).strength(2F, 10F).nonOpaque().sounds(BlockSoundGroup.LANTERN).breakByTool(FabricToolTags.PICKAXES);
@@ -73,10 +63,6 @@ public final class Velvet implements ModInitializer {
         public static final Block GREEN_CONDUIT = register("green_conduit", new ConduitBlock(DyeColor.GREEN, IRON_SETTINGS));
         public static final Block RED_CONDUIT = register("red_conduit", new ConduitBlock(DyeColor.RED, IRON_SETTINGS));
         public static final Block BLACK_CONDUIT = register("black_conduit", new ConduitBlock(DyeColor.BLACK, IRON_SETTINGS));
-
-        public static final Set<Block> COLORED_CONDUITS = ImmutableSet.of(WHITE_CONDUIT, ORANGE_CONDUIT, MAGENTA_CONDUIT,
-                LIGHT_BLUE_CONDUIT, YELLOW_CONDUIT, LIME_CONDUIT, PINK_CONDUIT, LIGHT_GRAY_CONDUIT, GRAY_CONDUIT,
-                CYAN_CONDUIT, PURPLE_CONDUIT, BLUE_CONDUIT, BROWN_CONDUIT, GREEN_CONDUIT, RED_CONDUIT, BLACK_CONDUIT);
 
         public static final Block FRAME = register("frame", new FrameBlock(IRON_SETTINGS));
         public static final Block FRAMED_CONDUIT = register("framed_conduit", new FramedConduitBlock(IRON_SETTINGS));
@@ -157,7 +143,7 @@ public final class Velvet implements ModInitializer {
         public static final Item REINFORCED_GLASS = register("reinforced_glass", new BlockItem(Velvet.Blocks.REINFORCED_GLASS, new Item.Settings().group(Velvet.GROUP)));
 
         public static final Item IRON_BAR = register("iron_bar", new Item(new Item.Settings().group(GROUP)));
-        public static final Item ADJUSTABLE_WRENCH = register("adjustable_wrench", new Item(new Item.Settings().maxCount(1).group(GROUP)));
+        public static final Item WRENCH = register("wrench", new WrenchItem(new Item.Settings().maxDamage(512).group(GROUP)));
         public static final Item PAINT_SCRAPER = register("paint_scraper", new PaintScrapperItem(new Item.Settings().maxDamage(256).group(GROUP)));
         public static final Item PAINT_ROLLER = register("paint_roller", new Item(new Item.Settings().maxCount(1).group(GROUP)));
 

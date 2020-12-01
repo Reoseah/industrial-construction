@@ -8,7 +8,21 @@ repositories {
         name = "BuildCraft"
         url = "https://mod-buildcraft.com/maven"
     }
+
+    maven {
+        name = "Wrenchable"
+        url  "https://dl.bintray.com/zundrel/wrenchable"
+    }
+    maven {
+    	name = "grondag"
+    	url = "https://grondag-repo.appspot.com"
+    	credentials {
+            username "guest"
+            password ""
+		}
+    }
 }
+
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
@@ -25,10 +39,14 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 	//modCompile "alexiil.mc.lib:libblockattributes-core:0.8.4"
-    modCompile "alexiil.mc.lib:libblockattributes-items:0.8.4"
+    modCompile "alexiil.mc.lib:libblockattributes-items:0.8.4" 
     //modCompile "alexiil.mc.lib:libblockattributes-fluids:0.8.4"
-    
     include "alexiil.mc.lib:libblockattributes-all:0.8.4"
+    
+    modApi('com.zundrel:wrenchable:1.0.0+1.16.1') {
+    	exclude group: "net.fabricmc.fabric-api"
+    }
+    include 'com.zundrel:wrenchable:1.0.0+1.16.1'
 }
 
 processResources {

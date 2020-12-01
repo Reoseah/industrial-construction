@@ -1,5 +1,7 @@
 package reoseah.velvet.blocks;
 
+import com.zundrel.wrenchable.block.BlockWrenchable;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
@@ -12,13 +14,10 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandlerFactory;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -30,7 +29,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import reoseah.velvet.Velvet;
 
-public class CatwalkBlock extends Block implements Waterloggable {
+public class CatwalkBlock extends Block implements Waterloggable, BlockWrenchable {
     public static final BooleanProperty SOUTH = Properties.SOUTH;
     public static final BooleanProperty WEST = Properties.WEST;
     public static final BooleanProperty NORTH = Properties.NORTH;
@@ -176,32 +175,6 @@ public class CatwalkBlock extends Block implements Waterloggable {
         return state;
     }
 
-    @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        ItemStack stack = player.getStackInHand(hand);
-        if (stack.getItem() == Velvet.Items.ADJUSTABLE_WRENCH) {
-            if (hit.getSide().getAxis().isHorizontal()) {
-                boolean inside = false;
-                if (hit.getSide().getAxis() == Axis.X) {
-                    double dx = hit.getPos().getX() - hit.getBlockPos().getX();
-                    inside = dx >= 0.5 / 16 && dx <= 15.5 / 16;
-                } else {
-                    double dz = hit.getPos().getZ() - hit.getBlockPos().getZ();
-                    inside = dz >= 0.5 / 16 && dz <= 15.5 / 16;
-                }
-                if (inside) {
-                    world.setBlockState(pos, world.getBlockState(pos).cycle(getConnectionProperty(hit.getSide().getOpposite())));
-                } else {
-                    world.setBlockState(pos, world.getBlockState(pos).cycle(getConnectionProperty(hit.getSide())));
-                }
-            } else {
-                world.setBlockState(pos, world.getBlockState(pos).cycle(getConnectionProperty(player.getHorizontalFacing())));
-            }
-            return ActionResult.SUCCESS;
-        }
-        return super.onUse(state, world, pos, player, hand, hit);
-    }
-
     protected static BooleanProperty getConnectionProperty(Direction direction) {
         switch (direction) {
         case SOUTH:
@@ -213,6 +186,28 @@ public class CatwalkBlock extends Block implements Waterloggable {
         case EAST:
         default:
             return EAST;
+        }
+    }
+
+    @Override
+    public void onWrenched(World world, PlayerEntity player, BlockHitResult result) {
+        BlockPos pos = result.getBlockPos();
+        if (result.getSide().getAxis().isHorizontal()) {
+            boolean inside = false;
+            if (result.getSide().getAxis() == Axis.X) {
+                double dx = result.getPos().getX() - result.getBlockPos().getX();
+                inside = dx >= 0.5 / 16 && dx <= 15.5 / 16;
+            } else {
+                double dz = result.getPos().getZ() - result.getBlockPos().getZ();
+                inside = dz >= 0.5 / 16 && dz <= 15.5 / 16;
+            }
+            if (inside) {
+                world.setBlockState(pos, world.getBlockState(pos).cycle(getConnectionProperty(result.getSide().getOpposite())));
+            } else {
+                world.setBlockState(pos, world.getBlockState(pos).cycle(getConnectionProperty(result.getSide())));
+            }
+        } else {
+            world.setBlockState(pos, world.getBlockState(pos).cycle(getConnectionProperty(player.getHorizontalFacing())));
         }
     }
 }

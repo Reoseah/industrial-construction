@@ -3,25 +3,53 @@ package reoseah.velvet;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jetbrains.annotations.Nullable;
+
+import com.zundrel.wrenchable.block.BlockWrenchable;
+
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.api.EnvironmentInterface;
+import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.fabricmc.fabric.api.network.PacketConsumer;
 import net.fabricmc.fabric.api.network.PacketContext;
+import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.item.ModelPredicateProvider;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.world.ClientWorld;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import reoseah.velvet.blocks.entities.ConduitBlockEntity;
 import reoseah.velvet.blocks.entities.ConduitBlockEntity.TravellingItem;
 import reoseah.velvet.client.render.ConduitBlockEntityRenderer;
 
-public class VelvetClient implements ClientModInitializer {
+@EnvironmentInterface(itf = ClientModInitializer.class, value = EnvType.CLIENT)
+public class VelvetInitializer implements ModInitializer, ClientModInitializer {
     @Override
+    public void onInitialize() {
+        Velvet.GROUP.getClass();
+
+        Velvet.Blocks.CONDUIT.getClass();
+        Velvet.Items.CONDUIT.getClass();
+        Velvet.BlockEntityTypes.CONDUIT.getClass();
+        Velvet.RecipeSerializers.PAINTROLLER_DYE.getClass();
+    }
+
+    @Override
+    @Environment(EnvType.CLIENT)
     public void onInitializeClient() {
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutoutMipped(),
                 Velvet.Blocks.CONDUIT,
@@ -79,6 +107,26 @@ public class VelvetClient implements ClientModInitializer {
 
         BlockEntityRendererRegistry.INSTANCE.register(Velvet.BlockEntityTypes.CONDUIT, ConduitBlockEntityRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(Velvet.BlockEntityTypes.EXTRACTOR, ConduitBlockEntityRenderer::new);
-    }
 
+        FabricModelPredicateProviderRegistry.register(Velvet.Items.WRENCH, new Identifier("open"), new ModelPredicateProvider() {
+            @Override
+            public float call(ItemStack stack, @Nullable ClientWorld world, @Nullable LivingEntity entity) {
+                if (entity instanceof PlayerEntity && entity.getEntityWorld() != null) {
+                    PlayerEntity player = (PlayerEntity) entity;
+                    if (player.getMainHandStack() == stack || player.getOffHandStack() == stack) {
+                        @SuppressWarnings("resource")
+                        HitResult target = player.raycast(MinecraftClient.getInstance().interactionManager.getReachDistance(), 0, false);
+                        if (target instanceof BlockHitResult) {
+                            BlockHitResult blockhit = (BlockHitResult) target;
+                            BlockPos pos = blockhit.getBlockPos();
+                            if (entity.getEntityWorld().getBlockState(pos).getBlock() instanceof BlockWrenchable) {
+                                return 1;
+                            }
+                        }
+                    }
+                }
+                return 0;
+            }
+        });
+    }
 }

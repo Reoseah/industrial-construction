@@ -172,7 +172,7 @@ public class ExtractorBlock extends ConduitConnectabilityBlock implements BlockE
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         ItemStack stack = player.getStackInHand(hand);
-        if (stack.getItem() == Velvet.Items.ADJUSTABLE_WRENCH) {
+        if (stack.getItem() == Velvet.Items.WRENCH) {
             int start = state.get(DIRECTION).ordinal();
             for (int i = (start + 1) % 7; i != start; i = (i + 1) % 7) {
                 if (i == 0) {

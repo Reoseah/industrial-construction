@@ -1,0 +1,14 @@
+{
+    "parent": "minecraft:item/handheld",
+    "textures": {
+        "layer0": "velvet:item/wrench"
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "open": 1
+            },
+            "model": "velvet:item/wrench_open"
+        }
+    ]
+}

@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/handheld",
   "textures": {
-    "layer0": "velvet:item/adjustable_wrench"
+    "layer0": "velvet:item/wrench_open"
   }
 }
