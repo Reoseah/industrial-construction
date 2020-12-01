@@ -37,7 +37,7 @@ import reoseah.velvet.Velvet;
 import reoseah.velvet.blocks.entities.ExtractorBlockEntity;
 import reoseah.velvet.blocks.state.OptionalDirection;
 
-public class ExtractorBlock extends AbstractConduitBlock implements BlockEntityProvider, Waterloggable {
+public class ExtractorBlock extends ConduitConnectabilityBlock implements BlockEntityProvider, Waterloggable {
     public static final EnumProperty<OptionalDirection> DIRECTION = EnumProperty.of("direction", OptionalDirection.class);
     public static final BooleanProperty ENABLED = Properties.ENABLED;
 
@@ -104,7 +104,7 @@ public class ExtractorBlock extends AbstractConduitBlock implements BlockEntityP
     @Environment(EnvType.CLIENT)
     @Override
     public boolean isSideInvisible(BlockState state, BlockState state2, Direction direction) {
-        return state.get(getConnectionProperty(direction)) && state2.getBlock() instanceof AbstractConduitBlock
+        return state.get(getConnectionProperty(direction)) && state2.getBlock() instanceof ConduitConnectabilityBlock
                 || super.isSideInvisible(state, state2, direction);
     }
 

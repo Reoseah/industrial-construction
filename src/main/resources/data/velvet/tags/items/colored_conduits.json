@@ -1,0 +1,21 @@
+{
+    "replace": false,
+    "values": [
+        "velvet:white_conduit",
+        "velvet:orange_conduit",
+        "velvet:magenta_conduit",
+        "velvet:light_blue_conduit",
+        "velvet:yellow_conduit",
+        "velvet:lime_conduit",
+        "velvet:pink_conduit",
+        "velvet:light_gray_conduit",
+        "velvet:gray_conduit",
+        "velvet:cyan_conduit",
+        "velvet:purple_conduit",
+        "velvet:blue_conduit",
+        "velvet:brown_conduit",
+        "velvet:green_conduit",
+        "velvet:red_conduit",
+        "velvet:black_conduit"
+    ]
+}

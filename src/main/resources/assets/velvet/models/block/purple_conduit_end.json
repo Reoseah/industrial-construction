@@ -1,0 +1,6 @@
+{
+    "parent": "velvet:block/template_conduit_end",
+    "textures": {
+        "texture": "velvet:block/purple_conduit"
+    }
+}

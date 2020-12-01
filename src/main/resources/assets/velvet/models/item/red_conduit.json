@@ -1,0 +1,7 @@
+{
+    "parent": "velvet:block/template_conduit_inventory",
+    "textures": {
+        "side": "velvet:item/red_conduit",
+        "end": "velvet:block/red_conduit"
+    }
+}

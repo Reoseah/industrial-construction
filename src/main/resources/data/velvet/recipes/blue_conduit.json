@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  
+  "pattern": [
+    "###",
+    "#X#",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "velvet:conduit"
+    },
+    "X": {
+      "item": "minecraft:blue_dye"
+    }
+  },
+  "result": {
+    "item": "velvet:blue_conduit",
+    "count": 8
+  }
+}

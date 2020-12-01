@@ -1,5 +1,7 @@
 package reoseah.velvet.blocks;
 
+import org.jetbrains.annotations.Nullable;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
@@ -14,6 +16,7 @@ import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
+import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
@@ -23,10 +26,10 @@ import net.minecraft.world.WorldAccess;
 import reoseah.velvet.Velvet;
 import reoseah.velvet.blocks.entities.ConduitBlockEntity;
 
-public class ConduitBlock extends AbstractConduitBlock implements BlockEntityProvider, Waterloggable {
+public class ConduitBlock extends ConduitConnectabilityBlock implements BlockEntityProvider, Waterloggable {
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 
-    private static final VoxelShape[] SHAPES;
+    public static final VoxelShape[] SHAPES;
     static {
         SHAPES = new VoxelShape[64];
         float min = 4;
@@ -52,8 +55,11 @@ public class ConduitBlock extends AbstractConduitBlock implements BlockEntityPro
         }
     }
 
-    public ConduitBlock(Block.Settings settings) {
+    final @Nullable private DyeColor color;
+
+    public ConduitBlock(DyeColor color, Block.Settings settings) {
         super(settings);
+        this.color = color;
         this.setDefaultState(this.getDefaultState().with(WATERLOGGED, false));
     }
 
@@ -83,7 +89,7 @@ public class ConduitBlock extends AbstractConduitBlock implements BlockEntityPro
 
     @Override
     public boolean canReplace(BlockState state, ItemPlacementContext context) {
-        return context.getStack().getItem() == Velvet.Items.FRAME || super.canReplace(state, context);
+        return this.getColor() == null && context.getStack().getItem() == Velvet.Items.FRAME || super.canReplace(state, context);
     }
 
     @Override
@@ -91,7 +97,7 @@ public class ConduitBlock extends AbstractConduitBlock implements BlockEntityPro
         BlockView world = ctx.getWorld();
         BlockPos pos = ctx.getBlockPos();
         BlockState state = world.getBlockState(pos);
-        if (state.getBlock() == Velvet.Blocks.FRAME) {
+        if (this.getColor() == null && state.getBlock() == Velvet.Blocks.FRAME) {
             return Velvet.Blocks.FRAMED_CONDUIT.getPlacementState(ctx);
         }
         return super.getPlacementState(ctx);
@@ -111,7 +117,25 @@ public class ConduitBlock extends AbstractConduitBlock implements BlockEntityPro
     @Environment(EnvType.CLIENT)
     @Override
     public boolean isSideInvisible(BlockState state, BlockState state2, Direction direction) {
-        return state.get(getConnectionProperty(direction)) && state2.getBlock() instanceof AbstractConduitBlock
+        return state.get(getConnectionProperty(direction)) && state2.getBlock() instanceof ConduitConnectabilityBlock
                 || super.isSideInvisible(state, state2, direction);
     }
+
+    @Override
+    public boolean connectsTo(BlockView view, BlockPos pos, Direction side) {
+        BlockState neighbor = view.getBlockState(pos.offset(side));
+        Block block = neighbor.getBlock();
+
+        return super.connectsTo(view, pos, side)
+                && (!(block instanceof ConduitBlock) || canColorsConnect(((ConduitBlock) block).getColor(), this.getColor()));
+    }
+
+    public static boolean canColorsConnect(@Nullable DyeColor a, @Nullable DyeColor b) {
+        return a == null || b == null || a == b;
+    }
+
+    public DyeColor getColor() {
+        return color;
+    }
+
 }

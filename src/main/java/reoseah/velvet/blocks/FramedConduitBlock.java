@@ -32,7 +32,7 @@ import net.minecraft.world.WorldAccess;
 import reoseah.velvet.Velvet;
 import reoseah.velvet.blocks.entities.ConduitBlockEntity;
 
-public class FramedConduitBlock extends AbstractConduitBlock implements FrameConnectable, BlockEntityProvider, Waterloggable {
+public class FramedConduitBlock extends ConduitConnectabilityBlock implements FrameConnectable, BlockEntityProvider, Waterloggable {
     public static final BooleanProperty ATTACHED = Properties.ATTACHED;
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 

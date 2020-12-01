@@ -1,15 +1,6 @@
 {
+    "parent": "velvet:block/template_conduit_end",
     "textures": {
-        "texture": "velvet:block/conduit",
-        "particle": "velvet:block/conduit"
-    },
-    "elements": [
-        {   
-            "from": [ 4, 4, 4 ],
-            "to": [ 12, 12, 12 ],
-            "faces": {
-                "north": { "texture": "#texture" }
-            }
-        }
-    ]
+        "texture": "velvet:block/conduit"
+    }
 }

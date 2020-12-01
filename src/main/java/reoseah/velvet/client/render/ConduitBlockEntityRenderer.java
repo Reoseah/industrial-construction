@@ -24,7 +24,7 @@ public class ConduitBlockEntityRenderer extends BlockEntityRenderer<ConduitBlock
 
             if (!stack.isEmpty()) {
                 matrices.push();
-                Vec3d offset = item.getRenderPos(entity.getWorld().getTime(), tickDelta);
+                Vec3d offset = item.interpolatePosition(entity.getWorld().getTime(), tickDelta);
                 matrices.translate(offset.x, offset.y, offset.z);
                 matrices.multiply(Vector3f.POSITIVE_Y.getRadialQuaternion((entity.getWorld().getTime() + tickDelta) / 20));
                 matrices.scale(0.5f, 0.5f, 0.5f);

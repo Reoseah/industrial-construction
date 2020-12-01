@@ -18,6 +18,7 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import reoseah.velvet.Velvet;
+import reoseah.velvet.blocks.ConduitBlock;
 
 public class PaintRollerItem extends Item {
     protected final DyeColor color;
@@ -43,8 +44,10 @@ public class PaintRollerItem extends Item {
         World world = context.getWorld();
         BlockPos pos = context.getBlockPos();
         BlockState state = world.getBlockState(pos);
-        if (state.getBlock() == Blocks.GLASS || state.getBlock() == Blocks.TERRACOTTA) {
-            Block stained = state.getBlock() == Blocks.GLASS ? getStainedGlass(this.color) : getColoredTerracota(this.color);
+        if (state.getBlock() == Blocks.GLASS
+                || state.getBlock() == Velvet.Blocks.CONDUIT
+                || (state.getBlock() instanceof ConduitBlock && ((ConduitBlock) state.getBlock()).getColor() != this.color)) {
+            Block stained = state.getBlock() == Blocks.GLASS ? getStainedGlass(this.color) : Velvet.Blocks.getColoredConduit(this.color);
             world.setBlockState(pos, stained.getDefaultState());
             if (context.getPlayer() != null && !context.getPlayer().isCreative()) {
                 context.getStack().damage(1, context.getPlayer(), player -> {
@@ -100,51 +103,12 @@ public class PaintRollerItem extends Item {
         }
     }
 
-    public static Block getColoredTerracota(DyeColor color) {
-        switch (color) {
-        case WHITE:
-            return Blocks.WHITE_TERRACOTTA;
-        case ORANGE:
-            return Blocks.ORANGE_TERRACOTTA;
-        case MAGENTA:
-            return Blocks.MAGENTA_TERRACOTTA;
-        case LIGHT_BLUE:
-            return Blocks.LIGHT_BLUE_TERRACOTTA;
-        case YELLOW:
-            return Blocks.YELLOW_TERRACOTTA;
-        case LIME:
-            return Blocks.LIME_TERRACOTTA;
-        case PINK:
-            return Blocks.PINK_TERRACOTTA;
-        case GRAY:
-            return Blocks.GRAY_TERRACOTTA;
-        case LIGHT_GRAY:
-            return Blocks.LIGHT_GRAY_TERRACOTTA;
-        case CYAN:
-            return Blocks.CYAN_TERRACOTTA;
-        case PURPLE:
-            return Blocks.PURPLE_TERRACOTTA;
-        case BLUE:
-            return Blocks.BLUE_TERRACOTTA;
-        case BROWN:
-            return Blocks.BROWN_TERRACOTTA;
-        case GREEN:
-            return Blocks.GREEN_TERRACOTTA;
-        case RED:
-            return Blocks.RED_TERRACOTTA;
-        case BLACK:
-            return Blocks.BLACK_TERRACOTTA;
-        default:
-            throw new UnsupportedOperationException();
-        }
-    }
-
     @Override
     public boolean isEnchantable(ItemStack stack) {
         return false;
     }
 
     public DyeColor getColor() {
-        return color;
+        return this.color;
     }
 }

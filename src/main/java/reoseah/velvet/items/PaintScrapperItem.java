@@ -8,6 +8,8 @@ import net.minecraft.item.ItemUsageContext;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import reoseah.velvet.Velvet;
+import reoseah.velvet.blocks.ConduitBlock;
 
 public class PaintScrapperItem extends Item {
     public PaintScrapperItem(Item.Settings settings) {
@@ -20,7 +22,11 @@ public class PaintScrapperItem extends Item {
         BlockPos pos = context.getBlockPos();
         BlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
-        if (block == Blocks.WHITE_STAINED_GLASS
+        boolean success = false;
+        if (block instanceof ConduitBlock && ((ConduitBlock) block).getColor() != null) {
+            world.setBlockState(pos, Velvet.Blocks.CONDUIT.getDefaultState());
+            success = true;
+        } else if (block == Blocks.WHITE_STAINED_GLASS
                 || block == Blocks.ORANGE_STAINED_GLASS
                 || block == Blocks.MAGENTA_STAINED_GLASS
                 || block == Blocks.LIGHT_BLUE_STAINED_GLASS
@@ -37,11 +43,15 @@ public class PaintScrapperItem extends Item {
                 || block == Blocks.RED_STAINED_GLASS
                 || block == Blocks.BLACK_STAINED_GLASS) {
             world.setBlockState(pos, Blocks.GLASS.getDefaultState());
+            success = true;
+        }
+        if (success) {
             if (context.getPlayer() != null && !context.getPlayer().isCreative()) {
                 context.getStack().damage(1, context.getPlayer(), player -> {
                     player.sendToolBreakStatus(context.getHand());
                 });
             }
+            return ActionResult.SUCCESS;
         }
         return super.useOnBlock(context);
     }

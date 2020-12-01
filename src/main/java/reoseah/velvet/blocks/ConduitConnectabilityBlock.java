@@ -20,7 +20,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import reoseah.velvet.blocks.entities.ConduitBlockEntity;
 
-public abstract class AbstractConduitBlock extends Block implements ConduitConnectable, AttributeProvider {
+public abstract class ConduitConnectabilityBlock extends Block implements AttributeProvider {
     public static final BooleanProperty DOWN = Properties.DOWN;
     public static final BooleanProperty UP = Properties.UP;
     public static final BooleanProperty NORTH = Properties.NORTH;
@@ -28,7 +28,7 @@ public abstract class AbstractConduitBlock extends Block implements ConduitConne
     public static final BooleanProperty EAST = Properties.EAST;
     public static final BooleanProperty WEST = Properties.WEST;
 
-    public AbstractConduitBlock(Block.Settings settings) {
+    public ConduitConnectabilityBlock(Block.Settings settings) {
         super(settings);
         this.setDefaultState(this.getDefaultState().with(DOWN, false).with(UP, false).with(NORTH, false).with(SOUTH, false).with(EAST, false).with(WEST, false));
     }
@@ -48,7 +48,7 @@ public abstract class AbstractConduitBlock extends Block implements ConduitConne
         }
         BlockState neighbor = view.getBlockState(pos.offset(side));
         Block block = neighbor.getBlock();
-        return block instanceof ConduitConnectable || block instanceof InventoryProvider;
+        return block instanceof ConduitConnectabilityBlock || block instanceof InventoryProvider;
     }
 
     @Override
@@ -95,7 +95,7 @@ public abstract class AbstractConduitBlock extends Block implements ConduitConne
             return;
         }
         ConduitBlockEntity be = (ConduitBlockEntity) world.getBlockEntity(pos);
-        if (be != null) {
+        if (be != null && state.get(getConnectionProperty(searchDirection.getOpposite()))) {
             to.offer(be.insertables[searchDirection.getId()]);
         }
     }

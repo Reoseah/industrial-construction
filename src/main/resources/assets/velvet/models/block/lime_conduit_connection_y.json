@@ -1,0 +1,8 @@
+{
+    "parent": "velvet:block/template_conduit_connection",
+    "textures": {
+        "side": "velvet:block/lime_conduit",
+        "end": "velvet:block/lime_conduit_top",
+        "top": "velvet:block/lime_conduit"
+    }
+}

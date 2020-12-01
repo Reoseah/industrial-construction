@@ -130,7 +130,7 @@ public class CatwalkBlock extends Block implements Waterloggable {
     public boolean hasBorder(BlockView world, BlockPos pos, Direction side) {
         BlockState neighbor = world.getBlockState(pos.offset(side));
         Block block = neighbor.getBlock();
-        if (block == this || block == Velvet.Blocks.FRAME || block == Velvet.Blocks.FRAMED_CONDUIT || block == Blocks.CAULDRON) {
+        if (block instanceof CatwalkBlock || block == Velvet.Blocks.FRAME || block == Velvet.Blocks.FRAMED_CONDUIT || block == Blocks.CAULDRON) {
             return false;
         }
         if (neighbor.isSideSolidFullSquare(world, pos.offset(side), side) && neighbor.getMaterial() != Material.AGGREGATE) {

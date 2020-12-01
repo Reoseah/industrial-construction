@@ -34,7 +34,7 @@ import net.minecraft.world.WorldView;
 import reoseah.velvet.Velvet;
 import reoseah.velvet.blocks.state.OptionalDirection;
 
-public class InserterBlock extends AbstractConduitBlock implements Waterloggable {
+public class InsertingConduitBlock extends ConduitConnectabilityBlock implements Waterloggable {
     public static final EnumProperty<OptionalDirection> DIRECTION = EnumProperty.of("direction", OptionalDirection.class);
     public static final BooleanProperty ENABLED = Properties.ENABLED;
 
@@ -44,12 +44,12 @@ public class InserterBlock extends AbstractConduitBlock implements Waterloggable
     static {
         VoxelShape[] extractors = new VoxelShape[] {
                 VoxelShapes.empty(),
-                Block.createCuboidShape(2, 0, 2, 14, 4, 14),
-                Block.createCuboidShape(2, 12, 2, 14, 16, 14),
-                Block.createCuboidShape(2, 2, 0, 14, 14, 4),
-                Block.createCuboidShape(2, 2, 12, 14, 14, 16),
-                Block.createCuboidShape(0, 2, 2, 4, 14, 14),
-                Block.createCuboidShape(12, 2, 2, 16, 14, 14)
+                VoxelShapes.union(Block.createCuboidShape(2, 0, 4, 14, 4, 12), Block.createCuboidShape(4, 0, 2, 12, 4, 14)),
+                VoxelShapes.union(Block.createCuboidShape(2, 12, 4, 14, 16, 12), Block.createCuboidShape(4, 12, 2, 12, 16, 14)),
+                VoxelShapes.union(Block.createCuboidShape(2, 4, 0, 14, 12, 4), Block.createCuboidShape(4, 2, 0, 12, 14, 4)),
+                VoxelShapes.union(Block.createCuboidShape(4, 2, 12, 12, 14, 16), Block.createCuboidShape(2, 4, 12, 12, 14, 16)),
+                VoxelShapes.union(Block.createCuboidShape(0, 2, 4, 4, 14, 12), Block.createCuboidShape(0, 4, 2, 4, 12, 14)),
+                VoxelShapes.union(Block.createCuboidShape(12, 4, 2, 16, 12, 14), Block.createCuboidShape(12, 2, 4, 16, 14, 12))
         };
         for (int j = 0; j < 7; j++) {
             SHAPES[j] = new VoxelShape[64];
@@ -77,7 +77,7 @@ public class InserterBlock extends AbstractConduitBlock implements Waterloggable
         }
     }
 
-    public InserterBlock(Block.Settings settings) {
+    public InsertingConduitBlock(Block.Settings settings) {
         super(settings);
         this.setDefaultState(this.getDefaultState().with(DIRECTION, OptionalDirection.NONE).with(ENABLED, true).with(WATERLOGGED, false));
     }
@@ -96,13 +96,14 @@ public class InserterBlock extends AbstractConduitBlock implements Waterloggable
     @Environment(EnvType.CLIENT)
     @Override
     public boolean isSideInvisible(BlockState state, BlockState state2, Direction direction) {
-        return state.get(DIRECTION).direction != direction && (state.get(getConnectionProperty(direction)) && state2.getBlock() instanceof AbstractConduitBlock
+        return state.get(DIRECTION).direction != direction && (state.get(getConnectionProperty(direction)) && state2.getBlock() instanceof ConduitConnectabilityBlock
                 || super.isSideInvisible(state, state2, direction));
     }
 
     public boolean canInsert(BlockState state, WorldView world, BlockPos pos, Direction direction) {
         if (world instanceof World) {
-            return ItemAttributes.INSERTABLE.get((World) world, pos.offset(direction), SearchOptions.inDirection(direction)) != RejectingItemInsertable.NULL;
+            return !(world.getBlockState(pos.offset(direction)).getBlock() instanceof ConduitConnectabilityBlock)
+                    && ItemAttributes.INSERTABLE.get((World) world, pos.offset(direction), SearchOptions.inDirection(direction)) != RejectingItemInsertable.NULL;
         }
         return false;
     }

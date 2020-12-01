@@ -1,5 +1,7 @@
 package reoseah.velvet;
 
+import java.util.Set;
+
 import org.jetbrains.annotations.Nullable;
 
 import com.google.common.collect.ImmutableSet;
@@ -30,7 +32,7 @@ import reoseah.velvet.blocks.ConduitBlock;
 import reoseah.velvet.blocks.ExtractorBlock;
 import reoseah.velvet.blocks.FrameBlock;
 import reoseah.velvet.blocks.FramedConduitBlock;
-import reoseah.velvet.blocks.InserterBlock;
+import reoseah.velvet.blocks.InsertingConduitBlock;
 import reoseah.velvet.blocks.entities.ConduitBlockEntity;
 import reoseah.velvet.blocks.entities.ExtractorBlockEntity;
 import reoseah.velvet.items.PaintRollerItem;
@@ -51,9 +53,31 @@ public final class Velvet implements ModInitializer {
     public static final class Blocks {
         private static final FabricBlockSettings IRON_SETTINGS = FabricBlockSettings.of(Material.METAL, MaterialColor.GRAY).strength(2F, 10F).nonOpaque().sounds(BlockSoundGroup.LANTERN).breakByTool(FabricToolTags.PICKAXES);
 
-        public static final Block CONDUIT = register("conduit", new ConduitBlock(IRON_SETTINGS));
+        public static final Block CONDUIT = register("conduit", new ConduitBlock((DyeColor) null, IRON_SETTINGS));
         public static final Block EXTRACTOR = register("extractor", new ExtractorBlock(IRON_SETTINGS));
-        public static final Block INSERTER = register("inserter", new InserterBlock(IRON_SETTINGS));
+        public static final Block INSERTER = register("inserter", new InsertingConduitBlock(IRON_SETTINGS));
+
+        public static final Block WHITE_CONDUIT = register("white_conduit", new ConduitBlock(DyeColor.WHITE, IRON_SETTINGS));
+        public static final Block ORANGE_CONDUIT = register("orange_conduit", new ConduitBlock(DyeColor.ORANGE, IRON_SETTINGS));
+        public static final Block MAGENTA_CONDUIT = register("magenta_conduit", new ConduitBlock(DyeColor.MAGENTA, IRON_SETTINGS));
+        public static final Block LIGHT_BLUE_CONDUIT = register("light_blue_conduit", new ConduitBlock(DyeColor.LIGHT_BLUE, IRON_SETTINGS));
+        public static final Block YELLOW_CONDUIT = register("yellow_conduit", new ConduitBlock(DyeColor.YELLOW, IRON_SETTINGS));
+        public static final Block LIME_CONDUIT = register("lime_conduit", new ConduitBlock(DyeColor.LIME, IRON_SETTINGS));
+        public static final Block PINK_CONDUIT = register("pink_conduit", new ConduitBlock(DyeColor.PINK, IRON_SETTINGS));
+        public static final Block GRAY_CONDUIT = register("gray_conduit", new ConduitBlock(DyeColor.GRAY, IRON_SETTINGS));
+        public static final Block LIGHT_GRAY_CONDUIT = register("light_gray_conduit", new ConduitBlock(DyeColor.LIGHT_GRAY, IRON_SETTINGS));
+        public static final Block CYAN_CONDUIT = register("cyan_conduit", new ConduitBlock(DyeColor.CYAN, IRON_SETTINGS));
+        public static final Block PURPLE_CONDUIT = register("purple_conduit", new ConduitBlock(DyeColor.PURPLE, IRON_SETTINGS));
+        public static final Block BLUE_CONDUIT = register("blue_conduit", new ConduitBlock(DyeColor.BLUE, IRON_SETTINGS));
+        public static final Block BROWN_CONDUIT = register("brown_conduit", new ConduitBlock(DyeColor.BROWN, IRON_SETTINGS));
+        public static final Block GREEN_CONDUIT = register("green_conduit", new ConduitBlock(DyeColor.GREEN, IRON_SETTINGS));
+        public static final Block RED_CONDUIT = register("red_conduit", new ConduitBlock(DyeColor.RED, IRON_SETTINGS));
+        public static final Block BLACK_CONDUIT = register("black_conduit", new ConduitBlock(DyeColor.BLACK, IRON_SETTINGS));
+
+        public static final Set<Block> COLORED_CONDUITS = ImmutableSet.of(WHITE_CONDUIT, ORANGE_CONDUIT, MAGENTA_CONDUIT,
+                LIGHT_BLUE_CONDUIT, YELLOW_CONDUIT, LIME_CONDUIT, PINK_CONDUIT, LIGHT_GRAY_CONDUIT, GRAY_CONDUIT,
+                CYAN_CONDUIT, PURPLE_CONDUIT, BLUE_CONDUIT, BROWN_CONDUIT, GREEN_CONDUIT, RED_CONDUIT, BLACK_CONDUIT);
+
         public static final Block FRAME = register("frame", new FrameBlock(IRON_SETTINGS));
         public static final Block FRAMED_CONDUIT = register("framed_conduit", new FramedConduitBlock(IRON_SETTINGS));
         public static final Block CATWALK = register("catwalk", new CatwalkBlock(IRON_SETTINGS));
@@ -62,12 +86,72 @@ public final class Velvet implements ModInitializer {
         private static Block register(String name, Block block) {
             return Registry.register(Registry.BLOCK, "velvet:" + name, block);
         }
+
+        public static Block getColoredConduit(@Nullable DyeColor color) {
+            if (color == null) {
+                return Velvet.Blocks.CONDUIT;
+            }
+            switch (color) {
+            case WHITE:
+                return Velvet.Blocks.WHITE_CONDUIT;
+            case ORANGE:
+                return Velvet.Blocks.ORANGE_CONDUIT;
+            case MAGENTA:
+                return Velvet.Blocks.MAGENTA_CONDUIT;
+            case LIGHT_BLUE:
+                return Velvet.Blocks.LIGHT_BLUE_CONDUIT;
+            case YELLOW:
+                return Velvet.Blocks.YELLOW_CONDUIT;
+            case LIME:
+                return Velvet.Blocks.LIME_CONDUIT;
+            case PINK:
+                return Velvet.Blocks.PINK_CONDUIT;
+            case GRAY:
+                return Velvet.Blocks.GRAY_CONDUIT;
+            case LIGHT_GRAY:
+                return Velvet.Blocks.LIGHT_GRAY_CONDUIT;
+            case CYAN:
+                return Velvet.Blocks.CYAN_CONDUIT;
+            case PURPLE:
+                return Velvet.Blocks.PURPLE_CONDUIT;
+            case BLUE:
+                return Velvet.Blocks.BLUE_CONDUIT;
+            case BROWN:
+                return Velvet.Blocks.BROWN_CONDUIT;
+            case GREEN:
+                return Velvet.Blocks.GREEN_CONDUIT;
+            case RED:
+                return Velvet.Blocks.RED_CONDUIT;
+            case BLACK:
+                return Velvet.Blocks.BLACK_CONDUIT;
+            default:
+                throw new UnsupportedOperationException();
+            }
+        }
     }
 
     public static final class Items {
         public static final Item CONDUIT = register("conduit", new BlockItem(Velvet.Blocks.CONDUIT, new Item.Settings().group(Velvet.GROUP)));
         public static final Item EXTRACTOR = register("extractor", new BlockItem(Velvet.Blocks.EXTRACTOR, new Item.Settings().group(Velvet.GROUP)));
-        public static final Item INSERTER = register("inserter", new BlockItem(Velvet.Blocks.INSERTER, new Item.Settings().group(Velvet.GROUP)));
+        public static final Item INSERTER = register("inserter", new BlockItem(Velvet.Blocks.INSERTER, new Item.Settings().group(null /* WIP */)));
+
+        public static final Item WHITE_CONDUIT = register("white_conduit", new BlockItem(Velvet.Blocks.WHITE_CONDUIT, new Item.Settings().group(ItemGroup.SEARCH)));
+        public static final Item ORANGE_CONDUIT = register("orange_conduit", new BlockItem(Velvet.Blocks.ORANGE_CONDUIT, new Item.Settings().group(ItemGroup.SEARCH)));
+        public static final Item MAGENTA_CONDUIT = register("magenta_conduit", new BlockItem(Velvet.Blocks.MAGENTA_CONDUIT, new Item.Settings().group(ItemGroup.SEARCH)));
+        public static final Item LIGHT_BLUE_CONDUIT = register("light_blue_conduit", new BlockItem(Velvet.Blocks.LIGHT_BLUE_CONDUIT, new Item.Settings().group(ItemGroup.SEARCH)));
+        public static final Item YELLOW_CONDUIT = register("yellow_conduit", new BlockItem(Velvet.Blocks.YELLOW_CONDUIT, new Item.Settings().group(ItemGroup.SEARCH)));
+        public static final Item LIME_CONDUIT = register("lime_conduit", new BlockItem(Velvet.Blocks.LIME_CONDUIT, new Item.Settings().group(ItemGroup.SEARCH)));
+        public static final Item PINK_CONDUIT = register("pink_conduit", new BlockItem(Velvet.Blocks.PINK_CONDUIT, new Item.Settings().group(ItemGroup.SEARCH)));
+        public static final Item GRAY_CONDUIT = register("gray_conduit", new BlockItem(Velvet.Blocks.GRAY_CONDUIT, new Item.Settings().group(ItemGroup.SEARCH)));
+        public static final Item LIGHT_GRAY_CONDUIT = register("light_gray_conduit", new BlockItem(Velvet.Blocks.LIGHT_GRAY_CONDUIT, new Item.Settings().group(ItemGroup.SEARCH)));
+        public static final Item CYAN_CONDUIT = register("cyan_conduit", new BlockItem(Velvet.Blocks.CYAN_CONDUIT, new Item.Settings().group(ItemGroup.SEARCH)));
+        public static final Item PURPLE_CONDUIT = register("purple_conduit", new BlockItem(Velvet.Blocks.PURPLE_CONDUIT, new Item.Settings().group(ItemGroup.SEARCH)));
+        public static final Item BLUE_CONDUIT = register("blue_conduit", new BlockItem(Velvet.Blocks.BLUE_CONDUIT, new Item.Settings().group(ItemGroup.SEARCH)));
+        public static final Item BROWN_CONDUIT = register("brown_conduit", new BlockItem(Velvet.Blocks.BROWN_CONDUIT, new Item.Settings().group(ItemGroup.SEARCH)));
+        public static final Item GREEN_CONDUIT = register("green_conduit", new BlockItem(Velvet.Blocks.GREEN_CONDUIT, new Item.Settings().group(ItemGroup.SEARCH)));
+        public static final Item RED_CONDUIT = register("red_conduit", new BlockItem(Velvet.Blocks.RED_CONDUIT, new Item.Settings().group(ItemGroup.SEARCH)));
+        public static final Item BLACK_CONDUIT = register("black_conduit", new BlockItem(Velvet.Blocks.BLACK_CONDUIT, new Item.Settings().group(ItemGroup.SEARCH)));
+
         public static final Item FRAME = register("frame", new BlockItem(Velvet.Blocks.FRAME, new Item.Settings().group(Velvet.GROUP)));
         public static final Item CATWALK = register("catwalk", new BlockItem(Velvet.Blocks.CATWALK, new Item.Settings().group(Velvet.GROUP)));
         public static final Item REINFORCED_GLASS = register("reinforced_glass", new BlockItem(Velvet.Blocks.REINFORCED_GLASS, new Item.Settings().group(Velvet.GROUP)));
@@ -143,7 +227,11 @@ public final class Velvet implements ModInitializer {
     }
 
     public static final class BlockEntityTypes {
-        public static final BlockEntityType<ConduitBlockEntity> CONDUIT = register("conduit", new BlockEntityType<>(ConduitBlockEntity::new, ImmutableSet.of(Velvet.Blocks.CONDUIT, Velvet.Blocks.FRAMED_CONDUIT), null));
+        public static final BlockEntityType<ConduitBlockEntity> CONDUIT = register("conduit", new BlockEntityType<>(ConduitBlockEntity::new,
+                ImmutableSet.of(Velvet.Blocks.CONDUIT, Velvet.Blocks.FRAMED_CONDUIT, Velvet.Blocks.WHITE_CONDUIT, Velvet.Blocks.ORANGE_CONDUIT, Velvet.Blocks.MAGENTA_CONDUIT, Velvet.Blocks.LIGHT_BLUE_CONDUIT,
+                        Velvet.Blocks.YELLOW_CONDUIT, Velvet.Blocks.LIME_CONDUIT, Velvet.Blocks.PINK_CONDUIT, Velvet.Blocks.LIGHT_GRAY_CONDUIT, Velvet.Blocks.GRAY_CONDUIT, Velvet.Blocks.CYAN_CONDUIT,
+                        Velvet.Blocks.PURPLE_CONDUIT, Velvet.Blocks.BLUE_CONDUIT, Velvet.Blocks.BROWN_CONDUIT, Velvet.Blocks.GREEN_CONDUIT, Velvet.Blocks.RED_CONDUIT, Velvet.Blocks.BLACK_CONDUIT),
+                null));
         public static final BlockEntityType<ConduitBlockEntity> EXTRACTOR = register("extractor", new BlockEntityType<>(ExtractorBlockEntity::new, ImmutableSet.of(Velvet.Blocks.EXTRACTOR), null));
 
         private static <T extends BlockEntity> BlockEntityType<T> register(String name, BlockEntityType<T> type) {
