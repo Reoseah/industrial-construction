@@ -9,6 +9,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3d;
+import reoseah.velvet.blocks.ConduitConnectabilityBlock;
 import reoseah.velvet.blocks.entities.ConduitBlockEntity;
 import reoseah.velvet.blocks.entities.ConduitBlockEntity.TravellingItem;
 
@@ -19,12 +20,25 @@ public class ConduitBlockEntityRenderer extends BlockEntityRenderer<ConduitBlock
 
     @Override
     public void render(ConduitBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
+        if (entity.items.isEmpty()) {
+            return;
+        }
+        boolean up = entity.getCachedState().get(ConduitConnectabilityBlock.UP);
+        boolean down = entity.getCachedState().get(ConduitConnectabilityBlock.DOWN);
+        boolean north = entity.getCachedState().get(ConduitConnectabilityBlock.NORTH);
+        boolean south = entity.getCachedState().get(ConduitConnectabilityBlock.SOUTH);
+        boolean west = entity.getCachedState().get(ConduitConnectabilityBlock.WEST);
+        boolean east = entity.getCachedState().get(ConduitConnectabilityBlock.EAST);
+
+        boolean straight = up && down && !(north || south || west || east)
+                || north && south && !(up || down || west || south)
+                || west && east && !(up || down || north || south);
         for (TravellingItem item : entity.items) {
             ItemStack stack = item.stack;
 
             if (!stack.isEmpty()) {
                 matrices.push();
-                Vec3d offset = item.interpolatePosition(entity.getWorld().getTime(), tickDelta);
+                Vec3d offset = item.interpolatePosition(entity.getWorld().getTime(), tickDelta, straight);
                 matrices.translate(offset.x, offset.y, offset.z);
                 matrices.multiply(Vector3f.POSITIVE_Y.getRadialQuaternion((entity.getWorld().getTime() + tickDelta) / 20));
                 matrices.scale(0.5f, 0.5f, 0.5f);

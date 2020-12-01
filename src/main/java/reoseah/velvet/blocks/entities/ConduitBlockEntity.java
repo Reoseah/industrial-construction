@@ -35,22 +35,9 @@ public class ConduitBlockEntity extends BlockEntity implements Tickable {
     public static final double SPEED = 0.05;
 
     public final List<TravellingItem> items = new ArrayList<>();
-    public final ItemInsertable[] insertables = new ItemInsertable[6];
 
     protected ConduitBlockEntity(BlockEntityType<?> type) {
         super(type);
-        for (Direction direction : Direction.values()) {
-            this.insertables[direction.getId()] = new ItemInsertable() {
-                @Override
-                public ItemStack attemptInsertion(ItemStack stack, Simulation simulation) {
-                    if (simulation == Simulation.SIMULATE || stack.isEmpty()) {
-                        return ItemStack.EMPTY;
-                    }
-                    ConduitBlockEntity.this.doInsert(stack, direction.getOpposite());
-                    return ItemStack.EMPTY;
-                }
-            };
-        }
     }
 
     public ConduitBlockEntity() {
@@ -213,13 +200,14 @@ public class ConduitBlockEntity extends BlockEntity implements Tickable {
             return Long.compare(this.timeFinish, o.timeFinish);
         }
 
-        public Vec3d interpolatePosition(long time, float tickDelta) {
-            float interp = MathHelper.clamp((time - this.timeStart + tickDelta) / (this.timeFinish - this.timeStart), 0, 1);
+        public Vec3d interpolatePosition(long time, float tickDelta, boolean straight) {
             Vec3d center = new Vec3d(0.5, 0.5, 0.5);
             if (this.to != null) {
+                float interp = MathHelper.clamp((time - this.timeStart + tickDelta) / (this.timeFinish - this.timeStart), 0, 1.25F);
                 Vec3d destination = center.add(Vec3d.of(this.to.getVector()).multiply(0.5));
                 return center.multiply(1 - interp).add(destination.multiply(interp));
             } else {
+                float interp = MathHelper.clamp((time - this.timeStart + tickDelta) / (this.timeFinish - this.timeStart), 0, straight ? 1.25F : 1);
                 Vec3d source = center.add(Vec3d.of(this.from.getVector()).multiply(0.5));
                 return source.multiply(1 - interp).add(center.multiply(interp));
             }

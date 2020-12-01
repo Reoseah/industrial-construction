@@ -3,6 +3,7 @@ package reoseah.velvet.blocks;
 import alexiil.mc.lib.attributes.AttributeList;
 import alexiil.mc.lib.attributes.AttributeProvider;
 import alexiil.mc.lib.attributes.SearchOptions;
+import alexiil.mc.lib.attributes.Simulation;
 import alexiil.mc.lib.attributes.item.ItemAttributes;
 import alexiil.mc.lib.attributes.item.ItemInsertable;
 import alexiil.mc.lib.attributes.item.impl.RejectingItemInsertable;
@@ -10,6 +11,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.InventoryProvider;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
@@ -39,16 +41,17 @@ public abstract class ConduitConnectabilityBlock extends Block implements Attrib
     }
 
     public boolean connectsTo(BlockView view, BlockPos pos, Direction side) {
+        BlockState neighbor = view.getBlockState(pos.offset(side));
+        Block block = neighbor.getBlock();
+        if (block instanceof ConduitConnectabilityBlock) {
+            return true;
+        }
         if (view instanceof World) {
             World world = (World) view;
             ItemInsertable insertable = ItemAttributes.INSERTABLE.get(world, pos.offset(side), SearchOptions.inDirection(side));
-            if (insertable != RejectingItemInsertable.NULL) {
-                return true;
-            }
+            return insertable != RejectingItemInsertable.NULL;
         }
-        BlockState neighbor = view.getBlockState(pos.offset(side));
-        Block block = neighbor.getBlock();
-        return block instanceof ConduitConnectabilityBlock || block instanceof InventoryProvider;
+        return block instanceof InventoryProvider;
     }
 
     @Override
@@ -90,13 +93,23 @@ public abstract class ConduitConnectabilityBlock extends Block implements Attrib
 
     @Override
     public void addAllAttributes(World world, BlockPos pos, BlockState state, AttributeList<?> to) {
-        Direction searchDirection = to.getSearchDirection();
-        if (searchDirection == null) {
+        Direction direction = to.getSearchDirection();
+        if (direction == null || !state.get(getConnectionProperty(direction.getOpposite()))) {
             return;
         }
         ConduitBlockEntity be = (ConduitBlockEntity) world.getBlockEntity(pos);
-        if (be != null && state.get(getConnectionProperty(searchDirection.getOpposite()))) {
-            to.offer(be.insertables[searchDirection.getId()]);
+        if (be == null) {
+            return;
         }
+        to.offer(new ItemInsertable() {
+            @Override
+            public ItemStack attemptInsertion(ItemStack stack, Simulation simulation) {
+                if (simulation == Simulation.SIMULATE || stack.isEmpty()) {
+                    return ItemStack.EMPTY;
+                }
+                be.doInsert(stack, direction.getOpposite());
+                return ItemStack.EMPTY;
+            }
+        });
     }
 }
