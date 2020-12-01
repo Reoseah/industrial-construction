@@ -1,5 +1,7 @@
 package reoseah.velvet.blocks;
 
+import com.zundrel.wrenchable.block.BlockWrenchable;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
@@ -14,6 +16,7 @@ import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
@@ -25,7 +28,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import reoseah.velvet.Velvet;
 
-public class FrameBlock extends Block implements FrameConnectable, Waterloggable {
+public class FrameBlock extends Block implements FrameConnectable, Waterloggable, BlockWrenchable {
     public static final BooleanProperty ATTACHED = Properties.ATTACHED;
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 
@@ -67,6 +70,11 @@ public class FrameBlock extends Block implements FrameConnectable, Waterloggable
     }
 
     @Override
+    public boolean canReplace(BlockState state, ItemPlacementContext context) {
+        return context.getStack().getItem() == Velvet.Items.CONDUIT && (context.getPlayer() != null && !context.getPlayer().isSneaking()) || super.canReplace(state, context);
+    }
+
+    @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         BlockView world = ctx.getWorld();
         BlockPos pos = ctx.getBlockPos();
@@ -83,7 +91,10 @@ public class FrameBlock extends Block implements FrameConnectable, Waterloggable
         if (state.get(WATERLOGGED)) {
             world.getFluidTickScheduler().schedule(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
         }
-        return state.with(ATTACHED, this.isFrame(world, pos.up(), Direction.DOWN, world.getBlockState(pos.up())));
+        if (direction == Direction.UP) {
+            return state.with(ATTACHED, this.isFrame(world, pos.up(), Direction.DOWN, world.getBlockState(pos.up())));
+        }
+        return state;
     }
 
     @Override
@@ -94,12 +105,10 @@ public class FrameBlock extends Block implements FrameConnectable, Waterloggable
     @Override
     @Environment(EnvType.CLIENT)
     public boolean isSideInvisible(BlockState state, BlockState stateFrom, Direction direction) {
+        if (stateFrom.getBlock() instanceof FrameConnectable && direction == Direction.UP) {
+            return state.get(ATTACHED);
+        }
         return stateFrom.getBlock() instanceof FrameConnectable ? true : super.isSideInvisible(state, stateFrom, direction);
-    }
-
-    @Override
-    public boolean canReplace(BlockState state, ItemPlacementContext context) {
-        return context.getStack().getItem() == Velvet.Items.CONDUIT || super.canReplace(state, context);
     }
 
     @Override
@@ -116,5 +125,10 @@ public class FrameBlock extends Block implements FrameConnectable, Waterloggable
                 player.setVelocity(MathHelper.clamp(velocity.getX(), -0.01, 0.01), Math.max(velocity.getY(), -0.07), MathHelper.clamp(velocity.getZ(), -0.01, 0.01));
             }
         }
+    }
+
+    @Override
+    public void onWrenched(World world, PlayerEntity player, BlockHitResult result) {
+        world.setBlockState(result.getBlockPos(), world.getBlockState(result.getBlockPos()).cycle(FrameBlock.ATTACHED));
     }
 }

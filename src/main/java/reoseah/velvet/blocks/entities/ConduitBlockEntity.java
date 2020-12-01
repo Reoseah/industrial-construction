@@ -202,12 +202,13 @@ public class ConduitBlockEntity extends BlockEntity implements Tickable {
 
         public Vec3d interpolatePosition(long time, float tickDelta, boolean straight) {
             Vec3d center = new Vec3d(0.5, 0.5, 0.5);
+            float interp = (time - this.timeStart + tickDelta) / (this.timeFinish - this.timeStart);
             if (this.to != null) {
-                float interp = MathHelper.clamp((time - this.timeStart + tickDelta) / (this.timeFinish - this.timeStart), 0, 1.25F);
+                interp = MathHelper.clamp(interp, 0, 1.25F);
                 Vec3d destination = center.add(Vec3d.of(this.to.getVector()).multiply(0.5));
                 return center.multiply(1 - interp).add(destination.multiply(interp));
             } else {
-                float interp = MathHelper.clamp((time - this.timeStart + tickDelta) / (this.timeFinish - this.timeStart), 0, straight ? 1.25F : 1);
+                interp = MathHelper.clamp(interp, 0, straight ? 1.25F : 1);
                 Vec3d source = center.add(Vec3d.of(this.from.getVector()).multiply(0.5));
                 return source.multiply(1 - interp).add(center.multiply(interp));
             }

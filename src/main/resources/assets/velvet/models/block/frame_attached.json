@@ -11,12 +11,47 @@
                 "west":  { "texture": "#bottom", "cullface": "west" },
                 "east":  { "texture": "#bottom", "cullface": "east" }
             }
+        },
+        {   "from": [ 0, 16, 0 ],
+            "to": [ 16, 16, 16 ],
+            "faces": {
+                "down":  { "texture": "#bottom", "cullface": "up" }
+            }
+        },
+        {   "from": [ 0, 0, 0 ],
+            "to": [ 16, 0, 16 ],
+            "faces": {
+                "up":  { "texture": "#bottom", "cullface": "down" }
+            }
+        },
+        {   "from": [ 0, 0, 16 ],
+            "to": [ 16, 16, 16 ],
+            "faces": {
+                "north":  { "texture": "#bottom", "cullface": "south"}
+            }
+        },
+        {   "from": [ 0, 0, 0 ],
+            "to": [ 16, 16, 0 ],
+            "faces": {
+                "south":  { "texture": "#bottom", "cullface": "north" }
+            }
+        },
+        {   "from": [ 16, 0, 0 ],
+            "to": [ 16, 16, 16 ],
+            "faces": {
+                "west":  { "texture": "#bottom", "cullface": "east"}
+            }
+        },
+        {   "from": [ 0, 0, 0 ],
+            "to": [ 0, 16, 16 ],
+            "faces": {
+                "east":  { "texture": "#bottom", "cullface": "west"}
+            }
         }
     ],
     "textures": {
         "particle": "velvet:block/frame_side",
         "side": "velvet:block/frame_side",
-        "top": "velvet:block/treadplate",
         "bottom": "velvet:block/frame_bottom"
     }
 }

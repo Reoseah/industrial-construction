@@ -59,6 +59,10 @@ public abstract class ConduitConnectabilityBlock extends Block implements Attrib
         BlockView world = ctx.getWorld();
         BlockPos pos = ctx.getBlockPos();
 
+        return this.makeConnections(world, pos);
+    }
+
+    public BlockState makeConnections(BlockView world, BlockPos pos) {
         return this.getDefaultState()
                 .with(DOWN, this.connectsTo(world, pos, Direction.DOWN))
                 .with(UP, this.connectsTo(world, pos, Direction.UP))

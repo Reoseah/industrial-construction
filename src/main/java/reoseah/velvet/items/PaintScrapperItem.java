@@ -4,16 +4,22 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
+import net.minecraft.tag.Tag;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import reoseah.velvet.Velvet;
 import reoseah.velvet.blocks.ConduitBlock;
+import reoseah.velvet.blocks.ConduitConnectabilityBlock;
 
 public class PaintScrapperItem extends Item {
-    public PaintScrapperItem(Item.Settings settings) {
+    protected final Tag<Item> material;
+
+    public PaintScrapperItem(Tag<Item> material, Item.Settings settings) {
         super(settings);
+        this.material = material;
     }
 
     @Override
@@ -24,7 +30,7 @@ public class PaintScrapperItem extends Item {
         Block block = state.getBlock();
         boolean success = false;
         if (block instanceof ConduitBlock && ((ConduitBlock) block).getColor() != null) {
-            world.setBlockState(pos, Velvet.Blocks.CONDUIT.getDefaultState());
+            world.setBlockState(pos, ((ConduitConnectabilityBlock) Velvet.Blocks.CONDUIT).makeConnections(world, pos));
             success = true;
         } else if (block == Blocks.WHITE_STAINED_GLASS
                 || block == Blocks.ORANGE_STAINED_GLASS
@@ -58,6 +64,11 @@ public class PaintScrapperItem extends Item {
 
     @Override
     public int getEnchantability() {
-        return 10;
+        return 1;
+    }
+
+    @Override
+    public boolean canRepair(ItemStack stack, ItemStack ingredient) {
+        return this.material.contains(ingredient.getItem());
     }
 }

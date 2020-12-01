@@ -55,7 +55,7 @@ public class ConduitBlock extends ConduitConnectabilityBlock implements BlockEnt
         }
     }
 
-    final @Nullable private DyeColor color;
+    protected final @Nullable DyeColor color;
 
     public ConduitBlock(DyeColor color, Block.Settings settings) {
         super(settings);
@@ -89,7 +89,7 @@ public class ConduitBlock extends ConduitConnectabilityBlock implements BlockEnt
 
     @Override
     public boolean canReplace(BlockState state, ItemPlacementContext context) {
-        return this.getColor() == null && context.getStack().getItem() == Velvet.Items.FRAME || super.canReplace(state, context);
+        return this.getColor() == null && context.getStack().getItem() == Velvet.Items.FRAME && (context.getPlayer() != null && !context.getPlayer().isSneaking()) || super.canReplace(state, context);
     }
 
     @Override
@@ -126,8 +126,11 @@ public class ConduitBlock extends ConduitConnectabilityBlock implements BlockEnt
         BlockState neighbor = view.getBlockState(pos.offset(side));
         Block block = neighbor.getBlock();
 
-        return super.connectsTo(view, pos, side)
-                && (!(block instanceof ConduitBlock) || canColorsConnect(((ConduitBlock) block).getColor(), this.getColor()));
+        boolean b = super.connectsTo(view, pos, side);
+        if (block instanceof ConduitBlock) {
+            b &= canColorsConnect(((ConduitBlock) block).getColor(), this.getColor());
+        }
+        return b;
     }
 
     public static boolean canColorsConnect(@Nullable DyeColor a, @Nullable DyeColor b) {
@@ -135,7 +138,6 @@ public class ConduitBlock extends ConduitConnectabilityBlock implements BlockEnt
     }
 
     public DyeColor getColor() {
-        return color;
+        return this.color;
     }
-
 }

@@ -4,15 +4,20 @@ import com.zundrel.wrenchable.block.BlockWrenchable;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
+import net.minecraft.tag.Tag;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class WrenchItem extends Item {
-    public WrenchItem(Item.Settings settings) {
+    protected final Tag<Item> material;
+
+    public WrenchItem(Tag<Item> material, Item.Settings settings) {
         super(settings);
+        this.material = material;
     }
 
     @Override
@@ -32,4 +37,13 @@ public class WrenchItem extends Item {
         return super.useOnBlock(context);
     }
 
+    @Override
+    public int getEnchantability() {
+        return 1;
+    }
+
+    @Override
+    public boolean canRepair(ItemStack stack, ItemStack ingredient) {
+        return this.material.contains(ingredient.getItem());
+    }
 }

@@ -19,6 +19,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import reoseah.velvet.Velvet;
 import reoseah.velvet.blocks.ConduitBlock;
+import reoseah.velvet.blocks.ConduitConnectabilityBlock;
 
 public class PaintRollerItem extends Item {
     protected final DyeColor color;
@@ -47,8 +48,13 @@ public class PaintRollerItem extends Item {
         if (state.getBlock() == Blocks.GLASS
                 || state.getBlock() == Velvet.Blocks.CONDUIT
                 || (state.getBlock() instanceof ConduitBlock && ((ConduitBlock) state.getBlock()).getColor() != this.color)) {
-            Block stained = state.getBlock() == Blocks.GLASS ? getStainedGlass(this.color) : Velvet.Blocks.getColoredConduit(this.color);
-            world.setBlockState(pos, stained.getDefaultState());
+            if (state.getBlock() == Blocks.GLASS) {
+                world.setBlockState(pos, getStainedGlass(this.color).getDefaultState());
+            } else {
+                Block stained = Velvet.getColoredConduit(this.color);
+                BlockState state2 = ((ConduitConnectabilityBlock) stained).makeConnections(world, pos);
+                world.setBlockState(pos, state2);
+            }
             if (context.getPlayer() != null && !context.getPlayer().isCreative()) {
                 context.getStack().damage(1, context.getPlayer(), player -> {
                     player.sendToolBreakStatus(context.getHand());
