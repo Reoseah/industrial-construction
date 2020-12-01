@@ -1,7 +1,5 @@
 package reoseah.velvet.blocks;
 
-import com.zundrel.wrenchable.block.BlockWrenchable;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
@@ -16,7 +14,6 @@ import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
-import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
@@ -28,7 +25,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import reoseah.velvet.Velvet;
 
-public class FrameBlock extends Block implements FrameConnectable, Waterloggable, BlockWrenchable {
+public class FrameBlock extends Block implements FrameConnectable, Waterloggable, Wrenchable {
     public static final BooleanProperty ATTACHED = Properties.ATTACHED;
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 
@@ -128,7 +125,8 @@ public class FrameBlock extends Block implements FrameConnectable, Waterloggable
     }
 
     @Override
-    public void onWrenched(World world, PlayerEntity player, BlockHitResult result) {
-        world.setBlockState(result.getBlockPos(), world.getBlockState(result.getBlockPos()).cycle(FrameBlock.ATTACHED));
+    public boolean useWrench(BlockState state, World world, BlockPos pos, Direction direction, PlayerEntity player, Vec3d hitPos) {
+        world.setBlockState(pos, state.cycle(FrameBlock.ATTACHED));
+        return true;
     }
 }

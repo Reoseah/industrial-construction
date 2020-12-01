@@ -5,8 +5,6 @@ import java.util.List;
 
 import org.jetbrains.annotations.Nullable;
 
-import com.zundrel.wrenchable.block.BlockWrenchable;
-
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -30,6 +28,7 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import reoseah.velvet.blocks.Wrenchable;
 import reoseah.velvet.blocks.entities.ConduitBlockEntity;
 import reoseah.velvet.blocks.entities.ConduitBlockEntity.TravellingItem;
 import reoseah.velvet.client.render.ConduitBlockEntityRenderer;
@@ -52,6 +51,7 @@ public class VelvetInitializer implements ModInitializer, ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutoutMipped(),
                 Velvet.Blocks.CONDUIT,
                 Velvet.Blocks.EXTRACTOR,
+                Velvet.Blocks.NEW_EXTRACTOR,
                 Velvet.Blocks.INSERTER,
                 Velvet.Blocks.WHITE_CONDUIT,
                 Velvet.Blocks.ORANGE_CONDUIT,
@@ -115,7 +115,7 @@ public class VelvetInitializer implements ModInitializer, ClientModInitializer {
                             if (hit instanceof BlockHitResult) {
                                 BlockHitResult blockhit = (BlockHitResult) hit;
                                 BlockPos pos = blockhit.getBlockPos();
-                                if (entity.getEntityWorld().getBlockState(pos).getBlock() instanceof BlockWrenchable) {
+                                if (entity.getEntityWorld().getBlockState(pos).getBlock() instanceof Wrenchable) {
                                     return 1;
                                 }
                             }

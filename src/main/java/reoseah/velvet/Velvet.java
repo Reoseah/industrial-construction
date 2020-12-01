@@ -31,6 +31,7 @@ import reoseah.velvet.blocks.ExtractorBlock;
 import reoseah.velvet.blocks.FrameBlock;
 import reoseah.velvet.blocks.FramedConduitBlock;
 import reoseah.velvet.blocks.InsertingConduitBlock;
+import reoseah.velvet.blocks.NewExtractorBlock;
 import reoseah.velvet.blocks.entities.ConduitBlockEntity;
 import reoseah.velvet.blocks.entities.ExtractorBlockEntity;
 import reoseah.velvet.items.PaintRollerItem;
@@ -46,6 +47,7 @@ public final class Velvet {
 
         public static final Block CONDUIT = register("conduit", new ConduitBlock((DyeColor) null, IRON_SETTINGS));
         public static final Block EXTRACTOR = register("extractor", new ExtractorBlock(IRON_SETTINGS));
+        public static final Block NEW_EXTRACTOR = register("new_extractor", new NewExtractorBlock(IRON_SETTINGS));
         public static final Block INSERTER = register("inserter", new InsertingConduitBlock(IRON_SETTINGS));
 
         public static final Block WHITE_CONDUIT = register("white_conduit", new ConduitBlock(DyeColor.WHITE, IRON_SETTINGS));
@@ -78,6 +80,7 @@ public final class Velvet {
     public static final class Items {
         public static final Item CONDUIT = register("conduit", new BlockItem(Velvet.Blocks.CONDUIT, new Item.Settings().group(Velvet.GROUP)));
         public static final Item EXTRACTOR = register("extractor", new BlockItem(Velvet.Blocks.EXTRACTOR, new Item.Settings().group(Velvet.GROUP)));
+        public static final Item NEW_EXTRACTOR = register("new_extractor", new BlockItem(Velvet.Blocks.NEW_EXTRACTOR, new Item.Settings().group(Velvet.GROUP)));
         public static final Item INSERTER = register("inserter", new BlockItem(Velvet.Blocks.INSERTER, new Item.Settings().group(null /* WIP */)));
         public static final Item[] COLORED_CONDUITS = {
                 register("white_conduit", new BlockItem(Velvet.Blocks.WHITE_CONDUIT, new Item.Settings().group(ItemGroup.SEARCH))),
@@ -106,7 +109,7 @@ public final class Velvet {
         public static final Item WRENCH = register("wrench", new WrenchItem(TagRegistry.item(new Identifier("c:iron_ingots")), new Item.Settings().maxDamage(512).group(GROUP)));
         public static final Item PAINT_SCRAPER = register("paint_scraper", new PaintScrapperItem(TagRegistry.item(new Identifier("c:iron_ingots")), new Item.Settings().maxDamage(256).group(GROUP)));
         public static final Item PAINT_ROLLER = register("paint_roller", new Item(new Item.Settings().maxCount(1).group(GROUP)));
-        
+
         private static final Item.Settings PAINT_ROLLER_SETTINGS = new Item.Settings().maxDamage(32).group(GROUP);
         public static final Item[] PAINT_ROLLERS = {
                 register("white_paint_roller", new PaintRollerItem(DyeColor.WHITE, PAINT_ROLLER_SETTINGS)),

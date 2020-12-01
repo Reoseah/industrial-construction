@@ -46,6 +46,9 @@ public abstract class ConduitConnectabilityBlock extends Block implements Attrib
         if (block instanceof ConduitConnectabilityBlock) {
             return true;
         }
+        if (block instanceof NewExtractorBlock) {
+            return neighbor.get(NewExtractorBlock.OUTPUT).direction == side.getOpposite();
+        }
         if (view instanceof World) {
             World world = (World) view;
             ItemInsertable insertable = ItemAttributes.INSERTABLE.get(world, pos.offset(side), SearchOptions.inDirection(side));

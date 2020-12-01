@@ -1,7 +1,5 @@
 package reoseah.velvet.blocks;
 
-import com.zundrel.wrenchable.block.BlockWrenchable;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
@@ -18,10 +16,10 @@ import net.minecraft.screen.ScreenHandlerFactory;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
-import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Direction.Axis;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
@@ -29,7 +27,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import reoseah.velvet.Velvet;
 
-public class CatwalkBlock extends Block implements Waterloggable, BlockWrenchable {
+public class CatwalkBlock extends Block implements Waterloggable, Wrenchable {
     public static final BooleanProperty SOUTH = Properties.SOUTH;
     public static final BooleanProperty WEST = Properties.WEST;
     public static final BooleanProperty NORTH = Properties.NORTH;
@@ -190,24 +188,24 @@ public class CatwalkBlock extends Block implements Waterloggable, BlockWrenchabl
     }
 
     @Override
-    public void onWrenched(World world, PlayerEntity player, BlockHitResult result) {
-        BlockPos pos = result.getBlockPos();
-        if (result.getSide().getAxis().isHorizontal()) {
+    public boolean useWrench(BlockState state, World world, BlockPos pos, Direction side, PlayerEntity player, Vec3d hitPos) {
+        if (side.getAxis().isHorizontal()) {
             boolean inside = false;
-            if (result.getSide().getAxis() == Axis.X) {
-                double dx = result.getPos().getX() - result.getBlockPos().getX();
+            if (side.getAxis() == Axis.X) {
+                double dx = hitPos.getX() - pos.getX();
                 inside = dx >= 0.5 / 16 && dx <= 15.5 / 16;
             } else {
-                double dz = result.getPos().getZ() - result.getBlockPos().getZ();
+                double dz = hitPos.getZ() - pos.getZ();
                 inside = dz >= 0.5 / 16 && dz <= 15.5 / 16;
             }
             if (inside) {
-                world.setBlockState(pos, world.getBlockState(pos).cycle(getConnectionProperty(result.getSide().getOpposite())));
+                world.setBlockState(pos, world.getBlockState(pos).cycle(getConnectionProperty(side.getOpposite())));
             } else {
-                world.setBlockState(pos, world.getBlockState(pos).cycle(getConnectionProperty(result.getSide())));
+                world.setBlockState(pos, world.getBlockState(pos).cycle(getConnectionProperty(side)));
             }
         } else {
             world.setBlockState(pos, world.getBlockState(pos).cycle(getConnectionProperty(player.getHorizontalFacing())));
         }
+        return true;
     }
 }
