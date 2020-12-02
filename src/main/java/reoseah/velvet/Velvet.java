@@ -30,8 +30,6 @@ import reoseah.velvet.blocks.ConduitBlock;
 import reoseah.velvet.blocks.ExtractorBlock;
 import reoseah.velvet.blocks.FrameBlock;
 import reoseah.velvet.blocks.FramedConduitBlock;
-import reoseah.velvet.blocks.InsertingConduitBlock;
-import reoseah.velvet.blocks.NewExtractorBlock;
 import reoseah.velvet.blocks.entities.ConduitBlockEntity;
 import reoseah.velvet.blocks.entities.ExtractorBlockEntity;
 import reoseah.velvet.items.PaintRollerItem;
@@ -46,9 +44,12 @@ public final class Velvet {
         private static final FabricBlockSettings IRON_SETTINGS = FabricBlockSettings.of(Material.METAL, MaterialColor.GRAY).strength(2F, 10F).nonOpaque().sounds(BlockSoundGroup.LANTERN).breakByTool(FabricToolTags.PICKAXES);
 
         public static final Block CONDUIT = register("conduit", new ConduitBlock((DyeColor) null, IRON_SETTINGS));
-        public static final Block EXTRACTOR = register("extractor", new ExtractorBlock(IRON_SETTINGS));
-        public static final Block NEW_EXTRACTOR = register("new_extractor", new NewExtractorBlock(IRON_SETTINGS));
-        public static final Block INSERTER = register("inserter", new InsertingConduitBlock(IRON_SETTINGS));
+        public static final Block EXTRACTOR = register("extractor", new ExtractorBlock((DyeColor) null, IRON_SETTINGS));
+
+        public static final Block FRAME = register("frame", new FrameBlock(IRON_SETTINGS));
+        public static final Block FRAMED_CONDUIT = register("framed_conduit", new FramedConduitBlock(IRON_SETTINGS));
+        public static final Block CATWALK = register("catwalk", new CatwalkBlock(IRON_SETTINGS));
+        public static final Block REINFORCED_GLASS = register("reinforced_glass", new GlassBlock(FabricBlockSettings.of(Material.GLASS).strength(2F, 10F).nonOpaque().sounds(BlockSoundGroup.GLASS).requiresTool().breakByTool(FabricToolTags.PICKAXES)));
 
         public static final Block WHITE_CONDUIT = register("white_conduit", new ConduitBlock(DyeColor.WHITE, IRON_SETTINGS));
         public static final Block ORANGE_CONDUIT = register("orange_conduit", new ConduitBlock(DyeColor.ORANGE, IRON_SETTINGS));
@@ -67,10 +68,22 @@ public final class Velvet {
         public static final Block RED_CONDUIT = register("red_conduit", new ConduitBlock(DyeColor.RED, IRON_SETTINGS));
         public static final Block BLACK_CONDUIT = register("black_conduit", new ConduitBlock(DyeColor.BLACK, IRON_SETTINGS));
 
-        public static final Block FRAME = register("frame", new FrameBlock(IRON_SETTINGS));
-        public static final Block FRAMED_CONDUIT = register("framed_conduit", new FramedConduitBlock(IRON_SETTINGS));
-        public static final Block CATWALK = register("catwalk", new CatwalkBlock(IRON_SETTINGS));
-        public static final Block REINFORCED_GLASS = register("reinforced_glass", new GlassBlock(FabricBlockSettings.of(Material.GLASS).strength(2F, 10F).nonOpaque().sounds(BlockSoundGroup.GLASS).requiresTool().breakByTool(FabricToolTags.PICKAXES)));
+        public static final Block WHITE_EXTRACTOR = register("white_extractor", new ExtractorBlock(DyeColor.WHITE, IRON_SETTINGS));
+        public static final Block ORANGE_EXTRACTOR = register("orange_extractor", new ExtractorBlock(DyeColor.ORANGE, IRON_SETTINGS));
+        public static final Block MAGENTA_EXTRACTOR = register("magenta_extractor", new ExtractorBlock(DyeColor.MAGENTA, IRON_SETTINGS));
+        public static final Block LIGHT_BLUE_EXTRACTOR = register("light_blue_extractor", new ExtractorBlock(DyeColor.LIGHT_BLUE, IRON_SETTINGS));
+        public static final Block YELLOW_EXTRACTOR = register("yellow_extractor", new ExtractorBlock(DyeColor.YELLOW, IRON_SETTINGS));
+        public static final Block LIME_EXTRACTOR = register("lime_extractor", new ExtractorBlock(DyeColor.LIME, IRON_SETTINGS));
+        public static final Block PINK_EXTRACTOR = register("pink_extractor", new ExtractorBlock(DyeColor.PINK, IRON_SETTINGS));
+        public static final Block GRAY_EXTRACTOR = register("gray_extractor", new ExtractorBlock(DyeColor.GRAY, IRON_SETTINGS));
+        public static final Block LIGHT_GRAY_EXTRACTOR = register("light_gray_extractor", new ExtractorBlock(DyeColor.LIGHT_GRAY, IRON_SETTINGS));
+        public static final Block CYAN_EXTRACTOR = register("cyan_extractor", new ExtractorBlock(DyeColor.CYAN, IRON_SETTINGS));
+        public static final Block PURPLE_EXTRACTOR = register("purple_extractor", new ExtractorBlock(DyeColor.PURPLE, IRON_SETTINGS));
+        public static final Block BLUE_EXTRACTOR = register("blue_extractor", new ExtractorBlock(DyeColor.BLUE, IRON_SETTINGS));
+        public static final Block BROWN_EXTRACTOR = register("brown_extractor", new ExtractorBlock(DyeColor.BROWN, IRON_SETTINGS));
+        public static final Block GREEN_EXTRACTOR = register("green_extractor", new ExtractorBlock(DyeColor.GREEN, IRON_SETTINGS));
+        public static final Block RED_EXTRACTOR = register("red_extractor", new ExtractorBlock(DyeColor.RED, IRON_SETTINGS));
+        public static final Block BLACK_EXTRACTOR = register("black_extractor", new ExtractorBlock(DyeColor.BLACK, IRON_SETTINGS));
 
         private static Block register(String name, Block block) {
             return Registry.register(Registry.BLOCK, "velvet:" + name, block);
@@ -80,26 +93,6 @@ public final class Velvet {
     public static final class Items {
         public static final Item CONDUIT = register("conduit", new BlockItem(Velvet.Blocks.CONDUIT, new Item.Settings().group(Velvet.GROUP)));
         public static final Item EXTRACTOR = register("extractor", new BlockItem(Velvet.Blocks.EXTRACTOR, new Item.Settings().group(Velvet.GROUP)));
-        public static final Item NEW_EXTRACTOR = register("new_extractor", new BlockItem(Velvet.Blocks.NEW_EXTRACTOR, new Item.Settings().group(Velvet.GROUP)));
-        public static final Item INSERTER = register("inserter", new BlockItem(Velvet.Blocks.INSERTER, new Item.Settings().group(null /* WIP */)));
-        public static final Item[] COLORED_CONDUITS = {
-                register("white_conduit", new BlockItem(Velvet.Blocks.WHITE_CONDUIT, new Item.Settings().group(ItemGroup.SEARCH))),
-                register("orange_conduit", new BlockItem(Velvet.Blocks.ORANGE_CONDUIT, new Item.Settings().group(ItemGroup.SEARCH))),
-                register("magenta_conduit", new BlockItem(Velvet.Blocks.MAGENTA_CONDUIT, new Item.Settings().group(ItemGroup.SEARCH))),
-                register("light_blue_conduit", new BlockItem(Velvet.Blocks.LIGHT_BLUE_CONDUIT, new Item.Settings().group(ItemGroup.SEARCH))),
-                register("yellow_conduit", new BlockItem(Velvet.Blocks.YELLOW_CONDUIT, new Item.Settings().group(ItemGroup.SEARCH))),
-                register("lime_conduit", new BlockItem(Velvet.Blocks.LIME_CONDUIT, new Item.Settings().group(ItemGroup.SEARCH))),
-                register("pink_conduit", new BlockItem(Velvet.Blocks.PINK_CONDUIT, new Item.Settings().group(ItemGroup.SEARCH))),
-                register("gray_conduit", new BlockItem(Velvet.Blocks.GRAY_CONDUIT, new Item.Settings().group(ItemGroup.SEARCH))),
-                register("light_gray_conduit", new BlockItem(Velvet.Blocks.LIGHT_GRAY_CONDUIT, new Item.Settings().group(ItemGroup.SEARCH))),
-                register("cyan_conduit", new BlockItem(Velvet.Blocks.CYAN_CONDUIT, new Item.Settings().group(ItemGroup.SEARCH))),
-                register("purple_conduit", new BlockItem(Velvet.Blocks.PURPLE_CONDUIT, new Item.Settings().group(ItemGroup.SEARCH))),
-                register("blue_conduit", new BlockItem(Velvet.Blocks.BLUE_CONDUIT, new Item.Settings().group(ItemGroup.SEARCH))),
-                register("brown_conduit", new BlockItem(Velvet.Blocks.BROWN_CONDUIT, new Item.Settings().group(ItemGroup.SEARCH))),
-                register("green_conduit", new BlockItem(Velvet.Blocks.GREEN_CONDUIT, new Item.Settings().group(ItemGroup.SEARCH))),
-                register("red_conduit", new BlockItem(Velvet.Blocks.RED_CONDUIT, new Item.Settings().group(ItemGroup.SEARCH))),
-                register("black_conduit", new BlockItem(Velvet.Blocks.BLACK_CONDUIT, new Item.Settings().group(ItemGroup.SEARCH)))
-        };
 
         public static final Item FRAME = register("frame", new BlockItem(Velvet.Blocks.FRAME, new Item.Settings().group(Velvet.GROUP)));
         public static final Item CATWALK = register("catwalk", new BlockItem(Velvet.Blocks.CATWALK, new Item.Settings().group(Velvet.GROUP)));
@@ -129,6 +122,42 @@ public final class Velvet {
                 register("red_paint_roller", new PaintRollerItem(DyeColor.RED, PAINT_ROLLER_SETTINGS)),
                 register("black_paint_roller", new PaintRollerItem(DyeColor.BLACK, PAINT_ROLLER_SETTINGS))
         };
+        public static final Item[] COLORED_CONDUITS = {
+                register("white_conduit", new BlockItem(Velvet.Blocks.WHITE_CONDUIT, new Item.Settings().group(GROUP))),
+                register("orange_conduit", new BlockItem(Velvet.Blocks.ORANGE_CONDUIT, new Item.Settings().group(GROUP))),
+                register("magenta_conduit", new BlockItem(Velvet.Blocks.MAGENTA_CONDUIT, new Item.Settings().group(GROUP))),
+                register("light_blue_conduit", new BlockItem(Velvet.Blocks.LIGHT_BLUE_CONDUIT, new Item.Settings().group(GROUP))),
+                register("yellow_conduit", new BlockItem(Velvet.Blocks.YELLOW_CONDUIT, new Item.Settings().group(GROUP))),
+                register("lime_conduit", new BlockItem(Velvet.Blocks.LIME_CONDUIT, new Item.Settings().group(GROUP))),
+                register("pink_conduit", new BlockItem(Velvet.Blocks.PINK_CONDUIT, new Item.Settings().group(GROUP))),
+                register("gray_conduit", new BlockItem(Velvet.Blocks.GRAY_CONDUIT, new Item.Settings().group(GROUP))),
+                register("light_gray_conduit", new BlockItem(Velvet.Blocks.LIGHT_GRAY_CONDUIT, new Item.Settings().group(GROUP))),
+                register("cyan_conduit", new BlockItem(Velvet.Blocks.CYAN_CONDUIT, new Item.Settings().group(GROUP))),
+                register("purple_conduit", new BlockItem(Velvet.Blocks.PURPLE_CONDUIT, new Item.Settings().group(GROUP))),
+                register("blue_conduit", new BlockItem(Velvet.Blocks.BLUE_CONDUIT, new Item.Settings().group(GROUP))),
+                register("brown_conduit", new BlockItem(Velvet.Blocks.BROWN_CONDUIT, new Item.Settings().group(GROUP))),
+                register("green_conduit", new BlockItem(Velvet.Blocks.GREEN_CONDUIT, new Item.Settings().group(GROUP))),
+                register("red_conduit", new BlockItem(Velvet.Blocks.RED_CONDUIT, new Item.Settings().group(GROUP))),
+                register("black_conduit", new BlockItem(Velvet.Blocks.BLACK_CONDUIT, new Item.Settings().group(GROUP)))
+        };
+        public static final Item[] COLORED_EXTRACTORS = {
+                register("white_extractor", new BlockItem(Velvet.Blocks.WHITE_EXTRACTOR, new Item.Settings().group(GROUP))),
+                register("orange_extractor", new BlockItem(Velvet.Blocks.ORANGE_EXTRACTOR, new Item.Settings().group(GROUP))),
+                register("magenta_extractor", new BlockItem(Velvet.Blocks.MAGENTA_EXTRACTOR, new Item.Settings().group(GROUP))),
+                register("light_blue_extractor", new BlockItem(Velvet.Blocks.LIGHT_BLUE_EXTRACTOR, new Item.Settings().group(GROUP))),
+                register("yellow_extractor", new BlockItem(Velvet.Blocks.YELLOW_EXTRACTOR, new Item.Settings().group(GROUP))),
+                register("lime_extractor", new BlockItem(Velvet.Blocks.LIME_EXTRACTOR, new Item.Settings().group(GROUP))),
+                register("pink_extractor", new BlockItem(Velvet.Blocks.PINK_EXTRACTOR, new Item.Settings().group(GROUP))),
+                register("gray_extractor", new BlockItem(Velvet.Blocks.GRAY_EXTRACTOR, new Item.Settings().group(GROUP))),
+                register("light_gray_extractor", new BlockItem(Velvet.Blocks.LIGHT_GRAY_EXTRACTOR, new Item.Settings().group(GROUP))),
+                register("cyan_extractor", new BlockItem(Velvet.Blocks.CYAN_EXTRACTOR, new Item.Settings().group(GROUP))),
+                register("purple_extractor", new BlockItem(Velvet.Blocks.PURPLE_EXTRACTOR, new Item.Settings().group(GROUP))),
+                register("blue_extractor", new BlockItem(Velvet.Blocks.BLUE_EXTRACTOR, new Item.Settings().group(GROUP))),
+                register("brown_extractor", new BlockItem(Velvet.Blocks.BROWN_EXTRACTOR, new Item.Settings().group(GROUP))),
+                register("green_extractor", new BlockItem(Velvet.Blocks.GREEN_EXTRACTOR, new Item.Settings().group(GROUP))),
+                register("red_extractor", new BlockItem(Velvet.Blocks.RED_EXTRACTOR, new Item.Settings().group(GROUP))),
+                register("black_extractor", new BlockItem(Velvet.Blocks.BLACK_EXTRACTOR, new Item.Settings().group(GROUP)))
+        };
 
         private static Item register(String name, Item item) {
             return Registry.register(Registry.ITEM, "velvet:" + name, item);
@@ -141,7 +170,7 @@ public final class Velvet {
                         Blocks.YELLOW_CONDUIT, Blocks.LIME_CONDUIT, Blocks.PINK_CONDUIT, Blocks.LIGHT_GRAY_CONDUIT, Blocks.GRAY_CONDUIT, Blocks.CYAN_CONDUIT,
                         Blocks.PURPLE_CONDUIT, Blocks.BLUE_CONDUIT, Blocks.BROWN_CONDUIT, Blocks.GREEN_CONDUIT, Blocks.RED_CONDUIT, Blocks.BLACK_CONDUIT),
                 null));
-        public static final BlockEntityType<ConduitBlockEntity> EXTRACTOR = register("extractor", new BlockEntityType<>(ExtractorBlockEntity::new, ImmutableSet.of(Blocks.EXTRACTOR), null));
+        public static final BlockEntityType<ConduitBlockEntity> EXTRACTOR = register("extractor", new BlockEntityType<>(ExtractorBlockEntity::new, ImmutableSet.of(Blocks.EXTRACTOR, Blocks.LIGHT_BLUE_EXTRACTOR, Blocks.YELLOW_EXTRACTOR), null));
 
         private static <T extends BlockEntity> BlockEntityType<T> register(String name, BlockEntityType<T> type) {
             return Registry.register(Registry.BLOCK_ENTITY_TYPE, "velvet:" + name, type);
@@ -193,6 +222,48 @@ public final class Velvet {
             return Blocks.RED_CONDUIT;
         case BLACK:
             return Blocks.BLACK_CONDUIT;
+        default:
+            throw new UnsupportedOperationException();
+        }
+    }
+
+    public static Block getColoredExtractor(@Nullable DyeColor color) {
+        if (color == null) {
+            return Blocks.EXTRACTOR;
+        }
+        switch (color) {
+        case WHITE:
+            return Blocks.WHITE_EXTRACTOR;
+        case ORANGE:
+            return Blocks.ORANGE_EXTRACTOR;
+        case MAGENTA:
+            return Blocks.MAGENTA_EXTRACTOR;
+        case LIGHT_BLUE:
+            return Blocks.LIGHT_BLUE_EXTRACTOR;
+        case YELLOW:
+            return Blocks.YELLOW_EXTRACTOR;
+        case LIME:
+            return Blocks.LIME_EXTRACTOR;
+        case PINK:
+            return Blocks.PINK_EXTRACTOR;
+        case GRAY:
+            return Blocks.GRAY_EXTRACTOR;
+        case LIGHT_GRAY:
+            return Blocks.LIGHT_GRAY_EXTRACTOR;
+        case CYAN:
+            return Blocks.CYAN_EXTRACTOR;
+        case PURPLE:
+            return Blocks.PURPLE_EXTRACTOR;
+        case BLUE:
+            return Blocks.BLUE_EXTRACTOR;
+        case BROWN:
+            return Blocks.BROWN_EXTRACTOR;
+        case GREEN:
+            return Blocks.GREEN_EXTRACTOR;
+        case RED:
+            return Blocks.RED_EXTRACTOR;
+        case BLACK:
+            return Blocks.BLACK_EXTRACTOR;
         default:
             throw new UnsupportedOperationException();
         }

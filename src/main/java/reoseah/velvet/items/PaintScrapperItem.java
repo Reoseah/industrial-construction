@@ -12,7 +12,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import reoseah.velvet.Velvet;
 import reoseah.velvet.blocks.ConduitBlock;
-import reoseah.velvet.blocks.ConduitConnectabilityBlock;
+import reoseah.velvet.blocks.AbstractConduitBlock;
 
 public class PaintScrapperItem extends Item {
     protected final Tag<Item> material;
@@ -30,7 +30,7 @@ public class PaintScrapperItem extends Item {
         Block block = state.getBlock();
         boolean success = false;
         if (block instanceof ConduitBlock && ((ConduitBlock) block).getColor() != null) {
-            world.setBlockState(pos, ((ConduitConnectabilityBlock) Velvet.Blocks.CONDUIT).makeConnections(world, pos));
+            world.setBlockState(pos, ((AbstractConduitBlock) Velvet.Blocks.CONDUIT).makeConnections(world, pos));
             success = true;
         } else if (block == Blocks.WHITE_STAINED_GLASS
                 || block == Blocks.ORANGE_STAINED_GLASS

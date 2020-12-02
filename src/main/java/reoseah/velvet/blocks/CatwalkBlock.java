@@ -124,6 +124,18 @@ public class CatwalkBlock extends Block implements Waterloggable, Wrenchable {
         return OUTLINE_SHAPES[i];
     }
 
+    @Override
+    public BlockState getPlacementState(ItemPlacementContext ctx) {
+        BlockView world = ctx.getWorld();
+        BlockPos pos = ctx.getBlockPos();
+
+        return this.getDefaultState()
+                .with(SOUTH, this.hasBorder(world, pos, Direction.SOUTH))
+                .with(WEST, this.hasBorder(world, pos, Direction.WEST))
+                .with(NORTH, this.hasBorder(world, pos, Direction.NORTH))
+                .with(EAST, this.hasBorder(world, pos, Direction.EAST));
+    }
+
     public boolean hasBorder(BlockView world, BlockPos pos, Direction side) {
         BlockState neighbor = world.getBlockState(pos.offset(side));
         Block block = neighbor.getBlock();
@@ -143,18 +155,6 @@ public class CatwalkBlock extends Block implements Waterloggable, Wrenchable {
         return ground.getBlock() != Velvet.Blocks.FRAME
                 && ground.getBlock() != Velvet.Blocks.FRAMED_CONDUIT
                 && ground.getBlock() != Velvet.Blocks.REINFORCED_GLASS;
-    }
-
-    @Override
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        BlockView world = ctx.getWorld();
-        BlockPos pos = ctx.getBlockPos();
-
-        return this.getDefaultState()
-                .with(SOUTH, this.hasBorder(world, pos, Direction.SOUTH))
-                .with(WEST, this.hasBorder(world, pos, Direction.WEST))
-                .with(NORTH, this.hasBorder(world, pos, Direction.NORTH))
-                .with(EAST, this.hasBorder(world, pos, Direction.EAST));
     }
 
     @Override

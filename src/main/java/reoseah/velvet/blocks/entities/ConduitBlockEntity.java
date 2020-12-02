@@ -29,7 +29,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import reoseah.velvet.Velvet;
-import reoseah.velvet.blocks.ConduitConnectabilityBlock;
+import reoseah.velvet.blocks.AbstractConduitBlock;
 
 public class ConduitBlockEntity extends BlockEntity implements Tickable {
     public static final double SPEED = 0.05;
@@ -159,7 +159,7 @@ public class ConduitBlockEntity extends BlockEntity implements Tickable {
     }
 
     private boolean isConnected(Direction direction) {
-        return this.getCachedState().get(ConduitConnectabilityBlock.getConnectionProperty(direction));
+        return this.getCachedState().get(AbstractConduitBlock.getConnectionProperty(direction));
     }
 
     public static class TravellingItem implements Comparable<TravellingItem> {
@@ -208,7 +208,7 @@ public class ConduitBlockEntity extends BlockEntity implements Tickable {
                 Vec3d destination = center.add(Vec3d.of(this.to.getVector()).multiply(0.5));
                 return center.multiply(1 - interp).add(destination.multiply(interp));
             } else {
-                interp = MathHelper.clamp(interp, 0, straight ? 1.25F : 1);
+                interp = MathHelper.clamp(interp, 0, straight ? 2F : 1.05F);
                 Vec3d source = center.add(Vec3d.of(this.from.getVector()).multiply(0.5));
                 return source.multiply(1 - interp).add(center.multiply(interp));
             }

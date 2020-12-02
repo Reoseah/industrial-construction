@@ -1,7 +1,5 @@
 package reoseah.velvet.blocks;
 
-import org.jetbrains.annotations.Nullable;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
@@ -26,7 +24,7 @@ import net.minecraft.world.WorldAccess;
 import reoseah.velvet.Velvet;
 import reoseah.velvet.blocks.entities.ConduitBlockEntity;
 
-public class ConduitBlock extends ConduitConnectabilityBlock implements BlockEntityProvider, Waterloggable {
+public class ConduitBlock extends AbstractConduitBlock implements BlockEntityProvider, Waterloggable {
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 
     public static final VoxelShape[] SHAPES;
@@ -55,11 +53,8 @@ public class ConduitBlock extends ConduitConnectabilityBlock implements BlockEnt
         }
     }
 
-    protected final @Nullable DyeColor color;
-
     public ConduitBlock(DyeColor color, Block.Settings settings) {
-        super(settings);
-        this.color = color;
+        super(color, settings);
         this.setDefaultState(this.getDefaultState().with(WATERLOGGED, false));
     }
 
@@ -67,40 +62,6 @@ public class ConduitBlock extends ConduitConnectabilityBlock implements BlockEnt
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         super.appendProperties(builder);
         builder.add(WATERLOGGED);
-    }
-
-    @Override
-    public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState newState, WorldAccess world, BlockPos pos, BlockPos posFrom) {
-        if (state.get(WATERLOGGED)) {
-            world.getFluidTickScheduler().schedule(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
-        }
-        return super.getStateForNeighborUpdate(state, direction, newState, world, pos, posFrom);
-    }
-
-    @Override
-    public FluidState getFluidState(BlockState state) {
-        return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
-    }
-
-    @Override
-    public BlockEntity createBlockEntity(BlockView world) {
-        return new ConduitBlockEntity();
-    }
-
-    @Override
-    public boolean canReplace(BlockState state, ItemPlacementContext context) {
-        return this.getColor() == null && context.getStack().getItem() == Velvet.Items.FRAME && (context.getPlayer() != null && !context.getPlayer().isSneaking()) || super.canReplace(state, context);
-    }
-
-    @Override
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        BlockView world = ctx.getWorld();
-        BlockPos pos = ctx.getBlockPos();
-        BlockState state = world.getBlockState(pos);
-        if (this.getColor() == null && state.getBlock() == Velvet.Blocks.FRAME) {
-            return Velvet.Blocks.FRAMED_CONDUIT.getPlacementState(ctx);
-        }
-        return super.getPlacementState(ctx);
     }
 
     @Override
@@ -114,30 +75,44 @@ public class ConduitBlock extends ConduitConnectabilityBlock implements BlockEnt
         return SHAPES[i];
     }
 
+    @Override
+    public boolean canReplace(BlockState state, ItemPlacementContext context) {
+        return super.canReplace(state, context)
+                || this == Velvet.Blocks.CONDUIT
+                        && context.getStack().getItem() == Velvet.Items.FRAME
+                        && (context.getPlayer() != null && !context.getPlayer().isSneaking());
+    }
+
+    @Override
+    public BlockState getPlacementState(ItemPlacementContext ctx) {
+        if (this == Velvet.Blocks.CONDUIT && ctx.getWorld().getBlockState(ctx.getBlockPos()).getBlock() == Velvet.Blocks.FRAME) {
+            return Velvet.Blocks.FRAMED_CONDUIT.getPlacementState(ctx);
+        }
+        return super.getPlacementState(ctx);
+    }
+
+    @Override
+    public FluidState getFluidState(BlockState state) {
+        return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
+    }
+
+    @Override
+    public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState newState, WorldAccess world, BlockPos pos, BlockPos posFrom) {
+        if (state.get(WATERLOGGED)) {
+            world.getFluidTickScheduler().schedule(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+        }
+        return super.getStateForNeighborUpdate(state, direction, newState, world, pos, posFrom);
+    }
+
+    @Override
+    public BlockEntity createBlockEntity(BlockView world) {
+        return new ConduitBlockEntity();
+    }
+
     @Environment(EnvType.CLIENT)
     @Override
     public boolean isSideInvisible(BlockState state, BlockState state2, Direction direction) {
-        return state.get(getConnectionProperty(direction)) && state2.getBlock() instanceof ConduitConnectabilityBlock
+        return state.get(getConnectionProperty(direction)) && state2.getBlock() instanceof ConduitConnectable
                 || super.isSideInvisible(state, state2, direction);
-    }
-
-    @Override
-    public boolean connectsTo(BlockView view, BlockPos pos, Direction side) {
-        BlockState neighbor = view.getBlockState(pos.offset(side));
-        Block block = neighbor.getBlock();
-
-        boolean b = super.connectsTo(view, pos, side);
-        if (block instanceof ConduitBlock) {
-            b &= canColorsConnect(((ConduitBlock) block).getColor(), this.getColor());
-        }
-        return b;
-    }
-
-    public static boolean canColorsConnect(@Nullable DyeColor a, @Nullable DyeColor b) {
-        return a == null || b == null || a == b;
-    }
-
-    public DyeColor getColor() {
-        return this.color;
     }
 }

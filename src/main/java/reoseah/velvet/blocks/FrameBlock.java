@@ -61,11 +61,6 @@ public class FrameBlock extends Block implements FrameConnectable, Waterloggable
         return VoxelShapes.fullCube();
     }
 
-    public boolean isFrame(BlockView world, BlockPos pos, Direction side, BlockState neighbor) {
-        Block block = neighbor.getBlock();
-        return block instanceof FrameConnectable;
-    }
-
     @Override
     public boolean canReplace(BlockState state, ItemPlacementContext context) {
         return context.getStack().getItem() == Velvet.Items.CONDUIT && (context.getPlayer() != null && !context.getPlayer().isSneaking()) || super.canReplace(state, context);
@@ -83,6 +78,16 @@ public class FrameBlock extends Block implements FrameConnectable, Waterloggable
                 .with(ATTACHED, this.isFrame(world, pos.up(), Direction.UP, world.getBlockState(pos.up())));
     }
 
+    public boolean isFrame(BlockView world, BlockPos pos, Direction side, BlockState neighbor) {
+        Block block = neighbor.getBlock();
+        return block instanceof FrameConnectable;
+    }
+
+    @Override
+    public FluidState getFluidState(BlockState state) {
+        return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
+    }
+
     @Override
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState newState, WorldAccess world, BlockPos pos, BlockPos posFrom) {
         if (state.get(WATERLOGGED)) {
@@ -92,20 +97,6 @@ public class FrameBlock extends Block implements FrameConnectable, Waterloggable
             return state.with(ATTACHED, this.isFrame(world, pos.up(), Direction.DOWN, world.getBlockState(pos.up())));
         }
         return state;
-    }
-
-    @Override
-    public FluidState getFluidState(BlockState state) {
-        return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
-    }
-
-    @Override
-    @Environment(EnvType.CLIENT)
-    public boolean isSideInvisible(BlockState state, BlockState stateFrom, Direction direction) {
-        if (stateFrom.getBlock() instanceof FrameConnectable && direction == Direction.UP) {
-            return state.get(ATTACHED);
-        }
-        return stateFrom.getBlock() instanceof FrameConnectable ? true : super.isSideInvisible(state, stateFrom, direction);
     }
 
     @Override
@@ -128,5 +119,14 @@ public class FrameBlock extends Block implements FrameConnectable, Waterloggable
     public boolean useWrench(BlockState state, World world, BlockPos pos, Direction direction, PlayerEntity player, Vec3d hitPos) {
         world.setBlockState(pos, state.cycle(FrameBlock.ATTACHED));
         return true;
+    }
+
+    @Override
+    @Environment(EnvType.CLIENT)
+    public boolean isSideInvisible(BlockState state, BlockState stateFrom, Direction direction) {
+        if (stateFrom.getBlock() instanceof FrameConnectable && direction == Direction.UP) {
+            return state.get(ATTACHED);
+        }
+        return stateFrom.getBlock() instanceof FrameConnectable ? true : super.isSideInvisible(state, stateFrom, direction);
     }
 }

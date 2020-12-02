@@ -19,7 +19,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import reoseah.velvet.Velvet;
 import reoseah.velvet.blocks.ConduitBlock;
-import reoseah.velvet.blocks.ConduitConnectabilityBlock;
+import reoseah.velvet.blocks.AbstractConduitBlock;
 
 public class PaintRollerItem extends Item {
     protected final DyeColor color;
@@ -52,7 +52,7 @@ public class PaintRollerItem extends Item {
                 world.setBlockState(pos, getStainedGlass(this.color).getDefaultState());
             } else {
                 Block stained = Velvet.getColoredConduit(this.color);
-                BlockState state2 = ((ConduitConnectabilityBlock) stained).makeConnections(world, pos);
+                BlockState state2 = ((AbstractConduitBlock) stained).makeConnections(world, pos);
                 world.setBlockState(pos, state2);
             }
             if (context.getPlayer() != null && !context.getPlayer().isCreative()) {

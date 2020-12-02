@@ -9,7 +9,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3d;
-import reoseah.velvet.blocks.ConduitConnectabilityBlock;
+import reoseah.velvet.blocks.AbstractConduitBlock;
 import reoseah.velvet.blocks.entities.ConduitBlockEntity;
 import reoseah.velvet.blocks.entities.ConduitBlockEntity.TravellingItem;
 
@@ -23,12 +23,12 @@ public class ConduitBlockEntityRenderer extends BlockEntityRenderer<ConduitBlock
         if (entity.items.isEmpty()) {
             return;
         }
-        boolean up = entity.getCachedState().get(ConduitConnectabilityBlock.UP);
-        boolean down = entity.getCachedState().get(ConduitConnectabilityBlock.DOWN);
-        boolean north = entity.getCachedState().get(ConduitConnectabilityBlock.NORTH);
-        boolean south = entity.getCachedState().get(ConduitConnectabilityBlock.SOUTH);
-        boolean west = entity.getCachedState().get(ConduitConnectabilityBlock.WEST);
-        boolean east = entity.getCachedState().get(ConduitConnectabilityBlock.EAST);
+        boolean up = entity.getCachedState().get(AbstractConduitBlock.UP);
+        boolean down = entity.getCachedState().get(AbstractConduitBlock.DOWN);
+        boolean north = entity.getCachedState().get(AbstractConduitBlock.NORTH);
+        boolean south = entity.getCachedState().get(AbstractConduitBlock.SOUTH);
+        boolean west = entity.getCachedState().get(AbstractConduitBlock.WEST);
+        boolean east = entity.getCachedState().get(AbstractConduitBlock.EAST);
 
         boolean straight = up && down && !(north || south || west || east)
                 || north && south && !(up || down || west || south)

@@ -17,27 +17,24 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
-import reoseah.velvet.Velvet;
 import reoseah.velvet.blocks.entities.ExtractorBlockEntity;
 import reoseah.velvet.blocks.state.OptionalDirection;
 
-public class ExtractorBlock extends ConduitConnectabilityBlock implements BlockEntityProvider, Waterloggable {
+public class ExtractorBlock extends AbstractConduitBlock implements BlockEntityProvider, Waterloggable, Wrenchable {
     public static final EnumProperty<OptionalDirection> DIRECTION = EnumProperty.of("direction", OptionalDirection.class);
 
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
@@ -79,8 +76,8 @@ public class ExtractorBlock extends ConduitConnectabilityBlock implements BlockE
         }
     }
 
-    public ExtractorBlock(Block.Settings settings) {
-        super(settings);
+    public ExtractorBlock(DyeColor color, Block.Settings settings) {
+        super(color, settings);
         this.setDefaultState(this.getDefaultState().with(DIRECTION, OptionalDirection.NONE).with(WATERLOGGED, false));
     }
 
@@ -91,27 +88,14 @@ public class ExtractorBlock extends ConduitConnectabilityBlock implements BlockE
     }
 
     @Override
-    public boolean connectsTo(BlockView view, BlockPos pos, Direction side) {
-        BlockState neighbor = view.getBlockState(pos.offset(side));
-        Block block = neighbor.getBlock();
-        if (block == this) {
-            return false;
-        }
-        return super.connectsTo(view, pos, side);
-    }
-
-    @Environment(EnvType.CLIENT)
-    @Override
-    public boolean isSideInvisible(BlockState state, BlockState state2, Direction direction) {
-        return state.get(getConnectionProperty(direction)) && state2.getBlock() instanceof ConduitConnectabilityBlock
-                || super.isSideInvisible(state, state2, direction);
-    }
-
-    public boolean canExtract(BlockState state, WorldView world, BlockPos pos, Direction direction) {
-        if (world instanceof World) {
-            return ItemAttributes.EXTRACTABLE.get((World) world, pos.offset(direction), SearchOptions.inDirection(direction)) != EmptyItemExtractable.NULL;
-        }
-        return false;
+    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        int i = (state.get(DOWN) ? 1 : 0) |
+                (state.get(UP) ? 2 : 0) |
+                (state.get(NORTH) ? 4 : 0) |
+                (state.get(SOUTH) ? 8 : 0) |
+                (state.get(WEST) ? 16 : 0) |
+                (state.get(EAST) ? 32 : 0);
+        return SHAPES[state.get(DIRECTION).ordinal()][i];
     }
 
     @Override
@@ -128,7 +112,24 @@ public class ExtractorBlock extends ConduitConnectabilityBlock implements BlockE
             }
         }
 
-        return state.with(DIRECTION, OptionalDirection.NONE);
+        return state.with(DIRECTION, OptionalDirection.of(ctx.getSide().getOpposite()));
+    }
+
+    public boolean canExtract(BlockState state, WorldView world, BlockPos pos, Direction direction) {
+        if (world instanceof World) {
+            return ItemAttributes.EXTRACTABLE.get((World) world, pos.offset(direction), SearchOptions.inDirection(direction)) != EmptyItemExtractable.NULL;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean canConnect(BlockView view, BlockPos pos, Direction side) {
+        BlockState neighbor = view.getBlockState(pos.offset(side));
+        Block block = neighbor.getBlock();
+        if (block instanceof ExtractorBlock) {
+            return false;
+        }
+        return super.canConnect(view, pos, side);
     }
 
     @Override
@@ -141,15 +142,7 @@ public class ExtractorBlock extends ConduitConnectabilityBlock implements BlockE
         if (state.get(WATERLOGGED)) {
             world.getFluidTickScheduler().schedule(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
         }
-        state = super.getStateForNeighborUpdate(state, direction, newState, world, pos, posFrom);
-        if (state.get(DIRECTION) == OptionalDirection.NONE && this.canExtract(state, world, pos, direction)) {
-            state = state.with(DIRECTION, OptionalDirection.of(direction));
-        } else if (state.get(DIRECTION).direction == direction) {
-            if (!this.canExtract(state, world, pos, direction)) {
-                state = state.with(DIRECTION, OptionalDirection.of(null));
-            }
-        }
-        return state;
+        return super.getStateForNeighborUpdate(state, direction, newState, world, pos, posFrom);
     }
 
     @Override
@@ -158,32 +151,25 @@ public class ExtractorBlock extends ConduitConnectabilityBlock implements BlockE
     }
 
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        int i = (state.get(DOWN) ? 1 : 0) |
-                (state.get(UP) ? 2 : 0) |
-                (state.get(NORTH) ? 4 : 0) |
-                (state.get(SOUTH) ? 8 : 0) |
-                (state.get(WEST) ? 16 : 0) |
-                (state.get(EAST) ? 32 : 0);
-        return SHAPES[state.get(DIRECTION).ordinal()][i];
-    }
-
-    @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        ItemStack stack = player.getStackInHand(hand);
-        if (stack.getItem() == Velvet.Items.WRENCH) {
-            int start = state.get(DIRECTION).ordinal();
-            for (int i = (start + 1) % 7; i != start; i = (i + 1) % 7) {
-                if (i == 0) {
-                    continue;
-                }
-                Direction direction = OptionalDirection.values()[i].direction;
-                if (this.canExtract(state, world, pos, direction)) {
-                    world.setBlockState(pos, world.getBlockState(pos).with(DIRECTION, OptionalDirection.values()[i]));
-                    return ActionResult.SUCCESS;
-                }
+    public boolean useWrench(BlockState state, World world, BlockPos pos, Direction side, PlayerEntity player, Vec3d hitPos) {
+        int start = state.get(DIRECTION).ordinal();
+        for (int i = (start + 1) % 7; i != start; i = (i + 1) % 7) {
+            if (i == 0) {
+                continue;
+            }
+            Direction direction = OptionalDirection.values()[i].direction;
+            if (this.canExtract(state, world, pos, direction)) {
+                world.setBlockState(pos, world.getBlockState(pos).with(DIRECTION, OptionalDirection.values()[i]));
+                return true;
             }
         }
-        return ActionResult.PASS;
+        return false;
+    }
+
+    @Environment(EnvType.CLIENT)
+    @Override
+    public boolean isSideInvisible(BlockState state, BlockState state2, Direction direction) {
+        return state.get(getConnectionProperty(direction)) && state2.getBlock() instanceof AbstractConduitBlock
+                || super.isSideInvisible(state, state2, direction);
     }
 }
