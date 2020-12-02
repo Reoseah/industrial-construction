@@ -9,7 +9,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.math.Direction;
 import reoseah.velvet.Velvet;
 import reoseah.velvet.blocks.ExtractorBlock;
-import reoseah.velvet.blocks.state.OptionalDirection;
 
 public class ExtractorBlockEntity extends ConduitBlockEntity {
     protected int transferCooldown;
@@ -24,12 +23,12 @@ public class ExtractorBlockEntity extends ConduitBlockEntity {
         if (!this.world.isClient) {
             this.transferCooldown--;
             if (this.transferCooldown <= 0) {
-                OptionalDirection optionalDirection = this.getCachedState().get(ExtractorBlock.DIRECTION);
-                if (!this.world.isReceivingRedstonePower(this.pos) && optionalDirection != OptionalDirection.NONE) {
-                    ItemExtractable extractable = ItemAttributes.EXTRACTABLE.getFromNeighbour(this, optionalDirection.direction);
+                Direction direction = this.getCachedState().get(ExtractorBlock.DIRECTION);
+                if (!this.world.isReceivingRedstonePower(this.pos)) {
+                    ItemExtractable extractable = ItemAttributes.EXTRACTABLE.getFromNeighbour(this, direction);
                     ItemStack stack = extractable.attemptAnyExtraction(8, Simulation.ACTION);
                     if (!stack.isEmpty()) {
-                        this.doInsert(stack, optionalDirection.direction);
+                        this.doInsert(stack, direction);
                         this.transferCooldown = 8;
                         this.markDirty();
                     }
@@ -53,6 +52,6 @@ public class ExtractorBlockEntity extends ConduitBlockEntity {
 
     @Override
     protected boolean canSendItems(Direction direction) {
-        return super.canSendItems(direction) && direction != this.getCachedState().get(ExtractorBlock.DIRECTION).direction;
+        return super.canSendItems(direction) && direction != this.getCachedState().get(ExtractorBlock.DIRECTION);
     }
 }

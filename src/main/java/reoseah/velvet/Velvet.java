@@ -170,7 +170,12 @@ public final class Velvet {
                         Blocks.YELLOW_CONDUIT, Blocks.LIME_CONDUIT, Blocks.PINK_CONDUIT, Blocks.LIGHT_GRAY_CONDUIT, Blocks.GRAY_CONDUIT, Blocks.CYAN_CONDUIT,
                         Blocks.PURPLE_CONDUIT, Blocks.BLUE_CONDUIT, Blocks.BROWN_CONDUIT, Blocks.GREEN_CONDUIT, Blocks.RED_CONDUIT, Blocks.BLACK_CONDUIT),
                 null));
-        public static final BlockEntityType<ConduitBlockEntity> EXTRACTOR = register("extractor", new BlockEntityType<>(ExtractorBlockEntity::new, ImmutableSet.of(Blocks.EXTRACTOR, Blocks.LIGHT_BLUE_EXTRACTOR, Blocks.YELLOW_EXTRACTOR), null));
+        public static final BlockEntityType<ConduitBlockEntity> EXTRACTOR = register("extractor", new BlockEntityType<>(ExtractorBlockEntity::new,
+                ImmutableSet.of(Blocks.EXTRACTOR,
+                        Blocks.WHITE_EXTRACTOR, Blocks.ORANGE_EXTRACTOR, Blocks.MAGENTA_EXTRACTOR, Blocks.LIGHT_BLUE_EXTRACTOR,
+                        Blocks.YELLOW_EXTRACTOR, Blocks.LIME_EXTRACTOR, Blocks.PINK_EXTRACTOR, Blocks.LIGHT_GRAY_EXTRACTOR, Blocks.GRAY_EXTRACTOR, Blocks.CYAN_EXTRACTOR,
+                        Blocks.PURPLE_EXTRACTOR, Blocks.BLUE_EXTRACTOR, Blocks.BROWN_EXTRACTOR, Blocks.GREEN_EXTRACTOR, Blocks.RED_EXTRACTOR, Blocks.BLACK_EXTRACTOR),
+                null));
 
         private static <T extends BlockEntity> BlockEntityType<T> register(String name, BlockEntityType<T> type) {
             return Registry.register(Registry.BLOCK_ENTITY_TYPE, "velvet:" + name, type);

@@ -145,7 +145,7 @@ public class ConduitBlockEntity extends BlockEntity implements Tickable {
             }
         }
 
-        PlayerStream.watching(this.world, this.pos).forEach(player -> ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, new Identifier("velvet:conduit"), buf));
+        PlayerStream.around(this.world, this.pos, 40).forEach(player -> ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, new Identifier("velvet:conduit"), buf));
     }
 
     public void doInsert(ItemStack stack, Direction from) {

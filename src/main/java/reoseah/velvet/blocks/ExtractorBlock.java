@@ -32,17 +32,15 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import reoseah.velvet.blocks.entities.ExtractorBlockEntity;
-import reoseah.velvet.blocks.state.OptionalDirection;
 
 public class ExtractorBlock extends AbstractConduitBlock implements BlockEntityProvider, Waterloggable, Wrenchable {
-    public static final EnumProperty<OptionalDirection> DIRECTION = EnumProperty.of("direction", OptionalDirection.class);
+    public static final EnumProperty<Direction> DIRECTION = EnumProperty.of("direction", Direction.class);
 
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 
-    private static final VoxelShape[][] SHAPES = new VoxelShape[7][];
+    private static final VoxelShape[][] SHAPES = new VoxelShape[6][];
     static {
         VoxelShape[] extractors = new VoxelShape[] {
-                VoxelShapes.empty(),
                 Block.createCuboidShape(2, 0, 2, 14, 4, 14),
                 Block.createCuboidShape(2, 12, 2, 14, 16, 14),
                 Block.createCuboidShape(2, 2, 0, 14, 14, 4),
@@ -50,7 +48,7 @@ public class ExtractorBlock extends AbstractConduitBlock implements BlockEntityP
                 Block.createCuboidShape(0, 2, 2, 4, 14, 14),
                 Block.createCuboidShape(12, 2, 2, 16, 14, 14)
         };
-        for (int j = 0; j < 7; j++) {
+        for (int j = 0; j < 6; j++) {
             SHAPES[j] = new VoxelShape[64];
             float min = 4;
             float max = 12;
@@ -78,7 +76,7 @@ public class ExtractorBlock extends AbstractConduitBlock implements BlockEntityP
 
     public ExtractorBlock(DyeColor color, Block.Settings settings) {
         super(color, settings);
-        this.setDefaultState(this.getDefaultState().with(DIRECTION, OptionalDirection.NONE).with(WATERLOGGED, false));
+        this.setDefaultState(this.getDefaultState().with(DIRECTION, Direction.DOWN).with(WATERLOGGED, false));
     }
 
     @Override
@@ -108,11 +106,11 @@ public class ExtractorBlock extends AbstractConduitBlock implements BlockEntityP
         for (int i = 0; i < directions.length; ++i) {
             Direction direction = directions[i];
             if (this.canExtract(state, world, pos, direction)) {
-                return state.with(DIRECTION, OptionalDirection.of(direction));
+                return state.with(DIRECTION, direction);
             }
         }
 
-        return state.with(DIRECTION, OptionalDirection.of(ctx.getSide().getOpposite()));
+        return state.with(DIRECTION, ctx.getSide().getOpposite());
     }
 
     public boolean canExtract(BlockState state, WorldView world, BlockPos pos, Direction direction) {
@@ -152,7 +150,7 @@ public class ExtractorBlock extends AbstractConduitBlock implements BlockEntityP
 
     @Override
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-        if (state.getBlock() instanceof AbstractConduitBlock) {
+        if (newState.getBlock() instanceof AbstractConduitBlock) {
             return;
         }
         super.onStateReplaced(state, world, pos, newState, moved);
@@ -161,13 +159,10 @@ public class ExtractorBlock extends AbstractConduitBlock implements BlockEntityP
     @Override
     public boolean useWrench(BlockState state, World world, BlockPos pos, Direction side, PlayerEntity player, Vec3d hitPos) {
         int start = state.get(DIRECTION).ordinal();
-        for (int i = (start + 1) % 7; i != start; i = (i + 1) % 7) {
-            if (i == 0) {
-                continue;
-            }
-            Direction direction = OptionalDirection.values()[i].direction;
+        for (int i = (start + 1) % 6; i != start; i = (i + 1) % 6) {
+            Direction direction = Direction.values()[i];
             if (this.canExtract(state, world, pos, direction)) {
-                world.setBlockState(pos, world.getBlockState(pos).with(DIRECTION, OptionalDirection.values()[i]));
+                world.setBlockState(pos, world.getBlockState(pos).with(DIRECTION, direction));
                 return true;
             }
         }
