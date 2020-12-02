@@ -112,7 +112,7 @@ public class ExtractorBlock extends AbstractConduitBlock implements BlockEntityP
             }
         }
 
-        return state.with(DIRECTION, ctx.getSide().getOpposite());
+        return state.with(DIRECTION, ctx.getPlayer() != null && ctx.getPlayer().isSneaking() ? ctx.getSide() : ctx.getSide().getOpposite());
     }
 
     public boolean canExtract(BlockState state, WorldView world, BlockPos pos, Direction direction) {
@@ -123,7 +123,12 @@ public class ExtractorBlock extends AbstractConduitBlock implements BlockEntityP
     }
 
     @Override
-    public boolean canConnect(BlockView view, BlockPos pos, Direction side) {
+    public boolean canConnect(BlockState state, BlockView world, BlockPos pos, Direction side) {
+        return side.getOpposite() != state.get(DIRECTION);
+    }
+
+    @Override
+    protected boolean connectsTo(BlockView view, BlockPos pos, Direction side) {
         BlockState neighbor = view.getBlockState(pos.offset(side));
         Block block = neighbor.getBlock();
         if (block instanceof ExtractorBlock) {
@@ -132,7 +137,7 @@ public class ExtractorBlock extends AbstractConduitBlock implements BlockEntityP
         if (block instanceof LeverBlock) {
             return getLeverDirection(neighbor) == side;
         }
-        return super.canConnect(view, pos, side);
+        return super.connectsTo(view, pos, side);
     }
 
     protected static Direction getLeverDirection(BlockState state) {
@@ -188,7 +193,7 @@ public class ExtractorBlock extends AbstractConduitBlock implements BlockEntityP
     @Environment(EnvType.CLIENT)
     @Override
     public boolean isSideInvisible(BlockState state, BlockState state2, Direction direction) {
-        return state.get(getConnectionProperty(direction)) && state2.getBlock() instanceof AbstractConduitBlock
+        return state.get(getConnectionProperty(direction)) && state2.getBlock() instanceof AbstractConduitBlock && direction != state.get(DIRECTION)
                 || super.isSideInvisible(state, state2, direction);
     }
 }

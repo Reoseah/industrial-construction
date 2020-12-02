@@ -58,20 +58,20 @@ public abstract class AbstractConduitBlock extends Block implements ConduitConne
 
     public BlockState makeConnections(BlockView world, BlockPos pos) {
         return this.getDefaultState()
-                .with(DOWN, this.canConnect(world, pos, Direction.DOWN))
-                .with(UP, this.canConnect(world, pos, Direction.UP))
-                .with(WEST, this.canConnect(world, pos, Direction.WEST))
-                .with(EAST, this.canConnect(world, pos, Direction.EAST))
-                .with(NORTH, this.canConnect(world, pos, Direction.NORTH))
-                .with(SOUTH, this.canConnect(world, pos, Direction.SOUTH));
+                .with(DOWN, this.connectsTo(world, pos, Direction.DOWN))
+                .with(UP, this.connectsTo(world, pos, Direction.UP))
+                .with(WEST, this.connectsTo(world, pos, Direction.WEST))
+                .with(EAST, this.connectsTo(world, pos, Direction.EAST))
+                .with(NORTH, this.connectsTo(world, pos, Direction.NORTH))
+                .with(SOUTH, this.connectsTo(world, pos, Direction.SOUTH));
     }
 
-    public boolean canConnect(BlockView view, BlockPos pos, Direction side) {
+    protected boolean connectsTo(BlockView view, BlockPos pos, Direction side) {
         BlockState neighbor = view.getBlockState(pos.offset(side));
         Block block = neighbor.getBlock();
         if (block instanceof ConduitConnectable) {
             ConduitConnectable connectable = (ConduitConnectable) block;
-            return ConduitConnectable.canColorsConnect(connectable.getColor(), this.getColor());
+            return ConduitConnectable.canColorsConnect(connectable.getColor(), this.getColor()) && connectable.canConnect(neighbor, view, pos.offset(side), side);
         }
         if (view instanceof World) {
             World world = (World) view;
@@ -83,7 +83,7 @@ public abstract class AbstractConduitBlock extends Block implements ConduitConne
 
     @Override
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState newState, WorldAccess world, BlockPos pos, BlockPos posFrom) {
-        return state.with(getConnectionProperty(direction), this.canConnect(world, pos, direction));
+        return state.with(getConnectionProperty(direction), this.connectsTo(world, pos, direction));
     }
 
     public static BooleanProperty getConnectionProperty(Direction direction) {
