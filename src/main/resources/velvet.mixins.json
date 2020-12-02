@@ -4,6 +4,7 @@
   "package": "reoseah.velvet.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+  	"WallMountedBlockMixin"
   ],
   "client": [
   ],

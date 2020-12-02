@@ -10,7 +10,9 @@ import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.LeverBlock;
 import net.minecraft.block.ShapeContext;
+import net.minecraft.block.WallMountedBlock;
 import net.minecraft.block.Waterloggable;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -127,7 +129,21 @@ public class ExtractorBlock extends AbstractConduitBlock implements BlockEntityP
         if (block instanceof ExtractorBlock) {
             return false;
         }
+        if (block instanceof LeverBlock) {
+            return getLeverDirection(neighbor) == side;
+        }
         return super.canConnect(view, pos, side);
+    }
+
+    protected static Direction getLeverDirection(BlockState state) {
+        switch (state.get(WallMountedBlock.FACE)) {
+        case CEILING:
+            return Direction.DOWN;
+        case FLOOR:
+            return Direction.UP;
+        default:
+            return state.get(WallMountedBlock.FACING);
+        }
     }
 
     @Override

@@ -4,6 +4,7 @@ import alexiil.mc.lib.attributes.Simulation;
 import alexiil.mc.lib.attributes.item.ItemAttributes;
 import alexiil.mc.lib.attributes.item.ItemExtractable;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.LeverBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.math.Direction;
@@ -52,6 +53,6 @@ public class ExtractorBlockEntity extends ConduitBlockEntity {
 
     @Override
     protected boolean canSendItems(Direction direction) {
-        return super.canSendItems(direction) && direction != this.getCachedState().get(ExtractorBlock.DIRECTION);
+        return super.canSendItems(direction) && direction != this.getCachedState().get(ExtractorBlock.DIRECTION) && !(world.getBlockState(getPos().offset(direction)).getBlock() instanceof LeverBlock);
     }
 }
