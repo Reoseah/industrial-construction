@@ -30,9 +30,9 @@ public class ConduitBlockEntityRenderer extends BlockEntityRenderer<ConduitBlock
         boolean west = entity.getCachedState().get(AbstractConduitBlock.WEST);
         boolean east = entity.getCachedState().get(AbstractConduitBlock.EAST);
 
-        boolean straight = up && down && !(north || south || west || east)
-                || north && south && !(up || down || west || south)
-                || west && east && !(up || down || north || south);
+        boolean straight = up && down && (!north && !south && !west && !east)
+                || north && south && (!up && !down && !west && !south)
+                || west && east && (!up && !down && !north && !south);
         for (TravellingItem item : entity.items) {
             ItemStack stack = item.stack;
 

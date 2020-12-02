@@ -214,4 +214,5 @@ public class ConduitBlockEntity extends BlockEntity implements Tickable {
             }
         }
     }
+
 }

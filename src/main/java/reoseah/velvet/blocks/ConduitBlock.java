@@ -20,6 +20,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import reoseah.velvet.Velvet;
 import reoseah.velvet.blocks.entities.ConduitBlockEntity;
@@ -80,7 +81,7 @@ public class ConduitBlock extends AbstractConduitBlock implements BlockEntityPro
         return super.canReplace(state, context)
                 || this == Velvet.Blocks.CONDUIT
                         && context.getStack().getItem() == Velvet.Items.FRAME
-                        && (context.getPlayer() != null && !context.getPlayer().isSneaking());
+                        && context.getPlayer() != null && !context.getPlayer().isSneaking();
     }
 
     @Override
@@ -107,6 +108,14 @@ public class ConduitBlock extends AbstractConduitBlock implements BlockEntityPro
     @Override
     public BlockEntity createBlockEntity(BlockView world) {
         return new ConduitBlockEntity();
+    }
+
+    @Override
+    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
+        if (state.getBlock() instanceof AbstractConduitBlock) {
+            return;
+        }
+        super.onStateReplaced(state, world, pos, newState, moved);
     }
 
     @Environment(EnvType.CLIENT)

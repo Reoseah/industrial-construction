@@ -136,6 +136,14 @@ public class FramedConduitBlock extends AbstractConduitBlock implements FrameCon
     }
 
     @Override
+    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
+        if (state.getBlock() instanceof AbstractConduitBlock) {
+            return;
+        }
+        super.onStateReplaced(state, world, pos, newState, moved);
+    }
+
+    @Override
     @Environment(EnvType.CLIENT)
     public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
         return new ItemStack(Velvet.Blocks.FRAME);

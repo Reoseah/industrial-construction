@@ -63,7 +63,7 @@ public class FrameBlock extends Block implements FrameConnectable, Waterloggable
 
     @Override
     public boolean canReplace(BlockState state, ItemPlacementContext context) {
-        return context.getStack().getItem() == Velvet.Items.CONDUIT && (context.getPlayer() != null && !context.getPlayer().isSneaking()) || super.canReplace(state, context);
+        return context.getStack().getItem() == Velvet.Items.CONDUIT && context.getPlayer() != null && !context.getPlayer().isSneaking() || super.canReplace(state, context);
     }
 
     @Override

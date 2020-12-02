@@ -18,8 +18,9 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import reoseah.velvet.Velvet;
-import reoseah.velvet.blocks.ConduitBlock;
 import reoseah.velvet.blocks.AbstractConduitBlock;
+import reoseah.velvet.blocks.ConduitBlock;
+import reoseah.velvet.blocks.ExtractorBlock;
 
 public class PaintRollerItem extends Item {
     protected final DyeColor color;
@@ -45,26 +46,39 @@ public class PaintRollerItem extends Item {
         World world = context.getWorld();
         BlockPos pos = context.getBlockPos();
         BlockState state = world.getBlockState(pos);
-        if (state.getBlock() == Blocks.GLASS
-                || state.getBlock() == Velvet.Blocks.CONDUIT
-                || (state.getBlock() instanceof ConduitBlock && ((ConduitBlock) state.getBlock()).getColor() != this.color)) {
-            if (state.getBlock() == Blocks.GLASS) {
-                world.setBlockState(pos, getStainedGlass(this.color).getDefaultState());
-            } else {
-                Block stained = Velvet.getColoredConduit(this.color);
-                BlockState state2 = ((AbstractConduitBlock) stained).makeConnections(world, pos);
-                world.setBlockState(pos, state2);
-            }
+
+        if (state.getBlock() == Blocks.CAULDRON && state.get(CauldronBlock.LEVEL) > 0 && context.getPlayer() != null) {
+            world.setBlockState(pos, state.with(CauldronBlock.LEVEL, state.get(CauldronBlock.LEVEL) - 1));
+            context.getPlayer().setStackInHand(context.getHand(), new ItemStack(Velvet.Items.PAINT_ROLLER));
+            return ActionResult.SUCCESS;
+        }
+
+        boolean success = false;
+        if (state.getBlock() == Blocks.GLASS) {
+            world.setBlockState(pos, getStainedGlass(this.color).getDefaultState());
+            success = true;
+        } else if (state.getBlock() == Velvet.Blocks.CONDUIT
+                || state.getBlock() instanceof ConduitBlock && ((ConduitBlock) state.getBlock()).getColor() != this.color) {
+            Block stained = Velvet.getColoredConduit(this.color);
+            BlockState state2 = ((AbstractConduitBlock) stained).makeConnections(world, pos);
+            world.setBlockState(pos, state2);
+
+            success = true;
+        } else if (state.getBlock() == Velvet.Blocks.EXTRACTOR
+                || state.getBlock() instanceof ExtractorBlock && ((ExtractorBlock) state.getBlock()).getColor() != this.color) {
+            Block stained = Velvet.getColoredExtractor(this.color);
+            BlockState state2 = ((AbstractConduitBlock) stained).makeConnections(world, pos).with(ExtractorBlock.DIRECTION, state.get(ExtractorBlock.DIRECTION));
+            world.setBlockState(pos, state2);
+
+            success = true;
+        }
+        if (success) {
             if (context.getPlayer() != null && !context.getPlayer().isCreative()) {
                 context.getStack().damage(1, context.getPlayer(), player -> {
                     player.sendToolBreakStatus(context.getHand());
                     player.setStackInHand(context.getHand(), new ItemStack(Velvet.Items.PAINT_ROLLER));
                 });
             }
-            return ActionResult.SUCCESS;
-        } else if (state.getBlock() == Blocks.CAULDRON && state.get(CauldronBlock.LEVEL) > 0 && context.getPlayer() != null) {
-            world.setBlockState(pos, state.with(CauldronBlock.LEVEL, state.get(CauldronBlock.LEVEL) - 1));
-            context.getPlayer().setStackInHand(context.getHand(), new ItemStack(Velvet.Items.PAINT_ROLLER));
             return ActionResult.SUCCESS;
         }
         return super.useOnBlock(context);

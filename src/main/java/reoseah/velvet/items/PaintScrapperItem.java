@@ -11,8 +11,9 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import reoseah.velvet.Velvet;
-import reoseah.velvet.blocks.ConduitBlock;
 import reoseah.velvet.blocks.AbstractConduitBlock;
+import reoseah.velvet.blocks.ConduitBlock;
+import reoseah.velvet.blocks.ExtractorBlock;
 
 public class PaintScrapperItem extends Item {
     protected final Tag<Item> material;
@@ -31,6 +32,9 @@ public class PaintScrapperItem extends Item {
         boolean success = false;
         if (block instanceof ConduitBlock && ((ConduitBlock) block).getColor() != null) {
             world.setBlockState(pos, ((AbstractConduitBlock) Velvet.Blocks.CONDUIT).makeConnections(world, pos));
+            success = true;
+        } else if (block instanceof ExtractorBlock && ((ExtractorBlock) block).getColor() != null) {
+            world.setBlockState(pos, ((AbstractConduitBlock) Velvet.Blocks.EXTRACTOR).makeConnections(world, pos).with(ExtractorBlock.DIRECTION, state.get(ExtractorBlock.DIRECTION)));
             success = true;
         } else if (block == Blocks.WHITE_STAINED_GLASS
                 || block == Blocks.ORANGE_STAINED_GLASS
