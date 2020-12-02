@@ -8,14 +8,14 @@
   ],
   "key": {
     "#": {
-      "item": "velvet:extractor"
+      "item": "velvet:conduit"
     },
     "X": {
       "item": "minecraft:brown_dye"
     }
   },
   "result": {
-    "item": "velvet:brown_extractor",
+    "item": "velvet:brown_conduit",
     "count": 8
   }
 }

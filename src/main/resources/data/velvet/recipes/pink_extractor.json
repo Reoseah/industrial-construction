@@ -11,11 +11,11 @@
       "item": "velvet:extractor"
     },
     "X": {
-      "item": "minecraft:brown_dye"
+      "item": "minecraft:pink_dye"
     }
   },
   "result": {
-    "item": "velvet:brown_extractor",
+    "item": "velvet:pink_extractor",
     "count": 8
   }
 }

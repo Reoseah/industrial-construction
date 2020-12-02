@@ -1,0 +1,21 @@
+{
+    "replace": false,
+    "values": [
+        "velvet:white_extractor",
+        "velvet:orange_extractor",
+        "velvet:magenta_extractor",
+        "velvet:light_blue_extractor",
+        "velvet:yellow_extractor",
+        "velvet:lime_extractor",
+        "velvet:pink_extractor",
+        "velvet:light_gray_extractor",
+        "velvet:gray_extractor",
+        "velvet:cyan_extractor",
+        "velvet:purple_extractor",
+        "velvet:blue_extractor",
+        "velvet:brown_extractor",
+        "velvet:green_extractor",
+        "velvet:red_extractor",
+        "velvet:black_extractor"
+    ]
+}
