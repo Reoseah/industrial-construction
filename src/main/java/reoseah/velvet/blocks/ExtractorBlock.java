@@ -170,14 +170,6 @@ public class ExtractorBlock extends AbstractConduitBlock implements BlockEntityP
     }
 
     @Override
-    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-        if (newState.getBlock() instanceof AbstractConduitBlock) {
-            return;
-        }
-        super.onStateReplaced(state, world, pos, newState, moved);
-    }
-
-    @Override
     public boolean useWrench(BlockState state, World world, BlockPos pos, Direction side, PlayerEntity player, Vec3d hitPos) {
         int start = state.get(DIRECTION).ordinal();
         for (int i = (start + 1) % 6; i != start; i = (i + 1) % 6) {

@@ -12,6 +12,8 @@ import alexiil.mc.lib.attributes.item.impl.RejectingItemInsertable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.InventoryProvider;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateManager;
@@ -20,10 +22,12 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import reoseah.velvet.blocks.entities.ConduitBlockEntity;
+import reoseah.velvet.blocks.entities.ConduitBlockEntity.TravellingItem;
 
 public abstract class AbstractConduitBlock extends Block implements ConduitConnectable, AttributeProvider {
     public static final BooleanProperty DOWN = Properties.DOWN;
@@ -84,6 +88,23 @@ public abstract class AbstractConduitBlock extends Block implements ConduitConne
     @Override
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState newState, WorldAccess world, BlockPos pos, BlockPos posFrom) {
         return state.with(getConnectionProperty(direction), this.connectsTo(world, pos, direction));
+    }
+
+    @Override
+    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
+        if (newState.getBlock() instanceof AbstractConduitBlock) {
+            return;
+        }
+        BlockEntity be = world.getBlockEntity(pos);
+        if (be instanceof ConduitBlockEntity) {
+            ConduitBlockEntity conduit = (ConduitBlockEntity) be;
+            for (TravellingItem item : conduit.items) {
+                Vec3d offset = item.interpolatePosition(world.getTime(), 0, false);
+                ItemEntity entity = new ItemEntity(world, pos.getX() + offset.getX(), pos.getY() + offset.getY(), pos.getZ() + offset.getZ(), item.stack);
+                world.spawnEntity(entity);
+            }
+        }
+        super.onStateReplaced(state, world, pos, newState, moved);
     }
 
     public static BooleanProperty getConnectionProperty(Direction direction) {

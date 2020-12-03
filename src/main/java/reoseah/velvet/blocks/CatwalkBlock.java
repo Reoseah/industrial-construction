@@ -1,21 +1,19 @@
 package reoseah.velvet.blocks;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.Waterloggable;
-import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.screen.ScreenHandlerFactory;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
+import net.minecraft.util.function.BooleanBiFunction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Direction.Axis;
@@ -37,6 +35,8 @@ public class CatwalkBlock extends Block implements Waterloggable, Wrenchable {
     private static final VoxelShape[] OUTLINE_SHAPES;
     private static final VoxelShape[] COLLISION_SHAPES;
     static {
+        VoxelShape cutout = VoxelShapes.union(Block.createCuboidShape(0, 2, 2, 16, 13, 14), Block.createCuboidShape(2, 2, 0, 14, 13, 16));
+
         OUTLINE_SHAPES = new VoxelShape[16];
         COLLISION_SHAPES = new VoxelShape[16];
 
@@ -48,10 +48,10 @@ public class CatwalkBlock extends Block implements Waterloggable, Wrenchable {
         VoxelShape east = Block.createCuboidShape(14, 0, 0, 16, 16, 16);
 
         VoxelShape floorCollision = Block.createCuboidShape(0.5, 0, 0.5, 15.5, 0.0001, 15.5);
-        VoxelShape southCollision = Block.createCuboidShape(0.5, 0, 15, 15.5, 20, 15.5);
-        VoxelShape westCollision = Block.createCuboidShape(0.5, 0, 0.5, 1, 20, 15.5);
-        VoxelShape northCollision = Block.createCuboidShape(0.5, 0, 0.5, 15.5, 20, 1);
-        VoxelShape eastCollision = Block.createCuboidShape(15, 0, 0.5, 15.5, 20, 15.5);
+        VoxelShape southCollision = Block.createCuboidShape(0.5, 0, 15, 15.5, 20.5, 15.5);
+        VoxelShape westCollision = Block.createCuboidShape(0.5, 0, 0.5, 1, 20.5, 15.5);
+        VoxelShape northCollision = Block.createCuboidShape(0.5, 0, 0.5, 15.5, 20.5, 1);
+        VoxelShape eastCollision = Block.createCuboidShape(15, 0, 0.5, 15.5, 20.5, 15.5);
 
         for (int i = 0; i < 16; i++) {
             VoxelShape outline = floor;
@@ -73,7 +73,7 @@ public class CatwalkBlock extends Block implements Waterloggable, Wrenchable {
                 collision = VoxelShapes.union(collision, eastCollision);
             }
             OUTLINE_SHAPES[i] = outline;
-            COLLISION_SHAPES[i] = collision;
+            COLLISION_SHAPES[i] = VoxelShapes.combineAndSimplify(collision, cutout, BooleanBiFunction.ONLY_FIRST);
         }
     }
 
@@ -145,16 +145,7 @@ public class CatwalkBlock extends Block implements Waterloggable, Wrenchable {
         if (neighbor.isSideSolidFullSquare(world, pos.offset(side), side) && neighbor.getMaterial() != Material.AGGREGATE) {
             return false;
         }
-        if (neighbor.getBlock() instanceof BlockEntityProvider) {
-            BlockEntity entity = world.getBlockEntity(pos.offset(side));
-            if (entity instanceof ScreenHandlerFactory) {
-                return false;
-            }
-        }
-        BlockState ground = world.getBlockState(pos.offset(side).down());
-        return ground.getBlock() != Velvet.Blocks.FRAME
-                && ground.getBlock() != Velvet.Blocks.FRAMED_CONDUIT
-                && ground.getBlock() != Velvet.Blocks.REINFORCED_GLASS;
+        return true;
     }
 
     @Override

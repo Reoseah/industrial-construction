@@ -26,6 +26,7 @@ import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import reoseah.velvet.blocks.CatwalkBlock;
+import reoseah.velvet.blocks.CatwalkStairsBlock;
 import reoseah.velvet.blocks.ConduitBlock;
 import reoseah.velvet.blocks.ExtractorBlock;
 import reoseah.velvet.blocks.FrameBlock;
@@ -49,6 +50,7 @@ public final class Velvet {
         public static final Block FRAME = register("frame", new FrameBlock(IRON_SETTINGS));
         public static final Block FRAMED_CONDUIT = register("framed_conduit", new FramedConduitBlock(IRON_SETTINGS));
         public static final Block CATWALK = register("catwalk", new CatwalkBlock(IRON_SETTINGS));
+        public static final Block CATWALK_STAIRS = register("catwalk_stairs", new CatwalkStairsBlock(IRON_SETTINGS));
         public static final Block REINFORCED_GLASS = register("reinforced_glass", new GlassBlock(FabricBlockSettings.of(Material.GLASS).strength(2F, 10F).nonOpaque().sounds(BlockSoundGroup.GLASS).requiresTool().breakByTool(FabricToolTags.PICKAXES)));
 
         public static final Block WHITE_CONDUIT = register("white_conduit", new ConduitBlock(DyeColor.WHITE, IRON_SETTINGS));
@@ -96,6 +98,7 @@ public final class Velvet {
 
         public static final Item FRAME = register("frame", new BlockItem(Velvet.Blocks.FRAME, new Item.Settings().group(Velvet.GROUP)));
         public static final Item CATWALK = register("catwalk", new BlockItem(Velvet.Blocks.CATWALK, new Item.Settings().group(Velvet.GROUP)));
+        public static final Item CATWALK_STAIRS = register("catwalk_stairs", new BlockItem(Velvet.Blocks.CATWALK_STAIRS, new Item.Settings().group(Velvet.GROUP)));
         public static final Item REINFORCED_GLASS = register("reinforced_glass", new BlockItem(Velvet.Blocks.REINFORCED_GLASS, new Item.Settings().group(Velvet.GROUP)));
 
         public static final Item IRON_BAR = register("iron_bar", new Item(new Item.Settings().group(GROUP)));

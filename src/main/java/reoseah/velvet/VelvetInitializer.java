@@ -86,6 +86,7 @@ public class VelvetInitializer implements ModInitializer, ClientModInitializer {
                 Velvet.Blocks.FRAME,
                 Velvet.Blocks.FRAMED_CONDUIT,
                 Velvet.Blocks.CATWALK,
+                Velvet.Blocks.CATWALK_STAIRS,
                 Velvet.Blocks.REINFORCED_GLASS);
 
         ClientSidePacketRegistry.INSTANCE.register(new Identifier("velvet:conduit"),
