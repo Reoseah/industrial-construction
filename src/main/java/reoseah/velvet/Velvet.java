@@ -18,6 +18,7 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.TallBlockItem;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialRecipeSerializer;
@@ -31,6 +32,7 @@ import reoseah.velvet.blocks.ConduitBlock;
 import reoseah.velvet.blocks.ExtractorBlock;
 import reoseah.velvet.blocks.FrameBlock;
 import reoseah.velvet.blocks.FramedConduitBlock;
+import reoseah.velvet.blocks.RouterBlock;
 import reoseah.velvet.blocks.entities.ConduitBlockEntity;
 import reoseah.velvet.blocks.entities.ExtractorBlockEntity;
 import reoseah.velvet.items.PaintRollerItem;
@@ -46,6 +48,7 @@ public final class Velvet {
 
         public static final Block CONDUIT = register("conduit", new ConduitBlock((DyeColor) null, IRON_SETTINGS));
         public static final Block EXTRACTOR = register("extractor", new ExtractorBlock((DyeColor) null, IRON_SETTINGS));
+        public static final Block ROUTER = register("router", new RouterBlock(IRON_SETTINGS));
 
         public static final Block FRAME = register("frame", new FrameBlock(IRON_SETTINGS));
         public static final Block FRAMED_CONDUIT = register("framed_conduit", new FramedConduitBlock(IRON_SETTINGS));
@@ -95,10 +98,11 @@ public final class Velvet {
     public static final class Items {
         public static final Item CONDUIT = register("conduit", new BlockItem(Velvet.Blocks.CONDUIT, new Item.Settings().group(Velvet.GROUP)));
         public static final Item EXTRACTOR = register("extractor", new BlockItem(Velvet.Blocks.EXTRACTOR, new Item.Settings().group(Velvet.GROUP)));
+        public static final Item ROUTER = register("router", new BlockItem(Velvet.Blocks.ROUTER, new Item.Settings().group(Velvet.GROUP)));
 
         public static final Item FRAME = register("frame", new BlockItem(Velvet.Blocks.FRAME, new Item.Settings().group(Velvet.GROUP)));
         public static final Item CATWALK = register("catwalk", new BlockItem(Velvet.Blocks.CATWALK, new Item.Settings().group(Velvet.GROUP)));
-        public static final Item CATWALK_STAIRS = register("catwalk_stairs", new BlockItem(Velvet.Blocks.CATWALK_STAIRS, new Item.Settings().group(Velvet.GROUP)));
+        public static final Item CATWALK_STAIRS = register("catwalk_stairs", new TallBlockItem(Velvet.Blocks.CATWALK_STAIRS, new Item.Settings().group(Velvet.GROUP)));
         public static final Item REINFORCED_GLASS = register("reinforced_glass", new BlockItem(Velvet.Blocks.REINFORCED_GLASS, new Item.Settings().group(Velvet.GROUP)));
 
         public static final Item IRON_BAR = register("iron_bar", new Item(new Item.Settings().group(GROUP)));

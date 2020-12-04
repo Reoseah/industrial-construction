@@ -53,6 +53,6 @@ public class ExtractorBlockEntity extends ConduitBlockEntity {
 
     @Override
     protected boolean canSendItems(Direction direction) {
-        return super.canSendItems(direction) && direction != this.getCachedState().get(ExtractorBlock.DIRECTION) && !(world.getBlockState(getPos().offset(direction)).getBlock() instanceof LeverBlock);
+        return super.canSendItems(direction) && direction != this.getCachedState().get(ExtractorBlock.DIRECTION) && !(this.world.getBlockState(this.getPos().offset(direction)).getBlock() instanceof LeverBlock);
     }
 }

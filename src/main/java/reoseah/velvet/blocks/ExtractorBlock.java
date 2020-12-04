@@ -10,6 +10,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.HorizontalFacingBlock;
 import net.minecraft.block.LeverBlock;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.WallMountedBlock;
@@ -147,7 +148,7 @@ public class ExtractorBlock extends AbstractConduitBlock implements BlockEntityP
         case FLOOR:
             return Direction.UP;
         default:
-            return state.get(WallMountedBlock.FACING);
+            return state.get(HorizontalFacingBlock.FACING);
         }
     }
 

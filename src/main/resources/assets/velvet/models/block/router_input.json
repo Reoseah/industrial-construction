@@ -1,0 +1,15 @@
+{
+    "textures": {
+        "particle": "velvet:block/router_input",
+        "texture": "velvet:block/router_input"
+    },
+    "elements": [
+        {   
+            "from": [ 2, 2, 2 ],
+            "to": [ 14, 14, 14 ],
+            "faces": {
+                "north": { "texture": "#texture" }
+            }
+        }
+    ]
+}

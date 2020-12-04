@@ -51,6 +51,7 @@ public class VelvetInitializer implements ModInitializer, ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutoutMipped(),
                 Velvet.Blocks.CONDUIT,
                 Velvet.Blocks.EXTRACTOR,
+                Velvet.Blocks.ROUTER,
                 Velvet.Blocks.WHITE_CONDUIT,
                 Velvet.Blocks.ORANGE_CONDUIT,
                 Velvet.Blocks.MAGENTA_CONDUIT,

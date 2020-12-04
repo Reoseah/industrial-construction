@@ -48,10 +48,10 @@ public class CatwalkBlock extends Block implements Waterloggable, Wrenchable {
         VoxelShape east = Block.createCuboidShape(14, 0, 0, 16, 16, 16);
 
         VoxelShape floorCollision = Block.createCuboidShape(0.5, 0, 0.5, 15.5, 0.0001, 15.5);
-        VoxelShape southCollision = Block.createCuboidShape(0.5, 0, 15, 15.5, 20.5, 15.5);
-        VoxelShape westCollision = Block.createCuboidShape(0.5, 0, 0.5, 1, 20.5, 15.5);
-        VoxelShape northCollision = Block.createCuboidShape(0.5, 0, 0.5, 15.5, 20.5, 1);
-        VoxelShape eastCollision = Block.createCuboidShape(15, 0, 0.5, 15.5, 20.5, 15.5);
+        VoxelShape southCollision = Block.createCuboidShape(0.5, 0, 15, 15.5, 16, 15.5);
+        VoxelShape westCollision = Block.createCuboidShape(0.5, 0, 0.5, 1, 16, 15.5);
+        VoxelShape northCollision = Block.createCuboidShape(0.5, 0, 0.5, 15.5, 16, 1);
+        VoxelShape eastCollision = Block.createCuboidShape(15, 0, 0.5, 15.5, 16, 15.5);
 
         for (int i = 0; i < 16; i++) {
             VoxelShape outline = floor;
@@ -142,7 +142,7 @@ public class CatwalkBlock extends Block implements Waterloggable, Wrenchable {
         if (block instanceof CatwalkBlock || block == Velvet.Blocks.FRAME || block == Velvet.Blocks.FRAMED_CONDUIT || block == Blocks.CAULDRON) {
             return false;
         }
-        if (neighbor.isSideSolidFullSquare(world, pos.offset(side), side) && neighbor.getMaterial() != Material.AGGREGATE) {
+        if (neighbor.isSideSolidFullSquare(world, pos.offset(side), side.getOpposite()) && neighbor.getMaterial() != Material.AGGREGATE) {
             return false;
         }
         return true;
