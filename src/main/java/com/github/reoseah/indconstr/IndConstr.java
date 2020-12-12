@@ -5,6 +5,7 @@ import com.github.reoseah.indconstr.blocks.CatwalkStairsBlock;
 import com.github.reoseah.indconstr.blocks.ColoredTransparentConduitBlock;
 import com.github.reoseah.indconstr.blocks.ColoredTransparentExtractorBlock;
 import com.github.reoseah.indconstr.blocks.ConduitInScaffoldingBlock;
+import com.github.reoseah.indconstr.blocks.OpaqueConduitBlock;
 import com.github.reoseah.indconstr.blocks.ScaffoldingBlock;
 import com.github.reoseah.indconstr.blocks.TransparentConduitBlock;
 import com.github.reoseah.indconstr.blocks.TransparentExtractorBlock;
@@ -52,6 +53,7 @@ public final class IndConstr {
         private static final FabricBlockSettings INDCONSTR_IRON = FabricBlockSettings.of(Material.METAL, MaterialColor.GRAY).strength(2F, 10F).nonOpaque().sounds(BlockSoundGroup.LANTERN).breakByTool(FabricToolTags.PICKAXES);
 
         public static final Block CONDUIT = register("conduit", new TransparentConduitBlock(INDCONSTR_IRON));
+        public static final Block OPAQUE_CONDUIT = register("opaque_conduit", new OpaqueConduitBlock(INDCONSTR_IRON));
         public static final Block EXTRACTOR = register("extractor", new TransparentExtractorBlock(INDCONSTR_IRON));
 
         public static final Block SCAFFOLDING = register("scaffolding", new ScaffoldingBlock(INDCONSTR_IRON));
@@ -101,6 +103,7 @@ public final class IndConstr {
 
     public static final class Items {
         public static final Item CONDUIT = register("conduit", new BlockItem(IndConstr.Blocks.CONDUIT, new Item.Settings().group(IndConstr.ITEMGROUP)));
+        public static final Item OPAQUE_CONDUIT = register("opaque_conduit", new BlockItem(IndConstr.Blocks.OPAQUE_CONDUIT, new Item.Settings().group(IndConstr.ITEMGROUP)));
         public static final Item EXTRACTOR = register("extractor", new BlockItem(IndConstr.Blocks.EXTRACTOR, new Item.Settings().group(IndConstr.ITEMGROUP)));
 
         public static final Item SCAFFOLDING = register("scaffolding", new BlockItem(IndConstr.Blocks.SCAFFOLDING, new Item.Settings().group(IndConstr.ITEMGROUP)));

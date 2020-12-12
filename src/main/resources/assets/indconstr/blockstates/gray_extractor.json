@@ -6,7 +6,7 @@
         },
         {   
         	"when": { "north": false },
-            "apply": { "model": "indconstr:block/gray_conduit_end" }
+            "apply": { "model": "indconstr:block/gray_conduit_side" }
         },
         {   
         	"when": { "east": true },
@@ -14,7 +14,7 @@
         },
         {   
         	"when": { "east": false },
-            "apply": { "model": "indconstr:block/gray_conduit_end", "uvlock": true, "y": 90 }
+            "apply": { "model": "indconstr:block/gray_conduit_side", "uvlock": true, "y": 90 }
         },
         {   
         	"when": { "south": true },
@@ -22,7 +22,7 @@
         },
         {   
         	"when": { "south": false },
-            "apply": { "model": "indconstr:block/gray_conduit_end", "uvlock": true, "y": 180 }
+            "apply": { "model": "indconstr:block/gray_conduit_side", "uvlock": true, "y": 180 }
         },
         {   
         	"when": { "west": true },
@@ -30,7 +30,7 @@
         },
         {   
         	"when": { "west": false },
-            "apply": { "model": "indconstr:block/gray_conduit_end", "uvlock": true, "y": 270 }
+            "apply": { "model": "indconstr:block/gray_conduit_side", "uvlock": true, "y": 270 }
         },
         {   
         	"when": { "up": true },
@@ -38,7 +38,7 @@
         },
         {   
         	"when": { "up": false },
-            "apply": { "model": "indconstr:block/gray_conduit_end_top", "uvlock": true, "x": 270 }
+            "apply": { "model": "indconstr:block/gray_conduit_top", "uvlock": true, "x": 270 }
         },
         {   
         	"when": { "down": true },
@@ -46,7 +46,7 @@
         },
         {   
         	"when": { "down": false },
-            "apply": { "model": "indconstr:block/gray_conduit_end_top", "uvlock": true, "x": 90 }  
+            "apply": { "model": "indconstr:block/gray_conduit_top", "uvlock": true, "x": 90 }  
         },
         
         {   

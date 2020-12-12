@@ -1,0 +1,6 @@
+{
+    "parent": "indconstr:block/template_conduit_side",
+    "textures": {
+        "texture": "indconstr:block/yellow_conduit"
+    }
+}

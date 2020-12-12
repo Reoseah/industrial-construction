@@ -2,6 +2,7 @@
     "itemGroup.indconstr.main": "indconstr",
     
     "block.indconstr.conduit": "Item Conduit",
+    "block.indconstr.opaque_conduit": "Item Conduit (Opaque)",
     "block.indconstr.extractor": "Item Extractor",
     "block.indconstr.scaffolding": "Iron Scaffolding",
     "block.indconstr.conduit_in_scaffolding": "Item Conduit in Scaffolding",
