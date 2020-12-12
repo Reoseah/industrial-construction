@@ -1,5 +1,5 @@
 {
-    "itemGroup.indconstr.main": "indconstr",
+    "itemGroup.indconstr.main": "Industrial Construction",
     
     "block.indconstr.conduit": "Item Conduit",
     "block.indconstr.opaque_conduit": "Item Conduit (Opaque)",

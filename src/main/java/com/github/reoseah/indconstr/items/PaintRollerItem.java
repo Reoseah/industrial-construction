@@ -62,8 +62,8 @@ public class PaintRollerItem extends Item {
         if (block == Blocks.GLASS) {
             world.setBlockState(pos, getStainedGlass(this.color).getDefaultState());
             success = true;
-        } else if (block instanceof ColorableBlock && ((ColorableBlock) block).canColor((DyeColor) null)) {
-            world.setBlockState(pos, ((ColorableBlock) block).getColoredState(state, world, pos, (DyeColor) null));
+        } else if (block instanceof ColorableBlock && ((ColorableBlock) block).canColor(this.color)) {
+            world.setBlockState(pos, ((ColorableBlock) block).getColoredState(state, world, pos, this.color));
             success = true;
         }
         if (success) {
