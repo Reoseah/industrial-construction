@@ -2,6 +2,7 @@ package com.github.reoseah.indconstr;
 
 import com.github.reoseah.indconstr.blocks.CatwalkBlock;
 import com.github.reoseah.indconstr.blocks.CatwalkStairsBlock;
+import com.github.reoseah.indconstr.blocks.ColoredOpaqueConduitBlock;
 import com.github.reoseah.indconstr.blocks.ColoredTransparentConduitBlock;
 import com.github.reoseah.indconstr.blocks.ColoredTransparentExtractorBlock;
 import com.github.reoseah.indconstr.blocks.ConduitInScaffoldingBlock;
@@ -79,6 +80,23 @@ public final class IndConstr {
         public static final Block RED_CONDUIT = register("red_conduit", new ColoredTransparentConduitBlock(DyeColor.RED, INDCONSTR_IRON));
         public static final Block BLACK_CONDUIT = register("black_conduit", new ColoredTransparentConduitBlock(DyeColor.BLACK, INDCONSTR_IRON));
 
+        public static final Block WHITE_OPAQUE_CONDUIT = register("white_opaque_conduit", new ColoredOpaqueConduitBlock(DyeColor.WHITE, INDCONSTR_IRON));
+        public static final Block ORANGE_OPAQUE_CONDUIT = register("orange_opaque_conduit", new ColoredOpaqueConduitBlock(DyeColor.ORANGE, INDCONSTR_IRON));
+        public static final Block MAGENTA_OPAQUE_CONDUIT = register("magenta_opaque_conduit", new ColoredOpaqueConduitBlock(DyeColor.MAGENTA, INDCONSTR_IRON));
+        public static final Block LIGHT_BLUE_OPAQUE_CONDUIT = register("light_blue_opaque_conduit", new ColoredOpaqueConduitBlock(DyeColor.LIGHT_BLUE, INDCONSTR_IRON));
+        public static final Block YELLOW_OPAQUE_CONDUIT = register("yellow_opaque_conduit", new ColoredOpaqueConduitBlock(DyeColor.YELLOW, INDCONSTR_IRON));
+        public static final Block LIME_OPAQUE_CONDUIT = register("lime_opaque_conduit", new ColoredOpaqueConduitBlock(DyeColor.LIME, INDCONSTR_IRON));
+        public static final Block PINK_OPAQUE_CONDUIT = register("pink_opaque_conduit", new ColoredOpaqueConduitBlock(DyeColor.PINK, INDCONSTR_IRON));
+        public static final Block GRAY_OPAQUE_CONDUIT = register("gray_opaque_conduit", new ColoredOpaqueConduitBlock(DyeColor.GRAY, INDCONSTR_IRON));
+        public static final Block LIGHT_GRAY_OPAQUE_CONDUIT = register("light_gray_opaque_conduit", new ColoredOpaqueConduitBlock(DyeColor.LIGHT_GRAY, INDCONSTR_IRON));
+        public static final Block CYAN_OPAQUE_CONDUIT = register("cyan_opaque_conduit", new ColoredOpaqueConduitBlock(DyeColor.CYAN, INDCONSTR_IRON));
+        public static final Block PURPLE_OPAQUE_CONDUIT = register("purple_opaque_conduit", new ColoredOpaqueConduitBlock(DyeColor.PURPLE, INDCONSTR_IRON));
+        public static final Block BLUE_OPAQUE_CONDUIT = register("blue_opaque_conduit", new ColoredOpaqueConduitBlock(DyeColor.BLUE, INDCONSTR_IRON));
+        public static final Block BROWN_OPAQUE_CONDUIT = register("brown_opaque_conduit", new ColoredOpaqueConduitBlock(DyeColor.BROWN, INDCONSTR_IRON));
+        public static final Block GREEN_OPAQUE_CONDUIT = register("green_opaque_conduit", new ColoredOpaqueConduitBlock(DyeColor.GREEN, INDCONSTR_IRON));
+        public static final Block RED_OPAQUE_CONDUIT = register("red_opaque_conduit", new ColoredOpaqueConduitBlock(DyeColor.RED, INDCONSTR_IRON));
+        public static final Block BLACK_OPAQUE_CONDUIT = register("black_opaque_conduit", new ColoredOpaqueConduitBlock(DyeColor.BLACK, INDCONSTR_IRON));
+
         public static final Block WHITE_EXTRACTOR = register("white_extractor", new ColoredTransparentExtractorBlock(DyeColor.WHITE, INDCONSTR_IRON));
         public static final Block ORANGE_EXTRACTOR = register("orange_extractor", new ColoredTransparentExtractorBlock(DyeColor.ORANGE, INDCONSTR_IRON));
         public static final Block MAGENTA_EXTRACTOR = register("magenta_extractor", new ColoredTransparentExtractorBlock(DyeColor.MAGENTA, INDCONSTR_IRON));
@@ -151,6 +169,23 @@ public final class IndConstr {
         public static final Item GREEN_CONDUIT = register("green_conduit", new BlockItem(IndConstr.Blocks.GREEN_CONDUIT, new Item.Settings().group(ITEMGROUP)));
         public static final Item RED_CONDUIT = register("red_conduit", new BlockItem(IndConstr.Blocks.RED_CONDUIT, new Item.Settings().group(ITEMGROUP)));
         public static final Item BLACK_CONDUIT = register("black_conduit", new BlockItem(IndConstr.Blocks.BLACK_CONDUIT, new Item.Settings().group(ITEMGROUP)));
+
+        public static final Item WHITE_OPAQUE_CONDUIT = register("white_opaque_conduit", new BlockItem(IndConstr.Blocks.WHITE_OPAQUE_CONDUIT, new Item.Settings().group(ITEMGROUP)));
+        public static final Item ORANGE_OPAQUE_CONDUIT = register("orange_opaque_conduit", new BlockItem(IndConstr.Blocks.ORANGE_OPAQUE_CONDUIT, new Item.Settings().group(ITEMGROUP)));
+        public static final Item MAGENTA_OPAQUE_CONDUIT = register("magenta_opaque_conduit", new BlockItem(IndConstr.Blocks.MAGENTA_OPAQUE_CONDUIT, new Item.Settings().group(ITEMGROUP)));
+        public static final Item LIGHT_BLUE_OPAQUE_CONDUIT = register("light_blue_opaque_conduit", new BlockItem(IndConstr.Blocks.LIGHT_BLUE_OPAQUE_CONDUIT, new Item.Settings().group(ITEMGROUP)));
+        public static final Item YELLOW_OPAQUE_CONDUIT = register("yellow_opaque_conduit", new BlockItem(IndConstr.Blocks.YELLOW_OPAQUE_CONDUIT, new Item.Settings().group(ITEMGROUP)));
+        public static final Item LIME_OPAQUE_CONDUIT = register("lime_opaque_conduit", new BlockItem(IndConstr.Blocks.LIME_OPAQUE_CONDUIT, new Item.Settings().group(ITEMGROUP)));
+        public static final Item PINK_OPAQUE_CONDUIT = register("pink_opaque_conduit", new BlockItem(IndConstr.Blocks.PINK_OPAQUE_CONDUIT, new Item.Settings().group(ITEMGROUP)));
+        public static final Item GRAY_OPAQUE_CONDUIT = register("gray_opaque_conduit", new BlockItem(IndConstr.Blocks.GRAY_OPAQUE_CONDUIT, new Item.Settings().group(ITEMGROUP)));
+        public static final Item LIGHT_GRAY_OPAQUE_CONDUIT = register("light_gray_opaque_conduit", new BlockItem(IndConstr.Blocks.LIGHT_GRAY_OPAQUE_CONDUIT, new Item.Settings().group(ITEMGROUP)));
+        public static final Item CYAN_OPAQUE_CONDUIT = register("cyan_opaque_conduit", new BlockItem(IndConstr.Blocks.CYAN_OPAQUE_CONDUIT, new Item.Settings().group(ITEMGROUP)));
+        public static final Item PURPLE_OPAQUE_CONDUIT = register("purple_opaque_conduit", new BlockItem(IndConstr.Blocks.PURPLE_OPAQUE_CONDUIT, new Item.Settings().group(ITEMGROUP)));
+        public static final Item BLUE_OPAQUE_CONDUIT = register("blue_opaque_conduit", new BlockItem(IndConstr.Blocks.BLUE_OPAQUE_CONDUIT, new Item.Settings().group(ITEMGROUP)));
+        public static final Item BROWN_OPAQUE_CONDUIT = register("brown_opaque_conduit", new BlockItem(IndConstr.Blocks.BROWN_OPAQUE_CONDUIT, new Item.Settings().group(ITEMGROUP)));
+        public static final Item GREEN_OPAQUE_CONDUIT = register("green_opaque_conduit", new BlockItem(IndConstr.Blocks.GREEN_OPAQUE_CONDUIT, new Item.Settings().group(ITEMGROUP)));
+        public static final Item RED_OPAQUE_CONDUIT = register("red_opaque_conduit", new BlockItem(IndConstr.Blocks.RED_OPAQUE_CONDUIT, new Item.Settings().group(ITEMGROUP)));
+        public static final Item BLACK_OPAQUE_CONDUIT = register("black_opaque_conduit", new BlockItem(IndConstr.Blocks.BLACK_OPAQUE_CONDUIT, new Item.Settings().group(ITEMGROUP)));
 
         public static final Item WHITE_EXTRACTOR = register("white_extractor", new BlockItem(IndConstr.Blocks.WHITE_EXTRACTOR, new Item.Settings().group(ITEMGROUP)));
         public static final Item ORANGE_EXTRACTOR = register("orange_extractor", new BlockItem(IndConstr.Blocks.ORANGE_EXTRACTOR, new Item.Settings().group(ITEMGROUP)));
