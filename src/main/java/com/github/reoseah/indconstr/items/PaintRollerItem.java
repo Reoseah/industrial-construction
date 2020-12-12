@@ -1,6 +1,8 @@
 package com.github.reoseah.indconstr.items;
 
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 
 import com.github.reoseah.indconstr.IndConstr;
 import com.github.reoseah.indconstr.api.blocks.ColorableBlock;
@@ -22,11 +24,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class PaintRollerItem extends Item {
+    public static final Map<DyeColor, Item> INSTANCES = new EnumMap<>(DyeColor.class);
+
     protected final DyeColor color;
 
     public PaintRollerItem(DyeColor color, Item.Settings settings) {
         super(settings);
         this.color = color;
+        INSTANCES.put(color, this);
     }
 
     @Override

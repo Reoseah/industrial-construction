@@ -1,7 +1,5 @@
 package com.github.reoseah.indconstr;
 
-import org.jetbrains.annotations.Nullable;
-
 import com.github.reoseah.indconstr.blocks.CatwalkBlock;
 import com.github.reoseah.indconstr.blocks.CatwalkStairsBlock;
 import com.github.reoseah.indconstr.blocks.ColoredTransparentConduitBlock;
@@ -37,6 +35,7 @@ import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialRecipeSerializer;
 import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.tag.Tag;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -109,66 +108,63 @@ public final class IndConstr {
         public static final Item CATWALK_STAIRS = register("catwalk_stairs", new TallBlockItem(IndConstr.Blocks.CATWALK_STAIRS, new Item.Settings().group(IndConstr.ITEMGROUP)));
         public static final Item REINFORCED_GLASS = register("reinforced_glass", new BlockItem(IndConstr.Blocks.REINFORCED_GLASS, new Item.Settings().group(IndConstr.ITEMGROUP)));
 
+        private static final Tag<Item> IRON_INGOTS = TagRegistry.item(new Identifier("c:iron_ingots"));
         public static final Item IRON_BAR = register("iron_bar", new Item(new Item.Settings().group(ITEMGROUP)));
-        public static final Item WRENCH = register("wrench", new WrenchItem(TagRegistry.item(new Identifier("c:iron_ingots")), new Item.Settings().maxDamage(512).group(ITEMGROUP)));
-        public static final Item PAINT_SCRAPER = register("paint_scraper", new PaintScraperItem(TagRegistry.item(new Identifier("c:iron_ingots")), new Item.Settings().maxDamage(256).group(ITEMGROUP)));
+        public static final Item WRENCH = register("wrench", new WrenchItem(Items.IRON_INGOTS, new Item.Settings().maxDamage(512).group(ITEMGROUP)));
+        public static final Item PAINT_SCRAPER = register("paint_scraper", new PaintScraperItem(Items.IRON_INGOTS, new Item.Settings().maxDamage(256).group(ITEMGROUP)));
         public static final Item PAINT_ROLLER = register("paint_roller", new Item(new Item.Settings().maxCount(1).group(ITEMGROUP)));
 
         private static final Item.Settings PAINT_ROLLER_SETTINGS = new Item.Settings().maxDamage(32).group(ITEMGROUP);
-        public static final Item[] PAINT_ROLLERS = {
-                register("white_paint_roller", new PaintRollerItem(DyeColor.WHITE, PAINT_ROLLER_SETTINGS)),
-                register("orange_paint_roller", new PaintRollerItem(DyeColor.ORANGE, PAINT_ROLLER_SETTINGS)),
-                register("magenta_paint_roller", new PaintRollerItem(DyeColor.MAGENTA, PAINT_ROLLER_SETTINGS)),
-                register("light_blue_paint_roller", new PaintRollerItem(DyeColor.LIGHT_BLUE, PAINT_ROLLER_SETTINGS)),
-                register("yellow_paint_roller", new PaintRollerItem(DyeColor.YELLOW, PAINT_ROLLER_SETTINGS)),
-                register("lime_paint_roller", new PaintRollerItem(DyeColor.LIME, PAINT_ROLLER_SETTINGS)),
-                register("pink_paint_roller", new PaintRollerItem(DyeColor.PINK, PAINT_ROLLER_SETTINGS)),
-                register("gray_paint_roller", new PaintRollerItem(DyeColor.GRAY, PAINT_ROLLER_SETTINGS)),
-                register("light_gray_paint_roller", new PaintRollerItem(DyeColor.LIGHT_GRAY, PAINT_ROLLER_SETTINGS)),
-                register("cyan_paint_roller", new PaintRollerItem(DyeColor.CYAN, PAINT_ROLLER_SETTINGS)),
-                register("purple_paint_roller", new PaintRollerItem(DyeColor.PURPLE, PAINT_ROLLER_SETTINGS)),
-                register("blue_paint_roller", new PaintRollerItem(DyeColor.BLUE, PAINT_ROLLER_SETTINGS)),
-                register("brown_paint_roller", new PaintRollerItem(DyeColor.BROWN, PAINT_ROLLER_SETTINGS)),
-                register("green_paint_roller", new PaintRollerItem(DyeColor.GREEN, PAINT_ROLLER_SETTINGS)),
-                register("red_paint_roller", new PaintRollerItem(DyeColor.RED, PAINT_ROLLER_SETTINGS)),
-                register("black_paint_roller", new PaintRollerItem(DyeColor.BLACK, PAINT_ROLLER_SETTINGS))
-        };
-        public static final Item[] COLORED_CONDUITS = {
-                register("white_conduit", new BlockItem(IndConstr.Blocks.WHITE_CONDUIT, new Item.Settings().group(ITEMGROUP))),
-                register("orange_conduit", new BlockItem(IndConstr.Blocks.ORANGE_CONDUIT, new Item.Settings().group(ITEMGROUP))),
-                register("magenta_conduit", new BlockItem(IndConstr.Blocks.MAGENTA_CONDUIT, new Item.Settings().group(ITEMGROUP))),
-                register("light_blue_conduit", new BlockItem(IndConstr.Blocks.LIGHT_BLUE_CONDUIT, new Item.Settings().group(ITEMGROUP))),
-                register("yellow_conduit", new BlockItem(IndConstr.Blocks.YELLOW_CONDUIT, new Item.Settings().group(ITEMGROUP))),
-                register("lime_conduit", new BlockItem(IndConstr.Blocks.LIME_CONDUIT, new Item.Settings().group(ITEMGROUP))),
-                register("pink_conduit", new BlockItem(IndConstr.Blocks.PINK_CONDUIT, new Item.Settings().group(ITEMGROUP))),
-                register("gray_conduit", new BlockItem(IndConstr.Blocks.GRAY_CONDUIT, new Item.Settings().group(ITEMGROUP))),
-                register("light_gray_conduit", new BlockItem(IndConstr.Blocks.LIGHT_GRAY_CONDUIT, new Item.Settings().group(ITEMGROUP))),
-                register("cyan_conduit", new BlockItem(IndConstr.Blocks.CYAN_CONDUIT, new Item.Settings().group(ITEMGROUP))),
-                register("purple_conduit", new BlockItem(IndConstr.Blocks.PURPLE_CONDUIT, new Item.Settings().group(ITEMGROUP))),
-                register("blue_conduit", new BlockItem(IndConstr.Blocks.BLUE_CONDUIT, new Item.Settings().group(ITEMGROUP))),
-                register("brown_conduit", new BlockItem(IndConstr.Blocks.BROWN_CONDUIT, new Item.Settings().group(ITEMGROUP))),
-                register("green_conduit", new BlockItem(IndConstr.Blocks.GREEN_CONDUIT, new Item.Settings().group(ITEMGROUP))),
-                register("red_conduit", new BlockItem(IndConstr.Blocks.RED_CONDUIT, new Item.Settings().group(ITEMGROUP))),
-                register("black_conduit", new BlockItem(IndConstr.Blocks.BLACK_CONDUIT, new Item.Settings().group(ITEMGROUP)))
-        };
-        public static final Item[] COLORED_EXTRACTORS = {
-                register("white_extractor", new BlockItem(IndConstr.Blocks.WHITE_EXTRACTOR, new Item.Settings().group(ITEMGROUP))),
-                register("orange_extractor", new BlockItem(IndConstr.Blocks.ORANGE_EXTRACTOR, new Item.Settings().group(ITEMGROUP))),
-                register("magenta_extractor", new BlockItem(IndConstr.Blocks.MAGENTA_EXTRACTOR, new Item.Settings().group(ITEMGROUP))),
-                register("light_blue_extractor", new BlockItem(IndConstr.Blocks.LIGHT_BLUE_EXTRACTOR, new Item.Settings().group(ITEMGROUP))),
-                register("yellow_extractor", new BlockItem(IndConstr.Blocks.YELLOW_EXTRACTOR, new Item.Settings().group(ITEMGROUP))),
-                register("lime_extractor", new BlockItem(IndConstr.Blocks.LIME_EXTRACTOR, new Item.Settings().group(ITEMGROUP))),
-                register("pink_extractor", new BlockItem(IndConstr.Blocks.PINK_EXTRACTOR, new Item.Settings().group(ITEMGROUP))),
-                register("gray_extractor", new BlockItem(IndConstr.Blocks.GRAY_EXTRACTOR, new Item.Settings().group(ITEMGROUP))),
-                register("light_gray_extractor", new BlockItem(IndConstr.Blocks.LIGHT_GRAY_EXTRACTOR, new Item.Settings().group(ITEMGROUP))),
-                register("cyan_extractor", new BlockItem(IndConstr.Blocks.CYAN_EXTRACTOR, new Item.Settings().group(ITEMGROUP))),
-                register("purple_extractor", new BlockItem(IndConstr.Blocks.PURPLE_EXTRACTOR, new Item.Settings().group(ITEMGROUP))),
-                register("blue_extractor", new BlockItem(IndConstr.Blocks.BLUE_EXTRACTOR, new Item.Settings().group(ITEMGROUP))),
-                register("brown_extractor", new BlockItem(IndConstr.Blocks.BROWN_EXTRACTOR, new Item.Settings().group(ITEMGROUP))),
-                register("green_extractor", new BlockItem(IndConstr.Blocks.GREEN_EXTRACTOR, new Item.Settings().group(ITEMGROUP))),
-                register("red_extractor", new BlockItem(IndConstr.Blocks.RED_EXTRACTOR, new Item.Settings().group(ITEMGROUP))),
-                register("black_extractor", new BlockItem(IndConstr.Blocks.BLACK_EXTRACTOR, new Item.Settings().group(ITEMGROUP)))
-        };
+        public static final Item WHITE_PAINT_ROLLER = register("white_paint_roller", new PaintRollerItem(DyeColor.WHITE, PAINT_ROLLER_SETTINGS));
+        public static final Item ORANGE_PAINT_ROLLER = register("orange_paint_roller", new PaintRollerItem(DyeColor.ORANGE, PAINT_ROLLER_SETTINGS));
+        public static final Item MAGENTA_PAINT_ROLLER = register("magenta_paint_roller", new PaintRollerItem(DyeColor.MAGENTA, PAINT_ROLLER_SETTINGS));
+        public static final Item LIGHT_BLUE_PAINT_ROLLER = register("light_blue_paint_roller", new PaintRollerItem(DyeColor.LIGHT_BLUE, PAINT_ROLLER_SETTINGS));
+        public static final Item YELLOW_PAINT_ROLLER = register("yellow_paint_roller", new PaintRollerItem(DyeColor.YELLOW, PAINT_ROLLER_SETTINGS));
+        public static final Item LIME_PAINT_ROLLER = register("lime_paint_roller", new PaintRollerItem(DyeColor.LIME, PAINT_ROLLER_SETTINGS));
+        public static final Item PINK_PAINT_ROLLER = register("pink_paint_roller", new PaintRollerItem(DyeColor.PINK, PAINT_ROLLER_SETTINGS));
+        public static final Item GRAY_PAINT_ROLLER = register("gray_paint_roller", new PaintRollerItem(DyeColor.GRAY, PAINT_ROLLER_SETTINGS));
+        public static final Item LIGHT_GRAY_PAINT_ROLLER = register("light_gray_paint_roller", new PaintRollerItem(DyeColor.LIGHT_GRAY, PAINT_ROLLER_SETTINGS));
+        public static final Item CYAN_PAINT_ROLLER = register("cyan_paint_roller", new PaintRollerItem(DyeColor.CYAN, PAINT_ROLLER_SETTINGS));
+        public static final Item PURPLE_PAINT_ROLLER = register("purple_paint_roller", new PaintRollerItem(DyeColor.PURPLE, PAINT_ROLLER_SETTINGS));
+        public static final Item BLUE_PAINT_ROLLER = register("blue_paint_roller", new PaintRollerItem(DyeColor.BLUE, PAINT_ROLLER_SETTINGS));
+        public static final Item BROWN_PAINT_ROLLER = register("brown_paint_roller", new PaintRollerItem(DyeColor.BROWN, PAINT_ROLLER_SETTINGS));
+        public static final Item GREEN_PAINT_ROLLER = register("green_paint_roller", new PaintRollerItem(DyeColor.GREEN, PAINT_ROLLER_SETTINGS));
+        public static final Item RED_PAINT_ROLLER = register("red_paint_roller", new PaintRollerItem(DyeColor.RED, PAINT_ROLLER_SETTINGS));
+        public static final Item BLACK_PAINT_ROLLER = register("black_paint_roller", new PaintRollerItem(DyeColor.BLACK, PAINT_ROLLER_SETTINGS));
+
+        public static final Item WHITE_CONDUIT = register("white_conduit", new BlockItem(IndConstr.Blocks.WHITE_CONDUIT, new Item.Settings().group(ITEMGROUP)));
+        public static final Item ORANGE_CONDUIT = register("orange_conduit", new BlockItem(IndConstr.Blocks.ORANGE_CONDUIT, new Item.Settings().group(ITEMGROUP)));
+        public static final Item MAGENTA_CONDUIT = register("magenta_conduit", new BlockItem(IndConstr.Blocks.MAGENTA_CONDUIT, new Item.Settings().group(ITEMGROUP)));
+        public static final Item LIGHT_BLUE_CONDUIT = register("light_blue_conduit", new BlockItem(IndConstr.Blocks.LIGHT_BLUE_CONDUIT, new Item.Settings().group(ITEMGROUP)));
+        public static final Item YELLOW_CONDUIT = register("yellow_conduit", new BlockItem(IndConstr.Blocks.YELLOW_CONDUIT, new Item.Settings().group(ITEMGROUP)));
+        public static final Item LIME_CONDUIT = register("lime_conduit", new BlockItem(IndConstr.Blocks.LIME_CONDUIT, new Item.Settings().group(ITEMGROUP)));
+        public static final Item PINK_CONDUIT = register("pink_conduit", new BlockItem(IndConstr.Blocks.PINK_CONDUIT, new Item.Settings().group(ITEMGROUP)));
+        public static final Item GRAY_CONDUIT = register("gray_conduit", new BlockItem(IndConstr.Blocks.GRAY_CONDUIT, new Item.Settings().group(ITEMGROUP)));
+        public static final Item LIGHT_GRAY_CONDUIT = register("light_gray_conduit", new BlockItem(IndConstr.Blocks.LIGHT_GRAY_CONDUIT, new Item.Settings().group(ITEMGROUP)));
+        public static final Item CYAN_CONDUIT = register("cyan_conduit", new BlockItem(IndConstr.Blocks.CYAN_CONDUIT, new Item.Settings().group(ITEMGROUP)));
+        public static final Item PURPLE_CONDUIT = register("purple_conduit", new BlockItem(IndConstr.Blocks.PURPLE_CONDUIT, new Item.Settings().group(ITEMGROUP)));
+        public static final Item BLUE_CONDUIT = register("blue_conduit", new BlockItem(IndConstr.Blocks.BLUE_CONDUIT, new Item.Settings().group(ITEMGROUP)));
+        public static final Item BROWN_CONDUIT = register("brown_conduit", new BlockItem(IndConstr.Blocks.BROWN_CONDUIT, new Item.Settings().group(ITEMGROUP)));
+        public static final Item GREEN_CONDUIT = register("green_conduit", new BlockItem(IndConstr.Blocks.GREEN_CONDUIT, new Item.Settings().group(ITEMGROUP)));
+        public static final Item RED_CONDUIT = register("red_conduit", new BlockItem(IndConstr.Blocks.RED_CONDUIT, new Item.Settings().group(ITEMGROUP)));
+        public static final Item BLACK_CONDUIT = register("black_conduit", new BlockItem(IndConstr.Blocks.BLACK_CONDUIT, new Item.Settings().group(ITEMGROUP)));
+
+        public static final Item WHITE_EXTRACTOR = register("white_extractor", new BlockItem(IndConstr.Blocks.WHITE_EXTRACTOR, new Item.Settings().group(ITEMGROUP)));
+        public static final Item ORANGE_EXTRACTOR = register("orange_extractor", new BlockItem(IndConstr.Blocks.ORANGE_EXTRACTOR, new Item.Settings().group(ITEMGROUP)));
+        public static final Item MAGENTA_EXTRACTOR = register("magenta_extractor", new BlockItem(IndConstr.Blocks.MAGENTA_EXTRACTOR, new Item.Settings().group(ITEMGROUP)));
+        public static final Item LIGHT_BLUE_EXTRACTOR = register("light_blue_extractor", new BlockItem(IndConstr.Blocks.LIGHT_BLUE_EXTRACTOR, new Item.Settings().group(ITEMGROUP)));
+        public static final Item YELLOW_EXTRACTOR = register("yellow_extractor", new BlockItem(IndConstr.Blocks.YELLOW_EXTRACTOR, new Item.Settings().group(ITEMGROUP)));
+        public static final Item LIME_EXTRACTOR = register("lime_extractor", new BlockItem(IndConstr.Blocks.LIME_EXTRACTOR, new Item.Settings().group(ITEMGROUP)));
+        public static final Item PINK_EXTRACTOR = register("pink_extractor", new BlockItem(IndConstr.Blocks.PINK_EXTRACTOR, new Item.Settings().group(ITEMGROUP)));
+        public static final Item GRAY_EXTRACTOR = register("gray_extractor", new BlockItem(IndConstr.Blocks.GRAY_EXTRACTOR, new Item.Settings().group(ITEMGROUP)));
+        public static final Item LIGHT_GRAY_EXTRACTOR = register("light_gray_extractor", new BlockItem(IndConstr.Blocks.LIGHT_GRAY_EXTRACTOR, new Item.Settings().group(ITEMGROUP)));
+        public static final Item CYAN_EXTRACTOR = register("cyan_extractor", new BlockItem(IndConstr.Blocks.CYAN_EXTRACTOR, new Item.Settings().group(ITEMGROUP)));
+        public static final Item PURPLE_EXTRACTOR = register("purple_extractor", new BlockItem(IndConstr.Blocks.PURPLE_EXTRACTOR, new Item.Settings().group(ITEMGROUP)));
+        public static final Item BLUE_EXTRACTOR = register("blue_extractor", new BlockItem(IndConstr.Blocks.BLUE_EXTRACTOR, new Item.Settings().group(ITEMGROUP)));
+        public static final Item BROWN_EXTRACTOR = register("brown_extractor", new BlockItem(IndConstr.Blocks.BROWN_EXTRACTOR, new Item.Settings().group(ITEMGROUP)));
+        public static final Item GREEN_EXTRACTOR = register("green_extractor", new BlockItem(IndConstr.Blocks.GREEN_EXTRACTOR, new Item.Settings().group(ITEMGROUP)));
+        public static final Item RED_EXTRACTOR = register("red_extractor", new BlockItem(IndConstr.Blocks.RED_EXTRACTOR, new Item.Settings().group(ITEMGROUP)));
+        public static final Item BLACK_EXTRACTOR = register("black_extractor", new BlockItem(IndConstr.Blocks.BLACK_EXTRACTOR, new Item.Settings().group(ITEMGROUP)));
 
         private static Item register(String name, Item item) {
             return Registry.register(Registry.ITEM, "indconstr:" + name, item);
@@ -176,17 +172,10 @@ public final class IndConstr {
     }
 
     public static final class BlockEntityTypes {
-        public static final BlockEntityType<ConduitBlockEntity> CONDUIT = register("conduit", new BlockEntityType<>(ConduitBlockEntity::new,
-                ImmutableSet.of(Blocks.CONDUIT, Blocks.CONDUIT_IN_SCAFFOLDING, Blocks.WHITE_CONDUIT, Blocks.ORANGE_CONDUIT, Blocks.MAGENTA_CONDUIT, Blocks.LIGHT_BLUE_CONDUIT,
-                        Blocks.YELLOW_CONDUIT, Blocks.LIME_CONDUIT, Blocks.PINK_CONDUIT, Blocks.LIGHT_GRAY_CONDUIT, Blocks.GRAY_CONDUIT, Blocks.CYAN_CONDUIT,
-                        Blocks.PURPLE_CONDUIT, Blocks.BLUE_CONDUIT, Blocks.BROWN_CONDUIT, Blocks.GREEN_CONDUIT, Blocks.RED_CONDUIT, Blocks.BLACK_CONDUIT),
-                null));
-        public static final BlockEntityType<ExtractorBlockEntity> EXTRACTOR = register("extractor", new BlockEntityType<>(ExtractorBlockEntity::new,
-                ImmutableSet.of(Blocks.EXTRACTOR,
-                        Blocks.WHITE_EXTRACTOR, Blocks.ORANGE_EXTRACTOR, Blocks.MAGENTA_EXTRACTOR, Blocks.LIGHT_BLUE_EXTRACTOR,
-                        Blocks.YELLOW_EXTRACTOR, Blocks.LIME_EXTRACTOR, Blocks.PINK_EXTRACTOR, Blocks.LIGHT_GRAY_EXTRACTOR, Blocks.GRAY_EXTRACTOR, Blocks.CYAN_EXTRACTOR,
-                        Blocks.PURPLE_EXTRACTOR, Blocks.BLUE_EXTRACTOR, Blocks.BROWN_EXTRACTOR, Blocks.GREEN_EXTRACTOR, Blocks.RED_EXTRACTOR, Blocks.BLACK_EXTRACTOR),
-                null));
+        public static final BlockEntityType<ConduitBlockEntity> CONDUIT = register("conduit",
+                new BlockEntityType<>(ConduitBlockEntity::new, ImmutableSet.<Block>builder().add(Blocks.CONDUIT, Blocks.CONDUIT_IN_SCAFFOLDING).addAll(ColoredTransparentConduitBlock.INSTANCES.values()).build(), null));
+        public static final BlockEntityType<ExtractorBlockEntity> EXTRACTOR = register("extractor",
+                new BlockEntityType<>(ExtractorBlockEntity::new, ImmutableSet.<Block>builder().add(Blocks.EXTRACTOR).addAll(ColoredTransparentExtractorBlock.INSTANCES.values()).build(), null));
 
         private static <T extends BlockEntity> BlockEntityType<T> register(String name, BlockEntityType<T> type) {
             return Registry.register(Registry.BLOCK_ENTITY_TYPE, "indconstr:" + name, type);
@@ -199,93 +188,5 @@ public final class IndConstr {
         private static <S extends RecipeSerializer<T>, T extends Recipe<?>> S register(String name, S serializer) {
             return Registry.register(Registry.RECIPE_SERIALIZER, "indconstr:" + name, serializer);
         }
-    }
-
-    public static Block getColoredConduit(@Nullable DyeColor color) {
-        if (color == null) {
-            return Blocks.CONDUIT;
-        }
-        switch (color) {
-        case WHITE:
-            return Blocks.WHITE_CONDUIT;
-        case ORANGE:
-            return Blocks.ORANGE_CONDUIT;
-        case MAGENTA:
-            return Blocks.MAGENTA_CONDUIT;
-        case LIGHT_BLUE:
-            return Blocks.LIGHT_BLUE_CONDUIT;
-        case YELLOW:
-            return Blocks.YELLOW_CONDUIT;
-        case LIME:
-            return Blocks.LIME_CONDUIT;
-        case PINK:
-            return Blocks.PINK_CONDUIT;
-        case GRAY:
-            return Blocks.GRAY_CONDUIT;
-        case LIGHT_GRAY:
-            return Blocks.LIGHT_GRAY_CONDUIT;
-        case CYAN:
-            return Blocks.CYAN_CONDUIT;
-        case PURPLE:
-            return Blocks.PURPLE_CONDUIT;
-        case BLUE:
-            return Blocks.BLUE_CONDUIT;
-        case BROWN:
-            return Blocks.BROWN_CONDUIT;
-        case GREEN:
-            return Blocks.GREEN_CONDUIT;
-        case RED:
-            return Blocks.RED_CONDUIT;
-        case BLACK:
-            return Blocks.BLACK_CONDUIT;
-        default:
-            throw new UnsupportedOperationException();
-        }
-    }
-
-    public static Block getColoredExtractor(@Nullable DyeColor color) {
-        if (color == null) {
-            return Blocks.EXTRACTOR;
-        }
-        switch (color) {
-        case WHITE:
-            return Blocks.WHITE_EXTRACTOR;
-        case ORANGE:
-            return Blocks.ORANGE_EXTRACTOR;
-        case MAGENTA:
-            return Blocks.MAGENTA_EXTRACTOR;
-        case LIGHT_BLUE:
-            return Blocks.LIGHT_BLUE_EXTRACTOR;
-        case YELLOW:
-            return Blocks.YELLOW_EXTRACTOR;
-        case LIME:
-            return Blocks.LIME_EXTRACTOR;
-        case PINK:
-            return Blocks.PINK_EXTRACTOR;
-        case GRAY:
-            return Blocks.GRAY_EXTRACTOR;
-        case LIGHT_GRAY:
-            return Blocks.LIGHT_GRAY_EXTRACTOR;
-        case CYAN:
-            return Blocks.CYAN_EXTRACTOR;
-        case PURPLE:
-            return Blocks.PURPLE_EXTRACTOR;
-        case BLUE:
-            return Blocks.BLUE_EXTRACTOR;
-        case BROWN:
-            return Blocks.BROWN_EXTRACTOR;
-        case GREEN:
-            return Blocks.GREEN_EXTRACTOR;
-        case RED:
-            return Blocks.RED_EXTRACTOR;
-        case BLACK:
-            return Blocks.BLACK_EXTRACTOR;
-        default:
-            throw new UnsupportedOperationException();
-        }
-    }
-
-    public static Item getPaintRoller(@Nullable DyeColor color) {
-        return color != null ? Items.PAINT_ROLLERS[color.getId()] : Items.PAINT_ROLLER;
     }
 }

@@ -107,7 +107,7 @@ public class PaintRollerFillingRecipe extends SpecialCraftingRecipe {
             }
         }
         if (!paintroller.isEmpty() && !dyes.isEmpty() && dyes.size() <= 4) {
-            ItemStack paintroller2 = new ItemStack(IndConstr.getPaintRoller(color));
+            ItemStack paintroller2 = new ItemStack(PaintRollerItem.INSTANCES.get(color));
             int left = dyes.size() * 8;
             if (item instanceof PaintRollerItem) {
                 paintroller2.setDamage(paintroller2.getMaxDamage() - left - paintroller.getMaxDamage() + paintroller.getDamage());
