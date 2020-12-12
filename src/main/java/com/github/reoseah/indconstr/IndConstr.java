@@ -7,6 +7,7 @@ import com.github.reoseah.indconstr.blocks.ColoredTransparentConduitBlock;
 import com.github.reoseah.indconstr.blocks.ColoredTransparentExtractorBlock;
 import com.github.reoseah.indconstr.blocks.ConduitInScaffoldingBlock;
 import com.github.reoseah.indconstr.blocks.OpaqueConduitBlock;
+import com.github.reoseah.indconstr.blocks.OpaqueExtractorBlock;
 import com.github.reoseah.indconstr.blocks.ScaffoldingBlock;
 import com.github.reoseah.indconstr.blocks.TransparentConduitBlock;
 import com.github.reoseah.indconstr.blocks.TransparentExtractorBlock;
@@ -56,6 +57,7 @@ public final class IndConstr {
         public static final Block CONDUIT = register("conduit", new TransparentConduitBlock(INDCONSTR_IRON));
         public static final Block OPAQUE_CONDUIT = register("opaque_conduit", new OpaqueConduitBlock(INDCONSTR_IRON));
         public static final Block EXTRACTOR = register("extractor", new TransparentExtractorBlock(INDCONSTR_IRON));
+        public static final Block OPAQUE_EXTRACTOR = register("opaque_extractor", new OpaqueExtractorBlock(INDCONSTR_IRON));
 
         public static final Block SCAFFOLDING = register("scaffolding", new ScaffoldingBlock(INDCONSTR_IRON));
         public static final Block CONDUIT_IN_SCAFFOLDING = register("conduit_in_scaffolding", new ConduitInScaffoldingBlock(INDCONSTR_IRON));
@@ -123,6 +125,7 @@ public final class IndConstr {
         public static final Item CONDUIT = register("conduit", new BlockItem(IndConstr.Blocks.CONDUIT, new Item.Settings().group(IndConstr.ITEMGROUP)));
         public static final Item OPAQUE_CONDUIT = register("opaque_conduit", new BlockItem(IndConstr.Blocks.OPAQUE_CONDUIT, new Item.Settings().group(IndConstr.ITEMGROUP)));
         public static final Item EXTRACTOR = register("extractor", new BlockItem(IndConstr.Blocks.EXTRACTOR, new Item.Settings().group(IndConstr.ITEMGROUP)));
+        public static final Item OPAQUE_EXTRACTOR = register("opaque_extractor", new BlockItem(IndConstr.Blocks.OPAQUE_EXTRACTOR, new Item.Settings().group(IndConstr.ITEMGROUP)));
 
         public static final Item SCAFFOLDING = register("scaffolding", new BlockItem(IndConstr.Blocks.SCAFFOLDING, new Item.Settings().group(IndConstr.ITEMGROUP)));
         public static final Item CATWALK = register("catwalk", new BlockItem(IndConstr.Blocks.CATWALK, new Item.Settings().group(IndConstr.ITEMGROUP)));
@@ -213,9 +216,11 @@ public final class IndConstr {
         public static final BlockEntityType<ConduitBlockEntity> CONDUIT = register("conduit",
                 new BlockEntityType<>(ConduitBlockEntity::createTransparent, ImmutableSet.<Block>builder().add(Blocks.CONDUIT, Blocks.CONDUIT_IN_SCAFFOLDING).addAll(ColoredTransparentConduitBlock.INSTANCES.values()).build(), null));
         public static final BlockEntityType<ExtractorBlockEntity> EXTRACTOR = register("extractor",
-                new BlockEntityType<>(ExtractorBlockEntity::new, ImmutableSet.<Block>builder().add(Blocks.EXTRACTOR).addAll(ColoredTransparentExtractorBlock.INSTANCES.values()).build(), null));
+                new BlockEntityType<>(ExtractorBlockEntity::createTransparent, ImmutableSet.<Block>builder().add(Blocks.EXTRACTOR).addAll(ColoredTransparentExtractorBlock.INSTANCES.values()).build(), null));
         public static final BlockEntityType<ConduitBlockEntity> OPAQUE_CONDUIT = register("opaque_conduit",
                 new BlockEntityType<>(ConduitBlockEntity::createOpaque, ImmutableSet.<Block>builder().add(Blocks.OPAQUE_CONDUIT).addAll(ColoredOpaqueConduitBlock.INSTANCES.values()).build(), null));
+        public static final BlockEntityType<ConduitBlockEntity> OPAQUE_EXTRACTOR = register("opaque_extractor",
+                new BlockEntityType<>(ExtractorBlockEntity::createOpaque, ImmutableSet.<Block>builder().add(Blocks.OPAQUE_EXTRACTOR).build(), null));
 
         private static <T extends BlockEntity> BlockEntityType<T> register(String name, BlockEntityType<T> type) {
             return Registry.register(Registry.BLOCK_ENTITY_TYPE, "indconstr:" + name, type);

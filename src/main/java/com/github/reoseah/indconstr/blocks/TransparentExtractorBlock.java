@@ -3,11 +3,13 @@ package com.github.reoseah.indconstr.blocks;
 import org.jetbrains.annotations.Nullable;
 
 import com.github.reoseah.indconstr.api.blocks.ColorableBlock;
+import com.github.reoseah.indconstr.blocks.entities.ExtractorBlockEntity;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -40,4 +42,10 @@ public class TransparentExtractorBlock extends ExtractorBlock implements Colorab
         return ((AbstractConduitConnectingBlock) ColoredTransparentExtractorBlock.INSTANCES.get(color))
                 .getStateForPos(world, pos).with(DIRECTION, state.get(DIRECTION));
     }
+
+    @Override
+    public BlockEntity createBlockEntity(BlockView world) {
+        return ExtractorBlockEntity.createTransparent();
+    }
+
 }

@@ -3,7 +3,6 @@ package com.github.reoseah.indconstr.blocks;
 import org.jetbrains.annotations.Nullable;
 
 import com.github.reoseah.indconstr.api.blocks.WrenchableBlock;
-import com.github.reoseah.indconstr.blocks.entities.ExtractorBlockEntity;
 
 import alexiil.mc.lib.attributes.SearchOptions;
 import alexiil.mc.lib.attributes.item.ItemAttributes;
@@ -16,7 +15,6 @@ import net.minecraft.block.LeverBlock;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.WallMountedBlock;
 import net.minecraft.block.Waterloggable;
-import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
@@ -163,11 +161,6 @@ public abstract class ExtractorBlock extends AbstractConduitConnectingBlock impl
             world.getFluidTickScheduler().schedule(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
         }
         return super.getStateForNeighborUpdate(state, direction, newState, world, pos, posFrom);
-    }
-
-    @Override
-    public BlockEntity createBlockEntity(BlockView world) {
-        return new ExtractorBlockEntity();
     }
 
     @Override

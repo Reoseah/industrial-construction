@@ -8,6 +8,7 @@ import alexiil.mc.lib.attributes.item.ItemAttributes;
 import alexiil.mc.lib.attributes.item.ItemExtractable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.LeverBlock;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.math.Direction;
@@ -15,8 +16,16 @@ import net.minecraft.util.math.Direction;
 public class ExtractorBlockEntity extends ConduitBlockEntity {
     protected int transferCooldown;
 
-    public ExtractorBlockEntity() {
-        super(IndConstr.BlockEntityTypes.EXTRACTOR);
+    protected ExtractorBlockEntity(BlockEntityType<?> type) {
+        super(type);
+    }
+
+    public static ExtractorBlockEntity createTransparent() {
+        return new ExtractorBlockEntity(IndConstr.BlockEntityTypes.EXTRACTOR);
+    }
+
+    public static ExtractorBlockEntity createOpaque() {
+        return new ExtractorBlockEntity(IndConstr.BlockEntityTypes.OPAQUE_EXTRACTOR);
     }
 
     @Override
