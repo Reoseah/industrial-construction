@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  
+  "pattern": [
+    "###",
+    "#X#",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "indconstr:opaque_conduit"
+    },
+    "X": {
+      "item": "minecraft:green_dye"
+    }
+  },
+  "result": {
+    "item": "indconstr:green_opaque_conduit",
+    "count": 8
+  }
+}

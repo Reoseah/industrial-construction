@@ -135,7 +135,7 @@ public class ConduitInScaffoldingBlock extends AbstractConduitConnectingBlock im
 
     @Override
     public BlockEntity createBlockEntity(BlockView world) {
-        return new ConduitBlockEntity();
+        return ConduitBlockEntity.createTransparent();
     }
 
     @Override

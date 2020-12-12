@@ -1,14 +1,12 @@
 package com.github.reoseah.indconstr.blocks;
 
 import com.github.reoseah.indconstr.IndConstr;
-import com.github.reoseah.indconstr.blocks.entities.ConduitBlockEntity;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.Waterloggable;
-import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
@@ -100,10 +98,5 @@ public abstract class ConduitBlock extends AbstractConduitConnectingBlock implem
             world.getFluidTickScheduler().schedule(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
         }
         return super.getStateForNeighborUpdate(state, direction, newState, world, pos, posFrom);
-    }
-
-    @Override
-    public BlockEntity createBlockEntity(BlockView world) {
-        return new ConduitBlockEntity();
     }
 }

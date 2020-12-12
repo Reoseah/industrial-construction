@@ -1,13 +1,13 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
+    "#G#",
     "GGG",
-    "G#G",
-    "GGG"
+    "#G#"
   ],
   "key": {
     "#": {
-      "tag": "c:iron_ingots"
+      "tag": "c:iron_bars"
     },
     "G": {
       "item": "minecraft:glass"
@@ -15,6 +15,6 @@
   },
   "result": {
     "item": "indconstr:reinforced_glass",
-    "count": 8
+    "count": 5
   }
 }

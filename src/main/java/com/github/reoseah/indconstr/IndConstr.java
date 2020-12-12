@@ -211,9 +211,11 @@ public final class IndConstr {
 
     public static final class BlockEntityTypes {
         public static final BlockEntityType<ConduitBlockEntity> CONDUIT = register("conduit",
-                new BlockEntityType<>(ConduitBlockEntity::new, ImmutableSet.<Block>builder().add(Blocks.CONDUIT, Blocks.CONDUIT_IN_SCAFFOLDING).addAll(ColoredTransparentConduitBlock.INSTANCES.values()).build(), null));
+                new BlockEntityType<>(ConduitBlockEntity::createTransparent, ImmutableSet.<Block>builder().add(Blocks.CONDUIT, Blocks.CONDUIT_IN_SCAFFOLDING).addAll(ColoredTransparentConduitBlock.INSTANCES.values()).build(), null));
         public static final BlockEntityType<ExtractorBlockEntity> EXTRACTOR = register("extractor",
                 new BlockEntityType<>(ExtractorBlockEntity::new, ImmutableSet.<Block>builder().add(Blocks.EXTRACTOR).addAll(ColoredTransparentExtractorBlock.INSTANCES.values()).build(), null));
+        public static final BlockEntityType<ConduitBlockEntity> OPAQUE_CONDUIT = register("opaque_conduit",
+                new BlockEntityType<>(ConduitBlockEntity::createOpaque, ImmutableSet.<Block>builder().add(Blocks.OPAQUE_CONDUIT).addAll(ColoredOpaqueConduitBlock.INSTANCES.values()).build(), null));
 
         private static <T extends BlockEntity> BlockEntityType<T> register(String name, BlockEntityType<T> type) {
             return Registry.register(Registry.BLOCK_ENTITY_TYPE, "indconstr:" + name, type);

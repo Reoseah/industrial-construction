@@ -1,14 +1,14 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "#S#"
+    "#B#"
   ],
   "key": {
     "#": {
       "tag": "c:iron_ingots"
     },
-    "G": {
-      "item": "c:reinforced_glass"
+    "B": {
+      "tag": "c:iron_bars"
     }
   },
   "result": {

@@ -8,7 +8,7 @@ import org.jetbrains.annotations.Nullable;
 import com.github.reoseah.indconstr.api.blocks.WrenchableBlock;
 import com.github.reoseah.indconstr.blocks.entities.ConduitBlockEntity;
 import com.github.reoseah.indconstr.blocks.entities.ConduitBlockEntity.TravellingItem;
-import com.github.reoseah.indconstr.client.render.ConduitBlockEntityRenderer;
+import com.github.reoseah.indconstr.client.render.TransparentConduitBlockEntityRenderer;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
@@ -118,8 +118,8 @@ public class IndConstrInitializer implements ModInitializer, ClientModInitialize
 
                 });
 
-        BlockEntityRendererRegistry.INSTANCE.register(IndConstr.BlockEntityTypes.CONDUIT, ConduitBlockEntityRenderer::new);
-        BlockEntityRendererRegistry.INSTANCE.register(IndConstr.BlockEntityTypes.EXTRACTOR, ConduitBlockEntityRenderer::new);
+        BlockEntityRendererRegistry.INSTANCE.register(IndConstr.BlockEntityTypes.CONDUIT, TransparentConduitBlockEntityRenderer::new);
+        BlockEntityRendererRegistry.INSTANCE.register(IndConstr.BlockEntityTypes.EXTRACTOR, TransparentConduitBlockEntityRenderer::new);
 
         FabricModelPredicateProviderRegistry.register(IndConstr.Items.WRENCH, new Identifier("open"),
                 (ItemStack stack, @Nullable ClientWorld world, @Nullable LivingEntity entity) -> {

@@ -4,11 +4,13 @@ import org.jetbrains.annotations.Nullable;
 
 import com.github.reoseah.indconstr.api.blocks.ColorableBlock;
 import com.github.reoseah.indconstr.api.blocks.ConduitConnectingBlock;
+import com.github.reoseah.indconstr.blocks.entities.ConduitBlockEntity;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -38,6 +40,11 @@ public class OpaqueConduitBlock extends ConduitBlock implements ColorableBlock {
 
     @Override
     public BlockState getColoredState(BlockState state, BlockView world, BlockPos pos, @Nullable DyeColor color) {
-        return ((AbstractConduitConnectingBlock) ColoredOpaqueConduitBlock.INSTANCES).getStateForPos(world, pos);
+        return ((AbstractConduitConnectingBlock) ColoredOpaqueConduitBlock.INSTANCES.get(color)).getStateForPos(world, pos);
+    }
+
+    @Override
+    public BlockEntity createBlockEntity(BlockView world) {
+        return ConduitBlockEntity.createOpaque();
     }
 }
