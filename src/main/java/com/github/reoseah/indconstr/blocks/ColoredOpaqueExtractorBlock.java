@@ -1,7 +1,11 @@
 package com.github.reoseah.indconstr.blocks;
 
+import java.util.EnumMap;
+import java.util.Map;
+
 import org.jetbrains.annotations.Nullable;
 
+import com.github.reoseah.indconstr.IndConstr;
 import com.github.reoseah.indconstr.api.blocks.ColorableBlock;
 import com.github.reoseah.indconstr.blocks.entities.ExtractorBlockEntity;
 
@@ -15,9 +19,15 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
 
-public class OpaqueExtractorBlock extends ExtractorBlock implements ColorableBlock {
-    public OpaqueExtractorBlock(Block.Settings settings) {
+public class ColoredOpaqueExtractorBlock extends ExtractorBlock implements ColorableBlock {
+    public static final Map<DyeColor, Block> INSTANCES = new EnumMap<>(DyeColor.class);
+
+    protected final @Nullable DyeColor color;
+
+    public ColoredOpaqueExtractorBlock(DyeColor color, Block.Settings settings) {
         super(settings);
+        this.color = color;
+        INSTANCES.put(color, this);
     }
 
     @Environment(EnvType.CLIENT)
@@ -29,17 +39,17 @@ public class OpaqueExtractorBlock extends ExtractorBlock implements ColorableBlo
 
     @Override
     public @Nullable DyeColor getColor() {
-        return null;
+        return this.color;
     }
 
     @Override
     public boolean canColor(@Nullable DyeColor color) {
-        return color != null;
+        return color == null;
     }
 
     @Override
     public BlockState getColoredState(BlockState state, BlockView world, BlockPos pos, @Nullable DyeColor color) {
-        return ((AbstractConduitConnectingBlock) ColoredOpaqueExtractorBlock.INSTANCES.get(color))
+        return ((AbstractConduitConnectingBlock) IndConstr.Blocks.OPAQUE_EXTRACTOR)
                 .getStateForPos(world, pos).with(DIRECTION, state.get(DIRECTION));
     }
 

@@ -8,7 +8,7 @@
       "tag": "c:iron_ingots"
     },
     "G": {
-      "item": "c:reinforced_glass"
+      "item": "indconstr:reinforced_glass"
     }
   },
   "result": {
