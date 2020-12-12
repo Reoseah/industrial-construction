@@ -1,0 +1,8 @@
+{
+    "parent": "indconstr:block/template_conduit_connection",
+    "textures": {
+        "side": "indconstr:block/green_conduit",
+        "end": "indconstr:block/green_conduit",
+        "top": "indconstr:block/green_conduit_top"
+    }
+}

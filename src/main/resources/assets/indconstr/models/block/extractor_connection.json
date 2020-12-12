@@ -1,0 +1,22 @@
+{
+    "textures": {
+        "texture": "indconstr:block/extractor",
+        "top": "indconstr:block/conduit_top",
+        "conduit": "indconstr:block/extractor",
+        "particle": "indconstr:block/conduit"
+    },
+    "elements": [
+        {   
+			"from": [ 2, 2, -0.01 ],
+            "to": [ 14, 14, 4 ],
+            "faces": {
+                "down":  { "texture": "#texture", "uv": [ 5, 14, 11, 16 ] },
+                "up":    { "texture": "#texture", "uv": [ 5, 0, 11, 2 ] },
+                "west":  { "texture": "#texture", "uv": [ 0, 5, 2, 11 ] },
+                "east":  { "texture": "#texture", "uv": [ 14, 5, 16, 11 ] },
+                "north": { "texture": "#texture", "uv": [ 5, 5, 11, 11 ], "cullface":"north" },
+                "south": { "texture": "#texture", "uv": [ 5, 5, 11, 11 ] }
+            }
+        }
+    ]
+}

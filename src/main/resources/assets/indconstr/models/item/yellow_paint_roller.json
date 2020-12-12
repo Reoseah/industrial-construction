@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "indconstr:item/yellow_paint_roller"
+  }
+}

@@ -1,0 +1,6 @@
+{
+    "parent": "indconstr:block/template_conduit_end",
+    "textures": {
+        "texture": "indconstr:block/pink_conduit"
+    }
+}

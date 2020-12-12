@@ -1,32 +1,32 @@
 {
   "schemaVersion": 1,
-  "id": "velvet",
+  "id": "indconstr",
   "version": "${version}",
 
-  "name": "Velvet",
+  "name": "indconstr",
   "description": "Small highly esthetic item transport and building mod.",
   "authors": [
     "Reoseah"
   ],
   "contact": {
-    "homepage": "https://github.com/Reoseah/velvet",
-    "sources": "https://github.com/Reoseah/velvet"
+    "homepage": "https://github.com/Reoseah/indconstr",
+    "sources": "https://github.com/Reoseah/indconstr"
   },
 
   "license": "CC0-1.0",
-  "icon": "assets/velvet/icon.png",
+  "icon": "assets/indconstr/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "reoseah.velvet.VelvetInitializer"
+      "com.github.reoseah.indconstr.IndConstrInitializer"
     ],
     "client": [
-      "reoseah.velvet.VelvetInitializer"
+      "com.github.reoseah.indconstr.IndConstrInitializer"
     ]
   },
   "mixins": [
-    "velvet.mixins.json"
+    "indconstr.mixins.json"
   ],
 
   "depends": {

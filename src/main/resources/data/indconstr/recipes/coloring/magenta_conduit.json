@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  
+  "pattern": [
+    "###",
+    "#X#",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "indconstr:conduit"
+    },
+    "X": {
+      "item": "minecraft:magenta_dye"
+    }
+  },
+  "result": {
+    "item": "indconstr:magenta_conduit",
+    "count": 8
+  }
+}

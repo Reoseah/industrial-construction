@@ -1,0 +1,54 @@
+{
+    "parent": "block/block",
+    "ambientocclusion": false,
+    "elements": [
+        {   "from": [ 0, 0, 0 ],
+            "to": [ 16, 0, 16 ],
+            "faces": {
+                "down": { "texture": "#floor" },
+                "up": { "texture": "#floor" }
+            }
+        },
+        {   "from": [ 1, 0, 0 ],
+            "to": [ 1, 16, 16 ],
+            "faces": {
+                "west": { "texture": "#side" },
+                "east": { "texture": "#side" }
+            }
+        },
+        {   "from": [ 15, 0, 0 ],
+            "to": [ 15, 16, 16 ],
+            "faces": {
+                "west": { "texture": "#side" },
+                "east": { "texture": "#side" }
+            }
+        },
+        {   "from": [ 0, 0, 1 ],
+            "to": [ 16, 16, 1 ],
+            "faces": {
+                "north": { "texture": "#side" },
+                "south": { "texture": "#side" }
+            }
+        },
+        {   "from": [ 0, 0, 15 ],
+            "to": [ 16, 16, 15 ],
+            "faces": {
+                "north": { "texture": "#side" },
+                "south": { "texture": "#side" }
+            }
+        },
+        {   "from": [ 0, 16, 0 ],
+            "to": [ 16, 16, 16 ],
+            "faces": {
+                "up": { "texture": "#top" },
+                "down": { "texture": "#top" }
+            }
+        }
+    ],
+    "textures": {
+        "particle": "indconstr:block/conduit",
+        "floor": "indconstr:block/treadplate",
+		"side": "indconstr:block/catwalk_side",
+		"top": "indconstr:block/catwalk_top"
+    }
+}

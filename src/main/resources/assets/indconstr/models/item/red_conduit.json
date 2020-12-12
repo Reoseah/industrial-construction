@@ -1,0 +1,7 @@
+{
+    "parent": "indconstr:block/template_conduit_inventory",
+    "textures": {
+        "side": "indconstr:item/red_conduit",
+        "end": "indconstr:block/red_conduit"
+    }
+}

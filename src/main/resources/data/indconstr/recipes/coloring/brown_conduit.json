@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  
+  "pattern": [
+    "###",
+    "#X#",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "indconstr:extractor"
+    },
+    "X": {
+      "item": "minecraft:brown_dye"
+    }
+  },
+  "result": {
+    "item": "indconstr:brown_extractor",
+    "count": 8
+  }
+}

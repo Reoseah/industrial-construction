@@ -1,0 +1,22 @@
+{
+    "parent": "block/block",
+    "elements": [
+        {   "from": [ 0, 0, 0 ],
+            "to": [ 16, 0.01, 16 ],
+            "faces": {
+                "up":  { "texture": "#texture" },
+                "down":  { "texture": "#texture" }
+            }
+        },
+        {   "from": [ 0, 0, 0 ],
+            "to": [ 16, 0, 16 ],
+            "faces": {
+                "up":  { "texture": "#texture" }
+            }
+        }
+    ],
+    "textures": {
+        "particle": "indconstr:block/treadplate",
+        "texture": "indconstr:block/treadplate"
+    }
+}

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  
+  "pattern": [
+    "###",
+    "#X#",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "indconstr:extractor"
+    },
+    "X": {
+      "item": "minecraft:lime_dye"
+    }
+  },
+  "result": {
+    "item": "indconstr:lime_extractor",
+    "count": 8
+  }
+}
