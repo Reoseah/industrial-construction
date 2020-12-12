@@ -32,7 +32,7 @@ public class ColoredTransparentConduitBlock extends ConduitBlock implements Colo
     @Environment(EnvType.CLIENT)
     @Override
     public boolean isSideInvisible(BlockState state, BlockState state2, Direction direction) {
-        return state.get(getConnectionProperty(direction)) && state2.getBlock() instanceof ConduitConnectingBlock
+        return state.get(getConnectionProperty(direction)) && state2.getBlock() instanceof ConduitConnectingBlock && !(state2.getBlock() instanceof OpaqueConduitBlock)
                 || super.isSideInvisible(state, state2, direction);
     }
 
