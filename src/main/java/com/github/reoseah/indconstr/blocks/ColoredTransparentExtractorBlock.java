@@ -49,7 +49,7 @@ public class ColoredTransparentExtractorBlock extends ExtractorBlock implements 
 
     @Override
     public BlockState getColoredState(BlockState state, BlockView world, BlockPos pos, @Nullable DyeColor color) {
-        return ((AbstractConduitBlock) IndConstr.Blocks.EXTRACTOR)
+        return ((ExtractorBlock) IndConstr.Blocks.EXTRACTOR)
                 .getStateForPos(world, pos).with(DIRECTION, state.get(DIRECTION));
     }
 

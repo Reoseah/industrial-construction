@@ -3,6 +3,7 @@ package com.github.reoseah.indconstr.blocks;
 import org.jetbrains.annotations.Nullable;
 
 import com.github.reoseah.indconstr.api.blocks.CatwalkConnectingBlock;
+import com.github.reoseah.indconstr.api.blocks.WrenchableBlock;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -20,15 +21,19 @@ import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Direction.Axis;
+import net.minecraft.util.math.Direction.AxisDirection;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 
-public class CatwalkStairsBlock extends Block implements CatwalkConnectingBlock {
+public class CatwalkStairsBlock extends Block implements CatwalkConnectingBlock, WrenchableBlock {
     public static final EnumProperty<Direction> FACING = Properties.HORIZONTAL_FACING;
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
     public static final EnumProperty<DoubleBlockHalf> HALF = Properties.DOUBLE_BLOCK_HALF;
@@ -199,5 +204,28 @@ public class CatwalkStairsBlock extends Block implements CatwalkConnectingBlock 
     @Override
     public boolean shouldCatwalkConnect(BlockState state, BlockView world, BlockPos pos, Direction side) {
         return state.get(HALF) == DoubleBlockHalf.LOWER ? side == state.get(FACING).getOpposite() : side == state.get(FACING);
+    }
+
+    @Override
+    public boolean useWrench(BlockState state, World world, BlockPos pos, Direction side, PlayerEntity player, Hand hand, Vec3d hitPos) {
+        Direction facing = state.get(FACING);
+        Axis perpendicular = facing.rotateYClockwise().getAxis();
+
+        if (state.get(HALF) == DoubleBlockHalf.UPPER) {
+            pos = pos.down();
+            state = world.getBlockState(pos);
+        }
+
+        double a = hitPos.getComponentAlongAxis(perpendicular);
+        if (a - pos.getComponentAlongAxis(perpendicular) > 0.5 && facing.rotateYClockwise().getDirection() == AxisDirection.POSITIVE
+                || a - pos.getComponentAlongAxis(perpendicular) < 0.5 && facing.rotateYClockwise().getDirection() == AxisDirection.NEGATIVE) {
+            world.setBlockState(pos, state.cycle(LEFT));
+            world.setBlockState(pos.up(), state.cycle(LEFT).with(HALF, DoubleBlockHalf.UPPER));
+            return true;
+        } else {
+            world.setBlockState(pos, state.cycle(RIGHT));
+            world.setBlockState(pos.up(), state.cycle(RIGHT).with(HALF, DoubleBlockHalf.UPPER));
+            return true;
+        }
     }
 }
