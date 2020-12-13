@@ -1,6 +1,7 @@
 {
     "textures": {
-        "particle": "#side"
+        "particle": "#side",
+        "inside": "indconstr:block/conduit"
     },
     "elements": [
         {   
@@ -18,7 +19,7 @@
 			"from": [ 4, 4, 0 ],
             "to": [ 12, 12, 0.01 ],
             "faces": {
-                "south": { "texture": "#end", "cullface": "north" }
+                "south": { "texture": "#inside", "cullface": "north" }
             }
         }
     ]

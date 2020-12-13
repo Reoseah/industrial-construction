@@ -99,7 +99,7 @@ public final class IndConstr {
         public static final Block GREEN_OPAQUE_CONDUIT = register("green_opaque_conduit", new ColoredOpaqueConduitBlock(DyeColor.GREEN, INDCONSTR_IRON));
         public static final Block RED_OPAQUE_CONDUIT = register("red_opaque_conduit", new ColoredOpaqueConduitBlock(DyeColor.RED, INDCONSTR_IRON));
         public static final Block BLACK_OPAQUE_CONDUIT = register("black_opaque_conduit", new ColoredOpaqueConduitBlock(DyeColor.BLACK, INDCONSTR_IRON));
-
+/*
         public static final Block WHITE_EXTRACTOR = register("white_extractor", new ColoredTransparentExtractorBlock(DyeColor.WHITE, INDCONSTR_IRON));
         public static final Block ORANGE_EXTRACTOR = register("orange_extractor", new ColoredTransparentExtractorBlock(DyeColor.ORANGE, INDCONSTR_IRON));
         public static final Block MAGENTA_EXTRACTOR = register("magenta_extractor", new ColoredTransparentExtractorBlock(DyeColor.MAGENTA, INDCONSTR_IRON));
@@ -116,7 +116,7 @@ public final class IndConstr {
         public static final Block GREEN_EXTRACTOR = register("green_extractor", new ColoredTransparentExtractorBlock(DyeColor.GREEN, INDCONSTR_IRON));
         public static final Block RED_EXTRACTOR = register("red_extractor", new ColoredTransparentExtractorBlock(DyeColor.RED, INDCONSTR_IRON));
         public static final Block BLACK_EXTRACTOR = register("black_extractor", new ColoredTransparentExtractorBlock(DyeColor.BLACK, INDCONSTR_IRON));
-
+*//*
         public static final Block WHITE_OPAQUE_EXTRACTOR = register("white_opaque_extractor", new ColoredOpaqueExtractorBlock(DyeColor.WHITE, INDCONSTR_IRON));
         public static final Block ORANGE_OPAQUE_EXTRACTOR = register("orange_opaque_extractor", new ColoredOpaqueExtractorBlock(DyeColor.ORANGE, INDCONSTR_IRON));
         public static final Block MAGENTA_OPAQUE_EXTRACTOR = register("magenta_opaque_extractor", new ColoredOpaqueExtractorBlock(DyeColor.MAGENTA, INDCONSTR_IRON));
@@ -133,7 +133,7 @@ public final class IndConstr {
         public static final Block GREEN_OPAQUE_EXTRACTOR = register("green_opaque_extractor", new ColoredOpaqueExtractorBlock(DyeColor.GREEN, INDCONSTR_IRON));
         public static final Block RED_OPAQUE_EXTRACTOR = register("red_opaque_extractor", new ColoredOpaqueExtractorBlock(DyeColor.RED, INDCONSTR_IRON));
         public static final Block BLACK_OPAQUE_EXTRACTOR = register("black_opaque_extractor", new ColoredOpaqueExtractorBlock(DyeColor.BLACK, INDCONSTR_IRON));
-
+*/
         private static Block register(String name, Block block) {
             return Registry.register(Registry.BLOCK, "indconstr:" + name, block);
         }
@@ -207,7 +207,7 @@ public final class IndConstr {
         public static final Item GREEN_OPAQUE_CONDUIT = register("green_opaque_conduit", new BlockItem(IndConstr.Blocks.GREEN_OPAQUE_CONDUIT, new Item.Settings().group(ITEMGROUP)));
         public static final Item RED_OPAQUE_CONDUIT = register("red_opaque_conduit", new BlockItem(IndConstr.Blocks.RED_OPAQUE_CONDUIT, new Item.Settings().group(ITEMGROUP)));
         public static final Item BLACK_OPAQUE_CONDUIT = register("black_opaque_conduit", new BlockItem(IndConstr.Blocks.BLACK_OPAQUE_CONDUIT, new Item.Settings().group(ITEMGROUP)));
-
+/*
         public static final Item WHITE_EXTRACTOR = register("white_extractor", new BlockItem(IndConstr.Blocks.WHITE_EXTRACTOR, new Item.Settings().group(ITEMGROUP)));
         public static final Item ORANGE_EXTRACTOR = register("orange_extractor", new BlockItem(IndConstr.Blocks.ORANGE_EXTRACTOR, new Item.Settings().group(ITEMGROUP)));
         public static final Item MAGENTA_EXTRACTOR = register("magenta_extractor", new BlockItem(IndConstr.Blocks.MAGENTA_EXTRACTOR, new Item.Settings().group(ITEMGROUP)));
@@ -224,7 +224,7 @@ public final class IndConstr {
         public static final Item GREEN_EXTRACTOR = register("green_extractor", new BlockItem(IndConstr.Blocks.GREEN_EXTRACTOR, new Item.Settings().group(ITEMGROUP)));
         public static final Item RED_EXTRACTOR = register("red_extractor", new BlockItem(IndConstr.Blocks.RED_EXTRACTOR, new Item.Settings().group(ITEMGROUP)));
         public static final Item BLACK_EXTRACTOR = register("black_extractor", new BlockItem(IndConstr.Blocks.BLACK_EXTRACTOR, new Item.Settings().group(ITEMGROUP)));
-
+*//*
         public static final Item WHITE_OPAQUE_EXTRACTOR = register("white_opaque_extractor", new BlockItem(IndConstr.Blocks.WHITE_OPAQUE_EXTRACTOR, new Item.Settings().group(ITEMGROUP)));
         public static final Item ORANGE_OPAQUE_EXTRACTOR = register("orange_opaque_extractor", new BlockItem(IndConstr.Blocks.ORANGE_OPAQUE_EXTRACTOR, new Item.Settings().group(ITEMGROUP)));
         public static final Item MAGENTA_OPAQUE_EXTRACTOR = register("magenta_opaque_extractor", new BlockItem(IndConstr.Blocks.MAGENTA_OPAQUE_EXTRACTOR, new Item.Settings().group(ITEMGROUP)));
@@ -241,7 +241,7 @@ public final class IndConstr {
         public static final Item GREEN_OPAQUE_EXTRACTOR = register("green_opaque_extractor", new BlockItem(IndConstr.Blocks.GREEN_OPAQUE_EXTRACTOR, new Item.Settings().group(ITEMGROUP)));
         public static final Item RED_OPAQUE_EXTRACTOR = register("red_opaque_extractor", new BlockItem(IndConstr.Blocks.RED_OPAQUE_EXTRACTOR, new Item.Settings().group(ITEMGROUP)));
         public static final Item BLACK_OPAQUE_EXTRACTOR = register("black_opaque_extractor", new BlockItem(IndConstr.Blocks.BLACK_OPAQUE_EXTRACTOR, new Item.Settings().group(ITEMGROUP)));
-
+*/
         private static Item register(String name, Item item) {
             return Registry.register(Registry.ITEM, "indconstr:" + name, item);
         }

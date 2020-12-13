@@ -8,7 +8,7 @@ import java.util.List;
 import org.jetbrains.annotations.Nullable;
 
 import com.github.reoseah.indconstr.IndConstr;
-import com.github.reoseah.indconstr.blocks.AbstractConduitConnectingBlock;
+import com.github.reoseah.indconstr.blocks.AbstractConduitBlock;
 import com.google.common.collect.ImmutableList;
 
 import alexiil.mc.lib.attributes.Simulation;
@@ -164,8 +164,8 @@ public class ConduitBlockEntity extends BlockEntity implements Tickable {
         }
     }
 
-    private boolean isConnected(Direction direction) {
-        return this.getCachedState().get(AbstractConduitConnectingBlock.getConnectionProperty(direction));
+    protected boolean isConnected(Direction direction) {
+        return this.getCachedState().get(AbstractConduitBlock.getConnectionProperty(direction));
     }
 
     public static class TravellingItem implements Comparable<TravellingItem> {

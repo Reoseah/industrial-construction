@@ -28,7 +28,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 
-public abstract class AbstractConduitConnectingBlock extends Block implements ConduitConnectingBlock, AttributeProvider {
+public abstract class AbstractConduitBlock extends Block implements ConduitConnectingBlock, AttributeProvider {
     public static final BooleanProperty DOWN = Properties.DOWN;
     public static final BooleanProperty UP = Properties.UP;
     public static final BooleanProperty NORTH = Properties.NORTH;
@@ -36,9 +36,33 @@ public abstract class AbstractConduitConnectingBlock extends Block implements Co
     public static final BooleanProperty EAST = Properties.EAST;
     public static final BooleanProperty WEST = Properties.WEST;
 
-    public AbstractConduitConnectingBlock(Block.Settings settings) {
+    public static BooleanProperty getConnectionProperty(Direction direction) {
+        switch (direction) {
+        case NORTH:
+            return NORTH;
+        case SOUTH:
+            return SOUTH;
+        case WEST:
+            return WEST;
+        case EAST:
+            return EAST;
+        case DOWN:
+            return DOWN;
+        case UP:
+        default:
+            return UP;
+        }
+    }
+
+    public AbstractConduitBlock(Block.Settings settings) {
         super(settings);
-        this.setDefaultState(this.getDefaultState().with(DOWN, false).with(UP, false).with(NORTH, false).with(SOUTH, false).with(EAST, false).with(WEST, false));
+        this.setDefaultState(this.getDefaultState()
+                .with(DOWN, false)
+                .with(UP, false)
+                .with(NORTH, false)
+                .with(SOUTH, false)
+                .with(EAST, false)
+                .with(WEST, false));
     }
 
     @Override
@@ -83,7 +107,7 @@ public abstract class AbstractConduitConnectingBlock extends Block implements Co
 
     @Override
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-        if (newState.getBlock() instanceof AbstractConduitConnectingBlock) {
+        if (newState.getBlock() instanceof AbstractConduitBlock) {
             return;
         }
         BlockEntity be = world.getBlockEntity(pos);
@@ -96,24 +120,6 @@ public abstract class AbstractConduitConnectingBlock extends Block implements Co
             }
         }
         super.onStateReplaced(state, world, pos, newState, moved);
-    }
-
-    public static BooleanProperty getConnectionProperty(Direction direction) {
-        switch (direction) {
-        case NORTH:
-            return NORTH;
-        case SOUTH:
-            return SOUTH;
-        case WEST:
-            return WEST;
-        case EAST:
-            return EAST;
-        case DOWN:
-            return DOWN;
-        case UP:
-        default:
-            return UP;
-        }
     }
 
     @Override

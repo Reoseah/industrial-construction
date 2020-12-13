@@ -20,7 +20,7 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldAccess;
 
-public abstract class ConduitBlock extends AbstractConduitConnectingBlock implements BlockEntityProvider, Waterloggable {
+public abstract class ConduitBlock extends AbstractConduitBlock implements BlockEntityProvider, Waterloggable {
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 
     public static final VoxelShape[] SHAPES;

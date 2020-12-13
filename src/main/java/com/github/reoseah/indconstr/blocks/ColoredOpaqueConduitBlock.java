@@ -50,7 +50,7 @@ public class ColoredOpaqueConduitBlock extends ConduitBlock implements Colorable
 
     @Override
     public BlockState getColoredState(BlockState state, BlockView world, BlockPos pos, @Nullable DyeColor color) {
-        return ((AbstractConduitConnectingBlock) IndConstr.Blocks.OPAQUE_CONDUIT).getStateForPos(world, pos);
+        return ((AbstractConduitBlock) IndConstr.Blocks.OPAQUE_CONDUIT).getStateForPos(world, pos);
     }
 
     @Override

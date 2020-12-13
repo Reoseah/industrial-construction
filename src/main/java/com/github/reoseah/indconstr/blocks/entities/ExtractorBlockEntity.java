@@ -2,6 +2,7 @@ package com.github.reoseah.indconstr.blocks.entities;
 
 import com.github.reoseah.indconstr.IndConstr;
 import com.github.reoseah.indconstr.blocks.ExtractorBlock;
+import com.github.reoseah.indconstr.blocks.SpecialConduitBlock;
 
 import alexiil.mc.lib.attributes.Simulation;
 import alexiil.mc.lib.attributes.item.ItemAttributes;
@@ -64,5 +65,9 @@ public class ExtractorBlockEntity extends ConduitBlockEntity {
     @Override
     protected boolean canSendItems(Direction direction) {
         return super.canSendItems(direction) && direction != this.getCachedState().get(ExtractorBlock.DIRECTION) && !(this.world.getBlockState(this.getPos().offset(direction)).getBlock() instanceof LeverBlock);
+    }
+
+    protected boolean isConnected(Direction direction) {
+        return this.getCachedState().get(SpecialConduitBlock.getConnectionProperty(direction)) == SpecialConduitBlock.ConnectionType.NORMAL;
     }
 }

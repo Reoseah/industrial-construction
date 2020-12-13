@@ -23,7 +23,7 @@ public class OpaqueExtractorBlock extends ExtractorBlock implements ColorableBlo
     @Environment(EnvType.CLIENT)
     @Override
     public boolean isSideInvisible(BlockState state, BlockState state2, Direction direction) {
-        return state.get(getConnectionProperty(direction)) && state2.getBlock() instanceof AbstractConduitConnectingBlock && direction != state.get(DIRECTION)
+        return state.get(getConnectionProperty(direction)) == ConnectionType.NORMAL && state2.getBlock() instanceof AbstractConduitBlock && direction != state.get(DIRECTION)
                 || super.isSideInvisible(state, state2, direction);
     }
 
@@ -39,7 +39,7 @@ public class OpaqueExtractorBlock extends ExtractorBlock implements ColorableBlo
 
     @Override
     public BlockState getColoredState(BlockState state, BlockView world, BlockPos pos, @Nullable DyeColor color) {
-        return ((AbstractConduitConnectingBlock) ColoredOpaqueExtractorBlock.INSTANCES.get(color))
+        return ((AbstractConduitBlock) ColoredOpaqueExtractorBlock.INSTANCES.get(color))
                 .getStateForPos(world, pos).with(DIRECTION, state.get(DIRECTION));
     }
 

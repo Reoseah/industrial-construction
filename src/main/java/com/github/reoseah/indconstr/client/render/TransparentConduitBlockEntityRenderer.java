@@ -1,6 +1,6 @@
 package com.github.reoseah.indconstr.client.render;
 
-import com.github.reoseah.indconstr.blocks.AbstractConduitConnectingBlock;
+import com.github.reoseah.indconstr.blocks.AbstractConduitBlock;
 import com.github.reoseah.indconstr.blocks.entities.ConduitBlockEntity;
 import com.github.reoseah.indconstr.blocks.entities.ConduitBlockEntity.TravellingItem;
 
@@ -24,12 +24,12 @@ public class TransparentConduitBlockEntityRenderer<T extends ConduitBlockEntity>
         if (entity.items.isEmpty()) {
             return;
         }
-        boolean up = entity.getCachedState().get(AbstractConduitConnectingBlock.UP);
-        boolean down = entity.getCachedState().get(AbstractConduitConnectingBlock.DOWN);
-        boolean north = entity.getCachedState().get(AbstractConduitConnectingBlock.NORTH);
-        boolean south = entity.getCachedState().get(AbstractConduitConnectingBlock.SOUTH);
-        boolean west = entity.getCachedState().get(AbstractConduitConnectingBlock.WEST);
-        boolean east = entity.getCachedState().get(AbstractConduitConnectingBlock.EAST);
+        boolean up = entity.getCachedState().get(AbstractConduitBlock.UP);
+        boolean down = entity.getCachedState().get(AbstractConduitBlock.DOWN);
+        boolean north = entity.getCachedState().get(AbstractConduitBlock.NORTH);
+        boolean south = entity.getCachedState().get(AbstractConduitBlock.SOUTH);
+        boolean west = entity.getCachedState().get(AbstractConduitBlock.WEST);
+        boolean east = entity.getCachedState().get(AbstractConduitBlock.EAST);
 
         boolean straight = up && down && !north && !south && !west && !east
                 || north && south && !up && !down && !west && !south

@@ -1,102 +1,128 @@
 {
     "multipart": [
         {   
-        	"when": { "north": true },
-            "apply": { "model": "indconstr:block/light_gray_conduit_connection" }
-        },
-        {   
-        	"when": { "north": false },
+        	"when": { "north": "none" },
             "apply": { "model": "indconstr:block/light_gray_conduit_side" }
         },
         {   
-        	"when": { "east": true },
-            "apply": { "model": "indconstr:block/light_gray_conduit_connection", "uvlock": true, "y": 90 }
-        },
-        {   
-        	"when": { "east": false },
+        	"when": { "east": "none" },
             "apply": { "model": "indconstr:block/light_gray_conduit_side", "uvlock": true, "y": 90 }
         },
         {   
-        	"when": { "south": true },
-            "apply": { "model": "indconstr:block/light_gray_conduit_connection", "uvlock": true, "y": 180 }
-        },
-        {   
-        	"when": { "south": false },
+        	"when": { "south": "none" },
             "apply": { "model": "indconstr:block/light_gray_conduit_side", "uvlock": true, "y": 180 }
         },
         {   
-        	"when": { "west": true },
-            "apply": { "model": "indconstr:block/light_gray_conduit_connection", "uvlock": true, "y": 270 }
-        },
-        {   
-        	"when": { "west": false },
+        	"when": { "west": "none" },
             "apply": { "model": "indconstr:block/light_gray_conduit_side", "uvlock": true, "y": 270 }
         },
         {   
-        	"when": { "up": true },
-            "apply": { "model": "indconstr:block/light_gray_conduit_vertical_connection", "uvlock": true, "x": 270 }
-        },
-        {   
-        	"when": { "up": false },
+        	"when": { "up": "none" },
             "apply": { "model": "indconstr:block/light_gray_conduit_top", "uvlock": true, "x": 270 }
         },
         {   
-        	"when": { "down": true },
-            "apply": { "model": "indconstr:block/light_gray_conduit_vertical_connection", "uvlock": true, "x": 90 }
-        },
-        {   
-        	"when": { "down": false },
+        	"when": { "down": "none" },
             "apply": { "model": "indconstr:block/light_gray_conduit_top", "uvlock": true, "x": 90 }  
         },
         
         {   
-        	"when": { "north": true, "west": true },
+        	"when": { "north": "normal" },
+            "apply": { "model": "indconstr:block/light_gray_conduit_connection" }
+        },
+        {   
+        	"when": { "east": "normal" },
+            "apply": { "model": "indconstr:block/light_gray_conduit_connection", "uvlock": true, "y": 90 }
+        },
+        {   
+        	"when": { "south": "normal" },
+            "apply": { "model": "indconstr:block/light_gray_conduit_connection", "uvlock": true, "y": 180 }
+        },
+        {   
+        	"when": { "west": "normal" },
+            "apply": { "model": "indconstr:block/light_gray_conduit_connection", "uvlock": true, "y": 270 }
+        },
+        {   
+        	"when": { "up": "normal" },
+            "apply": { "model": "indconstr:block/light_gray_conduit_vertical_connection", "uvlock": true, "x": 270 }
+        },
+        {   
+        	"when": { "down": "normal" },
+            "apply": { "model": "indconstr:block/light_gray_conduit_vertical_connection", "uvlock": true, "x": 90 }
+        },
+        
+        {   
+        	"when": { "north": "special" },
+            "apply": { "model": "indconstr:block/opaque_conduit_connection" }
+        },
+        {   
+        	"when": { "east": "special" },
+            "apply": { "model": "indconstr:block/opaque_conduit_connection", "uvlock": true, "y": 90 }
+        },
+        {   
+        	"when": { "south": "special" },
+            "apply": { "model": "indconstr:block/opaque_conduit_connection", "uvlock": true, "y": 180 }
+        },
+        {   
+        	"when": { "west": "special" },
+            "apply": { "model": "indconstr:block/opaque_conduit_connection", "uvlock": true, "y": 270 }
+        },
+        {   
+        	"when": { "up": "special" },
+            "apply": { "model": "indconstr:block/opaque_conduit_vertical_connection", "uvlock": true, "x": 270 }
+        },
+        {   
+        	"when": { "down": "special" },
+            "apply": { "model": "indconstr:block/opaque_conduit_vertical_connection", "uvlock": true, "x": 90 }
+        },
+
+        {   
+        	"when": { "north": "normal|special", "west": "normal|special" },
             "apply": { "model": "indconstr:block/conduit_joint" }  
         },
         {   
-        	"when": { "north": true, "east": true },
+        	"when": { "north": "normal|special", "east": "normal|special" },
             "apply": { "model": "indconstr:block/conduit_joint", "uvlock": true, "y": 90 }  
         },
         {   
-        	"when": { "south": true, "east": true },
+        	"when": { "south": "normal|special", "east": "normal|special" },
             "apply": { "model": "indconstr:block/conduit_joint", "uvlock": true, "y": 180 }  
         },
         {   
-        	"when": { "south": true, "west": true },
+        	"when": { "south": "normal|special", "west": "normal|special" },
             "apply": { "model": "indconstr:block/conduit_joint", "uvlock": true, "y": 270 }  
         },
         
         {   
-        	"when": { "west": true, "up": true },
+        	"when": { "west": "normal|special", "up": "normal|special" },
             "apply": { "model": "indconstr:block/conduit_joint", "uvlock": true, "x": 270 }  
         },
         {   
-        	"when": { "north": true, "up": true },
+        	"when": { "north": "normal|special", "up": "normal|special" },
             "apply": { "model": "indconstr:block/conduit_joint", "uvlock": true, "x": 270, "y": 90 }  
         },
         {   
-        	"when": { "east": true, "up": true },
+        	"when": { "east": "normal|special", "up": "normal|special" },
             "apply": { "model": "indconstr:block/conduit_joint", "uvlock": true, "x": 270, "y": 180 }  
         },
         {   
-        	"when": { "south": true, "up": true },
+        	"when": { "south": "normal|special", "up": "normal|special" },
             "apply": { "model": "indconstr:block/conduit_joint", "uvlock": true, "x": 270, "y": 270 }  
         },
         
         {   
-        	"when": { "west": true, "down": true },
+        	"when": { "west": "normal|special", "down": "normal|special" },
             "apply": { "model": "indconstr:block/conduit_joint", "uvlock": true, "x": 90 }  
         },
         {   
-        	"when": { "north": true, "down": true },
+        	"when": { "north": "normal|special", "down": "normal|special" },
             "apply": { "model": "indconstr:block/conduit_joint", "uvlock": true, "x": 90, "y": 90 }  
         },
         {   
-        	"when": { "east": true, "down": true },
+        	"when": { "east": "normal|special", "down": "normal|special" },
             "apply": { "model": "indconstr:block/conduit_joint", "uvlock": true, "x": 90, "y": 180 }  
         },
         {   
-        	"when": { "south": true, "down": true },
+        	"when": { "south": "normal|special", "down": "normal|special" },
             "apply": { "model": "indconstr:block/conduit_joint", "uvlock": true, "x": 90, "y": 270 }  
         },
         

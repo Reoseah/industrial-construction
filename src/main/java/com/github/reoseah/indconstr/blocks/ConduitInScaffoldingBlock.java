@@ -36,7 +36,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 
-public class ConduitInScaffoldingBlock extends AbstractConduitConnectingBlock implements ScaffoldingConnectable, BlockEntityProvider, Waterloggable {
+public class ConduitInScaffoldingBlock extends AbstractConduitBlock implements ScaffoldingConnectable, BlockEntityProvider, Waterloggable {
     public static final BooleanProperty ATTACHED = Properties.ATTACHED;
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 

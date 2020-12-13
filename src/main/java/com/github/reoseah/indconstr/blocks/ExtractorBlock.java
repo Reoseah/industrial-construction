@@ -16,13 +16,9 @@ import net.minecraft.block.ShapeContext;
 import net.minecraft.block.WallMountedBlock;
 import net.minecraft.block.Waterloggable;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.EnumProperty;
-import net.minecraft.state.property.Properties;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -31,13 +27,10 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 
-public abstract class ExtractorBlock extends AbstractConduitConnectingBlock implements BlockEntityProvider, Waterloggable, WrenchableBlock {
+public abstract class ExtractorBlock extends SpecialConduitBlock implements BlockEntityProvider, Waterloggable, WrenchableBlock {
     public static final EnumProperty<Direction> DIRECTION = EnumProperty.of("direction", Direction.class);
-
-    public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 
     private static final VoxelShape[][] SHAPES = new VoxelShape[6][];
     static {
@@ -77,23 +70,23 @@ public abstract class ExtractorBlock extends AbstractConduitConnectingBlock impl
 
     public ExtractorBlock(Block.Settings settings) {
         super(settings);
-        this.setDefaultState(this.getDefaultState().with(DIRECTION, Direction.DOWN).with(WATERLOGGED, false));
+        this.setDefaultState(this.getDefaultState().with(DIRECTION, Direction.DOWN));
     }
 
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         super.appendProperties(builder);
-        builder.add(DIRECTION, WATERLOGGED);
+        builder.add(DIRECTION);
     }
 
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        int i = (state.get(DOWN) ? 1 : 0) |
-                (state.get(UP) ? 2 : 0) |
-                (state.get(NORTH) ? 4 : 0) |
-                (state.get(SOUTH) ? 8 : 0) |
-                (state.get(WEST) ? 16 : 0) |
-                (state.get(EAST) ? 32 : 0);
+        int i = (state.get(DOWN) != ConnectionType.NONE ? 1 : 0) |
+                (state.get(UP) != ConnectionType.NONE ? 2 : 0) |
+                (state.get(NORTH) != ConnectionType.NONE ? 4 : 0) |
+                (state.get(SOUTH) != ConnectionType.NONE ? 8 : 0) |
+                (state.get(WEST) != ConnectionType.NONE ? 16 : 0) |
+                (state.get(EAST) != ConnectionType.NONE ? 32 : 0);
         return SHAPES[state.get(DIRECTION).ordinal()][i];
     }
 
@@ -127,16 +120,16 @@ public abstract class ExtractorBlock extends AbstractConduitConnectingBlock impl
     }
 
     @Override
-    protected boolean connectsTo(BlockView view, BlockPos pos, Direction side) {
+    protected ConnectionType getConnectionType(BlockView view, BlockPos pos, Direction side) {
         BlockState neighbor = view.getBlockState(pos.offset(side));
         Block block = neighbor.getBlock();
         if (block instanceof ExtractorBlock) {
-            return false;
+            return ConnectionType.NONE;
         }
         if (block instanceof LeverBlock) {
-            return getLeverDirection(neighbor) == side;
+            return getLeverDirection(neighbor) == side ? ConnectionType.SPECIAL : ConnectionType.NONE;
         }
-        return super.connectsTo(view, pos, side);
+        return super.getConnectionType(view, pos, side);
     }
 
     protected static Direction getLeverDirection(BlockState state) {
@@ -148,19 +141,6 @@ public abstract class ExtractorBlock extends AbstractConduitConnectingBlock impl
         default:
             return state.get(HorizontalFacingBlock.FACING);
         }
-    }
-
-    @Override
-    public FluidState getFluidState(BlockState state) {
-        return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
-    }
-
-    @Override
-    public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState newState, WorldAccess world, BlockPos pos, BlockPos posFrom) {
-        if (state.get(WATERLOGGED)) {
-            world.getFluidTickScheduler().schedule(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
-        }
-        return super.getStateForNeighborUpdate(state, direction, newState, world, pos, posFrom);
     }
 
     @Override
