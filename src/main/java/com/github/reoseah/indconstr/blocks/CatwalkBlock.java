@@ -133,11 +133,13 @@ public class CatwalkBlock extends Block implements Waterloggable, WrenchableBloc
         BlockView world = ctx.getWorld();
         BlockPos pos = ctx.getBlockPos();
 
-        return this.getDefaultState()
+        BlockState state = this.getDefaultState()
                 .with(SOUTH, this.hasBorder(world, pos, Direction.SOUTH))
                 .with(WEST, this.hasBorder(world, pos, Direction.WEST))
                 .with(NORTH, this.hasBorder(world, pos, Direction.NORTH))
                 .with(EAST, this.hasBorder(world, pos, Direction.EAST));
+        
+        return state;
     }
 
     public boolean hasBorder(BlockView world, BlockPos pos, Direction side) {

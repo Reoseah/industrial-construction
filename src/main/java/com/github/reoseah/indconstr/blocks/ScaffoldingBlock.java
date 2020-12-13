@@ -66,7 +66,8 @@ public class ScaffoldingBlock extends Block implements ScaffoldingConnectable, W
 
     @Override
     public boolean canReplace(BlockState state, ItemPlacementContext context) {
-        return context.getStack().getItem() == IndConstr.Items.CONDUIT && context.getPlayer() != null && !context.getPlayer().isSneaking() || super.canReplace(state, context);
+        return context.getStack().getItem() == IndConstr.Items.CONDUIT
+                && context.getPlayer() != null && !context.getPlayer().isSneaking() || super.canReplace(state, context);
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.github.reoseah.indconstr.blocks;
 
 import org.jetbrains.annotations.Nullable;
 
+import com.github.reoseah.indconstr.IndConstr;
 import com.github.reoseah.indconstr.api.blocks.ColorableBlock;
 import com.github.reoseah.indconstr.api.blocks.ConduitConnectingBlock;
 import com.github.reoseah.indconstr.blocks.entities.ConduitBlockEntity;
@@ -11,6 +12,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -46,5 +48,13 @@ public class TransparentConduitBlock extends ConduitBlock implements ColorableBl
     @Override
     public BlockEntity createBlockEntity(BlockView world) {
         return ConduitBlockEntity.createTransparent();
+    }
+
+    @Override
+    public boolean canReplace(BlockState state, ItemPlacementContext context) {
+        return super.canReplace(state, context)
+                || this == IndConstr.Blocks.CONDUIT
+                        && context.getStack().getItem() == IndConstr.Items.SCAFFOLDING
+                        && context.getPlayer() != null && !context.getPlayer().isSneaking();
     }
 }

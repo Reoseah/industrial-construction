@@ -72,14 +72,6 @@ public abstract class ConduitBlock extends AbstractConduitBlock implements Block
     }
 
     @Override
-    public boolean canReplace(BlockState state, ItemPlacementContext context) {
-        return super.canReplace(state, context)
-                || this == IndConstr.Blocks.CONDUIT
-                        && context.getStack().getItem() == IndConstr.Items.SCAFFOLDING
-                        && context.getPlayer() != null && !context.getPlayer().isSneaking();
-    }
-
-    @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         if (this == IndConstr.Blocks.CONDUIT && ctx.getWorld().getBlockState(ctx.getBlockPos()).getBlock() == IndConstr.Blocks.SCAFFOLDING) {
             return IndConstr.Blocks.CONDUIT_IN_SCAFFOLDING.getPlacementState(ctx);
