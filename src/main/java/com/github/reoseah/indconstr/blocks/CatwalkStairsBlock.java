@@ -192,7 +192,7 @@ public class CatwalkStairsBlock extends Block implements CatwalkConnectingBlock 
     @Environment(EnvType.CLIENT)
     @Override
     public boolean isSideInvisible(BlockState state, BlockState state2, Direction direction) {
-        return direction.getAxis().isHorizontal() && state2.getBlock() == this && (state.get(FACING) == direction && state2.get(FACING) == direction.getOpposite() && state.get(HALF) == DoubleBlockHalf.LOWER)
+        return direction.getAxis().isHorizontal() && state2.getBlock() == this && state.get(FACING) == direction && state2.get(FACING) == direction.getOpposite() && state.get(HALF) == DoubleBlockHalf.LOWER
                 || super.isSideInvisible(state, state2, direction);
     }
 

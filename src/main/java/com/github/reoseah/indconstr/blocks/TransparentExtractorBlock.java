@@ -23,7 +23,7 @@ public class TransparentExtractorBlock extends ExtractorBlock implements Colorab
     @Environment(EnvType.CLIENT)
     @Override
     public boolean isSideInvisible(BlockState state, BlockState state2, Direction direction) {
-        return state.get(getConnectionProperty(direction)) == ConnectionType.NORMAL && state2.getBlock() instanceof AbstractConduitBlock && direction != state.get(DIRECTION) && !(state2.getBlock() instanceof OpaqueConduitBlock) && !(state2.getBlock() instanceof ColoredOpaqueConduitBlock)
+        return state.get(getConnectionProperty(direction)) == ConnectionType.NORMAL && state2.getBlock() instanceof AbstractConduitBlock && direction != state.get(DIRECTION)
                 || super.isSideInvisible(state, state2, direction);
     }
 

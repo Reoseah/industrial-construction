@@ -10,13 +10,13 @@ import net.minecraft.world.World;
 
 /**
  * A block on which the wrench can be used.
- * 
+ *
  * <p>
  * Why not use Zundrel's WrenchableBlock API? <br>
- * 
+ *
  * First, it doesn't return success/failure value - a conduit might not have
  * other inventories to rotate to, therefore wrench couldn't be applied. <br>
- * 
+ *
  * Second, it enforces a number of interaction that for me don't make sense,
  * such as rotating a log... in a living tree!
  */

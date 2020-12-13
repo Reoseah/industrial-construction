@@ -44,10 +44,6 @@ public class ConduitBlockEntity extends BlockEntity implements Tickable {
         return new ConduitBlockEntity(IndConstr.BlockEntityTypes.CONDUIT);
     }
 
-    public static ConduitBlockEntity createOpaque() {
-        return new ConduitBlockEntity(IndConstr.BlockEntityTypes.OPAQUE_CONDUIT);
-    }
-
     @Override
     public void fromTag(BlockState state, CompoundTag tag) {
         super.fromTag(state, tag);
@@ -133,25 +129,25 @@ public class ConduitBlockEntity extends BlockEntity implements Tickable {
     }
 
     public void sendToClient(List<TravellingItem> list) {
-        if (this.getType() != IndConstr.BlockEntityTypes.OPAQUE_CONDUIT) {
-            PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
-            buf.writeBlockPos(this.pos);
-            buf.writeInt(list.size());
-            for (TravellingItem item : list) {
-                buf.writeItemStack(item.stack);
-                buf.writeLong(item.timeStart);
-                buf.writeLong(item.timeFinish);
-                buf.writeByte(item.from.getId());
-                if (item.to != null) {
-                    buf.writeBoolean(true);
-                    buf.writeByte(item.to.getId());
-                } else {
-                    buf.writeBoolean(false);
-                }
+//        if (this.getType() != IndConstr.BlockEntityTypes.OPAQUE_CONDUIT) {
+        PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
+        buf.writeBlockPos(this.pos);
+        buf.writeInt(list.size());
+        for (TravellingItem item : list) {
+            buf.writeItemStack(item.stack);
+            buf.writeLong(item.timeStart);
+            buf.writeLong(item.timeFinish);
+            buf.writeByte(item.from.getId());
+            if (item.to != null) {
+                buf.writeBoolean(true);
+                buf.writeByte(item.to.getId());
+            } else {
+                buf.writeBoolean(false);
             }
-
-            PlayerStream.around(this.world, this.pos, 40).forEach(player -> ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, new Identifier("indconstr:conduit"), buf));
         }
+
+        PlayerStream.around(this.world, this.pos, 40).forEach(player -> ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, new Identifier("indconstr:conduit"), buf));
+//        }
     }
 
     public void doInsert(ItemStack stack, Direction from) {
@@ -164,7 +160,7 @@ public class ConduitBlockEntity extends BlockEntity implements Tickable {
         }
     }
 
-    protected boolean isConnected(Direction direction) {
+    public boolean isConnected(Direction direction) {
         return this.getCachedState().get(AbstractConduitBlock.getConnectionProperty(direction));
     }
 

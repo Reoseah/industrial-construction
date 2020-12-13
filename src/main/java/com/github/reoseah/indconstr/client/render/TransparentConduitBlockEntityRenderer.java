@@ -1,6 +1,5 @@
 package com.github.reoseah.indconstr.client.render;
 
-import com.github.reoseah.indconstr.blocks.AbstractConduitBlock;
 import com.github.reoseah.indconstr.blocks.entities.ConduitBlockEntity;
 import com.github.reoseah.indconstr.blocks.entities.ConduitBlockEntity.TravellingItem;
 
@@ -12,6 +11,7 @@ import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 
 public class TransparentConduitBlockEntityRenderer<T extends ConduitBlockEntity> extends BlockEntityRenderer<T> {
@@ -24,12 +24,12 @@ public class TransparentConduitBlockEntityRenderer<T extends ConduitBlockEntity>
         if (entity.items.isEmpty()) {
             return;
         }
-        boolean up = entity.getCachedState().get(AbstractConduitBlock.UP);
-        boolean down = entity.getCachedState().get(AbstractConduitBlock.DOWN);
-        boolean north = entity.getCachedState().get(AbstractConduitBlock.NORTH);
-        boolean south = entity.getCachedState().get(AbstractConduitBlock.SOUTH);
-        boolean west = entity.getCachedState().get(AbstractConduitBlock.WEST);
-        boolean east = entity.getCachedState().get(AbstractConduitBlock.EAST);
+        boolean up = entity.isConnected(Direction.UP);
+        boolean down = entity.isConnected(Direction.DOWN);
+        boolean north = entity.isConnected(Direction.NORTH);
+        boolean south = entity.isConnected(Direction.SOUTH);
+        boolean west = entity.isConnected(Direction.WEST);
+        boolean east = entity.isConnected(Direction.EAST);
 
         boolean straight = up && down && !north && !south && !west && !east
                 || north && south && !up && !down && !west && !south

@@ -8,7 +8,7 @@ import org.jetbrains.annotations.Nullable;
 import com.github.reoseah.indconstr.api.blocks.WrenchableBlock;
 import com.github.reoseah.indconstr.blocks.entities.ConduitBlockEntity;
 import com.github.reoseah.indconstr.blocks.entities.ConduitBlockEntity.TravellingItem;
-import com.github.reoseah.indconstr.client.models.ConduitModelProvider;
+import com.github.reoseah.indconstr.client.models.IndrConstrModelProvider;
 import com.github.reoseah.indconstr.client.render.TransparentConduitBlockEntityRenderer;
 
 import net.fabricmc.api.ClientModInitializer;
@@ -70,16 +70,24 @@ public class IndConstrInitializer implements ModInitializer, ClientModInitialize
                 IndConstr.Blocks.GREEN_CONDUIT,
                 IndConstr.Blocks.RED_CONDUIT,
                 IndConstr.Blocks.BLACK_CONDUIT,
-                /*
-                 * IndConstr.Blocks.WHITE_EXTRACTOR, IndConstr.Blocks.ORANGE_EXTRACTOR,
-                 * IndConstr.Blocks.MAGENTA_EXTRACTOR, IndConstr.Blocks.YELLOW_EXTRACTOR,
-                 * IndConstr.Blocks.LIGHT_BLUE_EXTRACTOR, IndConstr.Blocks.LIME_EXTRACTOR,
-                 * IndConstr.Blocks.PINK_EXTRACTOR, IndConstr.Blocks.LIGHT_GRAY_EXTRACTOR,
-                 * IndConstr.Blocks.GRAY_EXTRACTOR, IndConstr.Blocks.CYAN_EXTRACTOR,
-                 * IndConstr.Blocks.PURPLE_EXTRACTOR, IndConstr.Blocks.BLUE_EXTRACTOR,
-                 * IndConstr.Blocks.BROWN_EXTRACTOR, IndConstr.Blocks.GREEN_EXTRACTOR,
-                 * IndConstr.Blocks.RED_EXTRACTOR, IndConstr.Blocks.BLACK_EXTRACTOR,
-                 */
+
+                IndConstr.Blocks.WHITE_EXTRACTOR,
+                IndConstr.Blocks.ORANGE_EXTRACTOR,
+                IndConstr.Blocks.MAGENTA_EXTRACTOR,
+                IndConstr.Blocks.YELLOW_EXTRACTOR,
+                IndConstr.Blocks.LIGHT_BLUE_EXTRACTOR,
+                IndConstr.Blocks.LIME_EXTRACTOR,
+                IndConstr.Blocks.PINK_EXTRACTOR,
+                IndConstr.Blocks.LIGHT_GRAY_EXTRACTOR,
+                IndConstr.Blocks.GRAY_EXTRACTOR,
+                IndConstr.Blocks.CYAN_EXTRACTOR,
+                IndConstr.Blocks.PURPLE_EXTRACTOR,
+                IndConstr.Blocks.BLUE_EXTRACTOR,
+                IndConstr.Blocks.BROWN_EXTRACTOR,
+                IndConstr.Blocks.GREEN_EXTRACTOR,
+                IndConstr.Blocks.RED_EXTRACTOR,
+                IndConstr.Blocks.BLACK_EXTRACTOR,
+
                 IndConstr.Blocks.SCAFFOLDING,
                 IndConstr.Blocks.CONDUIT_IN_SCAFFOLDING,
                 IndConstr.Blocks.CATWALK,
@@ -136,6 +144,6 @@ public class IndConstrInitializer implements ModInitializer, ClientModInitialize
                     return 0;
                 });
 
-        ModelLoadingRegistry.INSTANCE.registerResourceProvider(resources -> new ConduitModelProvider());
+        ModelLoadingRegistry.INSTANCE.registerResourceProvider(resources -> new IndrConstrModelProvider());
     }
 }

@@ -10,7 +10,9 @@ import java.util.stream.Collectors;
 
 import org.jetbrains.annotations.Nullable;
 
-import com.github.reoseah.indconstr.blocks.AbstractConduitBlock;
+import com.github.reoseah.indconstr.blocks.ExtractorBlock;
+import com.github.reoseah.indconstr.blocks.SpecialConduitBlock;
+import com.github.reoseah.indconstr.blocks.SpecialConduitBlock.ConnectionType;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.datafixers.util.Pair;
 
@@ -33,11 +35,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockRenderView;
 
-public class ConduitModel implements UnbakedModel {
+public class ExtractorModel implements UnbakedModel {
     private final IndrConstrModelProvider provider;
     private final @Nullable DyeColor color;
 
-    public ConduitModel(IndrConstrModelProvider provider, @Nullable DyeColor color) {
+    public ExtractorModel(IndrConstrModelProvider provider, @Nullable DyeColor color) {
         this.provider = provider;
         this.color = color;
     }
@@ -49,6 +51,9 @@ public class ConduitModel implements UnbakedModel {
                 new Identifier("indconstr:block/" + (this.color == null ? "" : this.color.asString() + "_") + "conduit_top"),
                 new Identifier("indconstr:block/" + (this.color == null ? "" : this.color.asString() + "_") + "conduit_connection"),
                 new Identifier("indconstr:block/" + (this.color == null ? "" : this.color.asString() + "_") + "conduit_vertical_connection"),
+                new Identifier("indconstr:block/" + (this.color == null ? "" : this.color.asString() + "_") + "opaque_conduit_connection"),
+                new Identifier("indconstr:block/" + (this.color == null ? "" : this.color.asString() + "_") + "opaque_conduit_vertical_connection"),
+                new Identifier("indconstr:block/extractor_connection"),
                 new Identifier("indconstr:block/conduit_joint"));
     }
 
@@ -62,19 +67,25 @@ public class ConduitModel implements UnbakedModel {
         BakedModel[] sides = this.provider.getOrLoadSides(this.color, loader, textureGetter, rotationContainer, modelId);
         BakedModel[] connections = this.provider.getOrLoadConnections(this.color, loader, textureGetter, rotationContainer, modelId);
         BakedModel[] joints = this.provider.getOrLoadJoints(loader, textureGetter, rotationContainer, modelId);
+        BakedModel[] extractors = this.provider.getOrLoadExtractors(loader, textureGetter, rotationContainer, modelId);
+        BakedModel[] opaqueConnections = this.provider.getOrLoadOpaqueConnections(this.color, loader, textureGetter, rotationContainer, modelId);
 
-        return new BakedConduitModel(sides, connections, joints);
+        return new BakedExtractorModel(sides, connections, joints, extractors, opaqueConnections);
     }
 
-    public static class BakedConduitModel implements BakedModel, FabricBakedModel {
+    public static class BakedExtractorModel implements BakedModel, FabricBakedModel {
         private final BakedModel[] sides;
         private final BakedModel[] connections;
         private final BakedModel[] joints;
+        private final BakedModel[] extractors;
+        private final BakedModel[] opaqueConnections;
 
-        public BakedConduitModel(BakedModel[] sides, BakedModel[] connections, BakedModel[] joints) {
+        public BakedExtractorModel(BakedModel[] sides, BakedModel[] connections, BakedModel[] joints, BakedModel[] extractors, BakedModel[] opaqueConnections) {
             this.sides = sides;
             this.connections = connections;
             this.joints = joints;
+            this.extractors = extractors;
+            this.opaqueConnections = opaqueConnections;
         }
 
         @Override
@@ -84,53 +95,69 @@ public class ConduitModel implements UnbakedModel {
 
         @Override
         public void emitBlockQuads(BlockRenderView blockView, BlockState state, BlockPos pos, Supplier<Random> randomSupplier, RenderContext context) {
-            boolean down = state.get(AbstractConduitBlock.DOWN);
-            boolean up = state.get(AbstractConduitBlock.UP);
-            boolean north = state.get(AbstractConduitBlock.NORTH);
-            boolean south = state.get(AbstractConduitBlock.SOUTH);
-            boolean west = state.get(AbstractConduitBlock.WEST);
-            boolean east = state.get(AbstractConduitBlock.EAST);
+            ConnectionType down = state.get(SpecialConduitBlock.DOWN);
+            ConnectionType up = state.get(SpecialConduitBlock.UP);
+            ConnectionType north = state.get(SpecialConduitBlock.NORTH);
+            ConnectionType south = state.get(SpecialConduitBlock.SOUTH);
+            ConnectionType west = state.get(SpecialConduitBlock.WEST);
+            ConnectionType east = state.get(SpecialConduitBlock.EAST);
+            Direction direction = state.get(ExtractorBlock.DIRECTION);
 
-            context.fallbackConsumer().accept(down ? this.connections[0] : this.sides[0]);
-            context.fallbackConsumer().accept(up ? this.connections[1] : this.sides[1]);
-            context.fallbackConsumer().accept(north ? this.connections[2] : this.sides[2]);
-            context.fallbackConsumer().accept(south ? this.connections[3] : this.sides[3]);
-            context.fallbackConsumer().accept(west ? this.connections[4] : this.sides[4]);
-            context.fallbackConsumer().accept(east ? this.connections[5] : this.sides[5]);
-            if (north && west) {
+            context.fallbackConsumer().accept(this.extractors[direction.ordinal()]);
+
+            if (direction != Direction.DOWN) {
+                context.fallbackConsumer().accept(down == ConnectionType.SPECIAL ? this.opaqueConnections[0] : down == ConnectionType.NORMAL ? this.connections[0] : this.sides[0]);
+            }
+            if (direction != Direction.UP) {
+                context.fallbackConsumer().accept(up == ConnectionType.SPECIAL ? this.opaqueConnections[1] : up == ConnectionType.NORMAL ? this.connections[1] : this.sides[1]);
+            }
+            if (direction != Direction.NORTH) {
+                context.fallbackConsumer().accept(north == ConnectionType.SPECIAL ? this.opaqueConnections[2] : north == ConnectionType.NORMAL ? this.connections[2] : this.sides[2]);
+            }
+            if (direction != Direction.SOUTH) {
+                context.fallbackConsumer().accept(south == ConnectionType.SPECIAL ? this.opaqueConnections[3] : south == ConnectionType.NORMAL ? this.connections[3] : this.sides[3]);
+            }
+            if (direction != Direction.WEST) {
+                context.fallbackConsumer().accept(west == ConnectionType.SPECIAL ? this.opaqueConnections[4] : west == ConnectionType.NORMAL ? this.connections[4] : this.sides[4]);
+            }
+            if (direction != Direction.EAST) {
+                context.fallbackConsumer().accept(east == ConnectionType.SPECIAL ? this.opaqueConnections[5] : east == ConnectionType.NORMAL ? this.connections[5] : this.sides[5]);
+            }
+
+            if (north == ConnectionType.NORMAL && west == ConnectionType.NORMAL) {
                 context.fallbackConsumer().accept(this.joints[0]);
             }
-            if (north && east) {
+            if (north == ConnectionType.NORMAL && east == ConnectionType.NORMAL) {
                 context.fallbackConsumer().accept(this.joints[1]);
             }
-            if (south && east) {
+            if (south == ConnectionType.NORMAL && east == ConnectionType.NORMAL) {
                 context.fallbackConsumer().accept(this.joints[2]);
             }
-            if (south && west) {
+            if (south == ConnectionType.NORMAL && west == ConnectionType.NORMAL) {
                 context.fallbackConsumer().accept(this.joints[3]);
             }
-            if (up && west) {
+            if (up == ConnectionType.NORMAL && west == ConnectionType.NORMAL) {
                 context.fallbackConsumer().accept(this.joints[4]);
             }
-            if (up && north) {
+            if (up == ConnectionType.NORMAL && north == ConnectionType.NORMAL) {
                 context.fallbackConsumer().accept(this.joints[5]);
             }
-            if (up && east) {
+            if (up == ConnectionType.NORMAL && east == ConnectionType.NORMAL) {
                 context.fallbackConsumer().accept(this.joints[6]);
             }
-            if (up && south) {
+            if (up == ConnectionType.NORMAL && south == ConnectionType.NORMAL) {
                 context.fallbackConsumer().accept(this.joints[7]);
             }
-            if (down && west) {
+            if (down == ConnectionType.NORMAL && west == ConnectionType.NORMAL) {
                 context.fallbackConsumer().accept(this.joints[8]);
             }
-            if (down && north) {
+            if (down == ConnectionType.NORMAL && north == ConnectionType.NORMAL) {
                 context.fallbackConsumer().accept(this.joints[9]);
             }
-            if (down && east) {
+            if (down == ConnectionType.NORMAL && east == ConnectionType.NORMAL) {
                 context.fallbackConsumer().accept(this.joints[10]);
             }
-            if (down && south) {
+            if (down == ConnectionType.NORMAL && south == ConnectionType.NORMAL) {
                 context.fallbackConsumer().accept(this.joints[11]);
             }
         }

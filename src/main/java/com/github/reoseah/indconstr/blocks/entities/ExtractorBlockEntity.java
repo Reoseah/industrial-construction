@@ -25,10 +25,6 @@ public class ExtractorBlockEntity extends ConduitBlockEntity {
         return new ExtractorBlockEntity(IndConstr.BlockEntityTypes.EXTRACTOR);
     }
 
-    public static ExtractorBlockEntity createOpaque() {
-        return new ExtractorBlockEntity(IndConstr.BlockEntityTypes.OPAQUE_EXTRACTOR);
-    }
-
     @Override
     public void tick() {
         super.tick();
@@ -67,7 +63,8 @@ public class ExtractorBlockEntity extends ConduitBlockEntity {
         return super.canSendItems(direction) && direction != this.getCachedState().get(ExtractorBlock.DIRECTION) && !(this.world.getBlockState(this.getPos().offset(direction)).getBlock() instanceof LeverBlock);
     }
 
-    protected boolean isConnected(Direction direction) {
+    @Override
+    public boolean isConnected(Direction direction) {
         return this.getCachedState().get(SpecialConduitBlock.getConnectionProperty(direction)) == SpecialConduitBlock.ConnectionType.NORMAL;
     }
 }

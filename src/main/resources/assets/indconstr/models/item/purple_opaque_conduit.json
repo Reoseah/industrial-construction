@@ -1,7 +1,0 @@
-{
-    "parent": "indconstr:block/template_conduit_inventory",
-    "textures": {
-        "side": "indconstr:item/purple_opaque_conduit",
-        "end": "indconstr:block/purple_opaque_conduit"
-    }
-}
