@@ -21,7 +21,6 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.function.BooleanBiFunction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Direction.Axis;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
@@ -138,13 +137,13 @@ public class CatwalkBlock extends Block implements Waterloggable, WrenchableBloc
         boolean north = this.hasBorder(world, pos, Direction.NORTH);
         boolean east = this.hasBorder(world, pos, Direction.EAST);
 
-        if (!south && !west && !east && !north && world.getBlockState(pos.up()).isAir()) {
+        if (world.getBlockState(pos.up()).isAir()) {
             for (Direction dir : Direction.Type.HORIZONTAL) {
                 BlockPos upOffset = pos.up().offset(dir);
                 BlockState upOffsetState = world.getBlockState(upOffset);
                 Block upOffsetBlock = upOffsetState.getBlock();
                 if (upOffsetBlock == this || upOffsetBlock instanceof CatwalkConnectingBlock && ((CatwalkConnectingBlock) upOffsetBlock).shouldCatwalkConnect(upOffsetState, world, upOffset, dir)) {
-                    return IndConstr.Blocks.CATWALK_STAIRS.getDefaultState().with(CatwalkStairsBlock.FACING, dir);
+                    return IndConstr.Blocks.CATWALK_STAIRS.getDefaultState().with(CatwalkStairsBlock.FACING, dir.getOpposite());
                 }
             }
         }
@@ -199,23 +198,26 @@ public class CatwalkBlock extends Block implements Waterloggable, WrenchableBloc
 
     @Override
     public boolean useWrench(BlockState state, World world, BlockPos pos, Direction side, PlayerEntity player, Hand hand, Vec3d hitPos) {
-        if (side.getAxis().isHorizontal()) {
-            boolean inside = false;
-            if (side.getAxis() == Axis.X) {
-                double dx = hitPos.getX() - pos.getX();
-                inside = dx >= 0.5 / 16 && dx <= 15.5 / 16;
+        Direction dir = null;
+        double x = hitPos.getX() - pos.getX();
+        double z = hitPos.getZ() - pos.getZ();
+
+        if (Math.abs(x - 0.5) > Math.abs(z - 0.5)) {
+            if (x > 0.5) {
+                dir = Direction.EAST;
             } else {
-                double dz = hitPos.getZ() - pos.getZ();
-                inside = dz >= 0.5 / 16 && dz <= 15.5 / 16;
-            }
-            if (inside) {
-                world.setBlockState(pos, world.getBlockState(pos).cycle(getConnectionProperty(side.getOpposite())));
-            } else {
-                world.setBlockState(pos, world.getBlockState(pos).cycle(getConnectionProperty(side)));
+                dir = Direction.WEST;
             }
         } else {
-            world.setBlockState(pos, world.getBlockState(pos).cycle(getConnectionProperty(player.getHorizontalFacing())));
+            if (z > 0.5) {
+                dir = Direction.SOUTH;
+            } else {
+                dir = Direction.NORTH;
+            }
         }
+
+        world.setBlockState(pos, state.cycle(getConnectionProperty(dir)));
+
         return true;
     }
 }

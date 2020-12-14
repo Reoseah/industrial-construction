@@ -216,6 +216,12 @@ public class CatwalkStairsBlock extends Block implements CatwalkConnectingBlock,
             state = world.getBlockState(pos);
         }
 
+        if (player != null && player.isSneaking()) {
+            world.setBlockState(pos, state.cycle(FACING));
+            world.setBlockState(pos.up(), state.cycle(FACING).with(HALF, DoubleBlockHalf.UPPER));
+            return true;
+        }
+
         double a = hitPos.getComponentAlongAxis(perpendicular);
         if (a - pos.getComponentAlongAxis(perpendicular) > 0.5 && facing.rotateYClockwise().getDirection() == AxisDirection.POSITIVE
                 || a - pos.getComponentAlongAxis(perpendicular) < 0.5 && facing.rotateYClockwise().getDirection() == AxisDirection.NEGATIVE) {
