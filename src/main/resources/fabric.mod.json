@@ -22,7 +22,7 @@
       "com.github.reoseah.indconstr.IndConstrInitializer"
     ],
     "client": [
-      "com.github.reoseah.indconstr.IndConstrInitializer"
+      "com.github.reoseah.indconstr.IndConstrClientInitializer"
     ]
   },
   "mixins": [

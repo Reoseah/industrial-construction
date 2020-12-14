@@ -52,11 +52,9 @@ public class PaintScraperItem extends Item {
             success = true;
         }
         if (success) {
-            if (context.getPlayer() != null && !context.getPlayer().isCreative()) {
-                context.getStack().damage(1, context.getPlayer(), player -> {
-                    player.sendToolBreakStatus(context.getHand());
-                });
-            }
+            context.getStack().damage(1, context.getPlayer(), player -> {
+                player.sendToolBreakStatus(context.getHand());
+            });
             return ActionResult.SUCCESS;
         }
         return super.useOnBlock(context);

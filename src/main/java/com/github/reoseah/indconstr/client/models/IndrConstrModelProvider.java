@@ -4,6 +4,8 @@ import java.util.function.Function;
 
 import org.jetbrains.annotations.Nullable;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.model.ModelProviderContext;
 import net.fabricmc.fabric.api.client.model.ModelProviderException;
 import net.fabricmc.fabric.api.client.model.ModelResourceProvider;
@@ -18,6 +20,7 @@ import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 
+@Environment(EnvType.CLIENT)
 public class IndrConstrModelProvider implements ModelResourceProvider {
     private static final Identifier CONDUIT = new Identifier("indconstr:block/conduit");
     private static final Identifier WHITE_CONDUIT = new Identifier("indconstr:block/white_conduit");

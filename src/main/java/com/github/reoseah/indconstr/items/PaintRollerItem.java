@@ -23,7 +23,7 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class PaintRollerItem extends Item {
+public class PaintRollerItem extends CustomDamageItem {
     public static final Map<DyeColor, Item> INSTANCES = new EnumMap<>(DyeColor.class);
 
     protected final DyeColor color;
@@ -67,12 +67,10 @@ public class PaintRollerItem extends Item {
             success = true;
         }
         if (success) {
-            if (context.getPlayer() != null && !context.getPlayer().isCreative()) {
-                context.getStack().damage(1, context.getPlayer(), player -> {
-                    player.sendToolBreakStatus(context.getHand());
-                    player.setStackInHand(context.getHand(), new ItemStack(IndConstr.Items.PAINT_ROLLER));
-                });
-            }
+            this.damage(context.getStack(), 1, context.getPlayer(), player -> {
+                player.sendToolBreakStatus(context.getHand());
+                player.setStackInHand(context.getHand(), new ItemStack(IndConstr.Items.PAINT_ROLLER));
+            });
             return ActionResult.SUCCESS;
         }
         return super.useOnBlock(context);
@@ -124,5 +122,10 @@ public class PaintRollerItem extends Item {
 
     public DyeColor getColor() {
         return this.color;
+    }
+
+    @Override
+    public int getCustomMaxDamage() {
+        return 32;
     }
 }

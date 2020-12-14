@@ -14,6 +14,8 @@ import com.github.reoseah.indconstr.blocks.AbstractConduitBlock;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.datafixers.util.Pair;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.renderer.v1.model.FabricBakedModel;
 import net.fabricmc.fabric.api.renderer.v1.render.RenderContext;
 import net.minecraft.block.BlockState;
@@ -33,6 +35,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockRenderView;
 
+@Environment(EnvType.CLIENT)
 public class ConduitModel implements UnbakedModel {
     private final IndrConstrModelProvider provider;
     private final @Nullable DyeColor color;

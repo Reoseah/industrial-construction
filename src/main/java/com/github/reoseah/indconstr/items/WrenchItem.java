@@ -26,11 +26,10 @@ public class WrenchItem extends Item {
         BlockState state = world.getBlockState(pos);
         if (state.getBlock() instanceof WrenchableBlock
                 && ((WrenchableBlock) state.getBlock()).useWrench(state, world, pos, context.getSide(), context.getPlayer(), context.getHand(), context.getHitPos())) {
-            if (context.getPlayer() != null && !context.getPlayer().isCreative()) {
-                context.getStack().damage(1, context.getPlayer(), player -> {
-                    player.sendToolBreakStatus(context.getHand());
-                });
-            }
+            context.getStack().damage(1, context.getPlayer(), player -> {
+                player.sendToolBreakStatus(context.getHand());
+            });
+
             return ActionResult.SUCCESS;
 
         }

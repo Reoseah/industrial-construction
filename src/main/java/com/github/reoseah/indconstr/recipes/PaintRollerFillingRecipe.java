@@ -52,11 +52,12 @@ public class PaintRollerFillingRecipe extends SpecialCraftingRecipe {
         }
         Item item = paintroller.getItem();
         if (item instanceof PaintRollerItem) {
+            PaintRollerItem item2 = (PaintRollerItem) item;
             DyeColor paintrollerColor = ((PaintRollerItem) item).getColor();
             if (paintrollerColor != color) {
                 return false;
             }
-            int uses = paintroller.getMaxDamage() - paintroller.getDamage();
+            int uses = item2.getCustomMaxDamage() - item2.getDamage(paintroller);
             int maxAdded = 4 - (int) Math.ceil(uses / 8F);
             if (dyes.size() > maxAdded) {
                 return false;
@@ -96,11 +97,12 @@ public class PaintRollerFillingRecipe extends SpecialCraftingRecipe {
         }
         Item item = paintroller.getItem();
         if (item instanceof PaintRollerItem) {
+            PaintRollerItem item2 = (PaintRollerItem) item;
             DyeColor paintrollerColor = ((PaintRollerItem) item).getColor();
             if (paintrollerColor != color) {
                 return ItemStack.EMPTY;
             }
-            int uses = paintroller.getMaxDamage() - paintroller.getDamage();
+            int uses = item2.getCustomMaxDamage() - item2.getDamage(paintroller);
             int maxAdded = 4 - (int) Math.ceil(uses / 8F);
             if (dyes.size() > maxAdded) {
                 return ItemStack.EMPTY;
@@ -108,11 +110,13 @@ public class PaintRollerFillingRecipe extends SpecialCraftingRecipe {
         }
         if (!paintroller.isEmpty() && !dyes.isEmpty() && dyes.size() <= 4) {
             ItemStack paintroller2 = new ItemStack(PaintRollerItem.INSTANCES.get(color));
+            PaintRollerItem resultItem = (PaintRollerItem) paintroller2.getItem();
             int left = dyes.size() * 8;
             if (item instanceof PaintRollerItem) {
-                paintroller2.setDamage(paintroller2.getMaxDamage() - left - paintroller.getMaxDamage() + paintroller.getDamage());
+                resultItem.setDamage(paintroller2, resultItem.getCustomMaxDamage() - left - resultItem.getCustomMaxDamage() + resultItem.getDamage(paintroller));
             } else {
-                paintroller2.setDamage(paintroller2.getMaxDamage() - left);
+                resultItem.setDamage(paintroller2, resultItem.getCustomMaxDamage() - left);
+
             }
             return paintroller2;
         }

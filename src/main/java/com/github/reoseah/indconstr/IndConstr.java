@@ -110,9 +110,9 @@ public final class IndConstr {
         public static final Item IRON_BAR = register("iron_bar", new Item(new Item.Settings().group(ITEMGROUP)));
         public static final Item WRENCH = register("wrench", new WrenchItem(Items.IRON_INGOTS, new Item.Settings().maxDamage(512).group(ITEMGROUP)));
         public static final Item PAINT_SCRAPER = register("paint_scraper", new PaintScraperItem(Items.IRON_INGOTS, new Item.Settings().maxDamage(256).group(ITEMGROUP)));
-        public static final Item PAINT_ROLLER = register("paint_roller", new Item(new Item.Settings().maxCount(1).group(ITEMGROUP)));
+        public static final Item PAINT_ROLLER = register("paint_roller", new Item(new Item.Settings().maxCount(16).group(ITEMGROUP)));
 
-        private static final Item.Settings PAINT_ROLLER_SETTINGS = new Item.Settings().maxDamage(32).group(ITEMGROUP);
+        private static final Item.Settings PAINT_ROLLER_SETTINGS = new Item.Settings().maxCount(1).group(ITEMGROUP);
         public static final Item WHITE_PAINT_ROLLER = register("white_paint_roller", new PaintRollerItem(DyeColor.WHITE, PAINT_ROLLER_SETTINGS));
         public static final Item ORANGE_PAINT_ROLLER = register("orange_paint_roller", new PaintRollerItem(DyeColor.ORANGE, PAINT_ROLLER_SETTINGS));
         public static final Item MAGENTA_PAINT_ROLLER = register("magenta_paint_roller", new PaintRollerItem(DyeColor.MAGENTA, PAINT_ROLLER_SETTINGS));
