@@ -10,6 +10,7 @@ import com.github.reoseah.indconstr.blocks.TransparentConduitBlock;
 import com.github.reoseah.indconstr.blocks.TransparentExtractorBlock;
 import com.github.reoseah.indconstr.blocks.entities.ConduitBlockEntity;
 import com.github.reoseah.indconstr.blocks.entities.ExtractorBlockEntity;
+import com.github.reoseah.indconstr.items.DyeScrapItem;
 import com.github.reoseah.indconstr.items.PaintRollerItem;
 import com.github.reoseah.indconstr.items.PaintScraperItem;
 import com.github.reoseah.indconstr.items.WrenchItem;
@@ -129,6 +130,23 @@ public final class IndConstr {
         public static final Item GREEN_PAINT_ROLLER = register("green_paint_roller", new PaintRollerItem(DyeColor.GREEN, PAINT_ROLLER_SETTINGS));
         public static final Item RED_PAINT_ROLLER = register("red_paint_roller", new PaintRollerItem(DyeColor.RED, PAINT_ROLLER_SETTINGS));
         public static final Item BLACK_PAINT_ROLLER = register("black_paint_roller", new PaintRollerItem(DyeColor.BLACK, PAINT_ROLLER_SETTINGS));
+
+        public static final Item WHITE_DYE_SCRAP = register("white_dye_scrap", new DyeScrapItem(DyeColor.WHITE, new Item.Settings().group(IndConstr.ITEMGROUP)));
+        public static final Item ORANGE_DYE_SCRAP = register("orange_dye_scrap", new DyeScrapItem(DyeColor.ORANGE, new Item.Settings().group(IndConstr.ITEMGROUP)));
+        public static final Item MAGENTA_DYE_SCRAP = register("magenta_dye_scrap", new DyeScrapItem(DyeColor.MAGENTA, new Item.Settings().group(IndConstr.ITEMGROUP)));
+        public static final Item LIGHT_BLUE_DYE_SCRAP = register("light_blue_dye_scrap", new DyeScrapItem(DyeColor.LIGHT_BLUE, new Item.Settings().group(IndConstr.ITEMGROUP)));
+        public static final Item YELLOW_DYE_SCRAP = register("yellow_dye_scrap", new DyeScrapItem(DyeColor.YELLOW, new Item.Settings().group(IndConstr.ITEMGROUP)));
+        public static final Item LIME_DYE_SCRAP = register("lime_dye_scrap", new DyeScrapItem(DyeColor.LIME, new Item.Settings().group(IndConstr.ITEMGROUP)));
+        public static final Item PINK_DYE_SCRAP = register("pink_dye_scrap", new DyeScrapItem(DyeColor.PINK, new Item.Settings().group(IndConstr.ITEMGROUP)));
+        public static final Item GRAY_DYE_SCRAP = register("gray_dye_scrap", new DyeScrapItem(DyeColor.GRAY, new Item.Settings().group(IndConstr.ITEMGROUP)));
+        public static final Item LIGHT_GRAY_DYE_SCRAP = register("light_gray_dye_scrap", new DyeScrapItem(DyeColor.LIGHT_GRAY, new Item.Settings().group(IndConstr.ITEMGROUP)));
+        public static final Item CYAN_DYE_SCRAP = register("cyan_dye_scrap", new DyeScrapItem(DyeColor.CYAN, new Item.Settings().group(IndConstr.ITEMGROUP)));
+        public static final Item PURPLE_DYE_SCRAP = register("purple_dye_scrap", new DyeScrapItem(DyeColor.PURPLE, new Item.Settings().group(IndConstr.ITEMGROUP)));
+        public static final Item BLUE_DYE_SCRAP = register("blue_dye_scrap", new DyeScrapItem(DyeColor.BLUE, new Item.Settings().group(IndConstr.ITEMGROUP)));
+        public static final Item BROWN_DYE_SCRAP = register("brown_dye_scrap", new DyeScrapItem(DyeColor.BROWN, new Item.Settings().group(IndConstr.ITEMGROUP)));
+        public static final Item GREEN_DYE_SCRAP = register("green_dye_scrap", new DyeScrapItem(DyeColor.GREEN, new Item.Settings().group(IndConstr.ITEMGROUP)));
+        public static final Item RED_DYE_SCRAP = register("red_dye_scrap", new DyeScrapItem(DyeColor.RED, new Item.Settings().group(IndConstr.ITEMGROUP)));
+        public static final Item BLACK_DYE_SCRAP = register("black_dye_scrap", new DyeScrapItem(DyeColor.BLACK, new Item.Settings().group(IndConstr.ITEMGROUP)));
 
         public static final Item WHITE_CONDUIT = register("white_conduit", new BlockItem(IndConstr.Blocks.WHITE_CONDUIT, new Item.Settings().group(ITEMGROUP)));
         public static final Item ORANGE_CONDUIT = register("orange_conduit", new BlockItem(IndConstr.Blocks.ORANGE_CONDUIT, new Item.Settings().group(ITEMGROUP)));

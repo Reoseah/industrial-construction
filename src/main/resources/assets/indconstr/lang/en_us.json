@@ -62,5 +62,22 @@
     "item.indconstr.paint_roller.brown": "Brown",
     "item.indconstr.paint_roller.green": "Green",
     "item.indconstr.paint_roller.red": "Red",
-    "item.indconstr.paint_roller.black": "Black"
+    "item.indconstr.paint_roller.black": "Black",
+    
+    "item.indconstr.white_dye_scrap": "White Dye Scrap",
+    "item.indconstr.orange_dye_scrap": "Orange Dye Scrap",
+    "item.indconstr.magenta_dye_scrap": "Magenta Dye Scrap",
+    "item.indconstr.light_blue_dye_scrap": "Light Blue Dye Scrap",
+    "item.indconstr.yellow_dye_scrap": "Yellow Dye Scrap",
+    "item.indconstr.lime_dye_scrap": "Lime Dye Scrap",
+    "item.indconstr.pink_dye_scrap": "Pink Dye Scrap",
+    "item.indconstr.gray_dye_scrap": "Gray Dye Scrap",
+    "item.indconstr.light_gray_dye_scrap": "Light Gray Dye Scrap",
+    "item.indconstr.cyan_dye_scrap": "Cyan Dye Scrap",
+    "item.indconstr.purple_dye_scrap": "Purple Dye Scrap",
+    "item.indconstr.blue_dye_scrap": "Blue Dye Scrap",
+    "item.indconstr.brown_dye_scrap": "Brown Dye Scrap",
+    "item.indconstr.green_dye_scrap": "Green Dye Scrap",
+    "item.indconstr.red_dye_scrap": "Red Dye Scrap",
+    "item.indconstr.black_dye_scrap": "Black Dye Scrap"
 }

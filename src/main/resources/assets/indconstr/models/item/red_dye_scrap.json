@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "indconstr:item/red_dye_scrap"
+  }
+}
