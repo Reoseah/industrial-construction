@@ -30,7 +30,6 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.TallBlockItem;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialRecipeSerializer;
@@ -105,7 +104,6 @@ public final class IndConstr {
 
         public static final Item SCAFFOLDING = register("scaffolding", new BlockItem(IndConstr.Blocks.SCAFFOLDING, new Item.Settings().group(IndConstr.ITEMGROUP)));
         public static final Item CATWALK = register("catwalk", new BlockItem(IndConstr.Blocks.CATWALK, new Item.Settings().group(IndConstr.ITEMGROUP)));
-        public static final Item CATWALK_STAIRS = register("catwalk_stairs", new TallBlockItem(IndConstr.Blocks.CATWALK_STAIRS, new Item.Settings().group(IndConstr.ITEMGROUP)));
         public static final Item REINFORCED_GLASS = register("reinforced_glass", new BlockItem(IndConstr.Blocks.REINFORCED_GLASS, new Item.Settings().group(IndConstr.ITEMGROUP)));
 
         private static final Tag<Item> IRON_INGOTS = TagRegistry.item(new Identifier("c:iron_ingots"));

@@ -133,13 +133,22 @@ public class CatwalkBlock extends Block implements Waterloggable, WrenchableBloc
         BlockView world = ctx.getWorld();
         BlockPos pos = ctx.getBlockPos();
 
-        BlockState state = this.getDefaultState()
-                .with(SOUTH, this.hasBorder(world, pos, Direction.SOUTH))
-                .with(WEST, this.hasBorder(world, pos, Direction.WEST))
-                .with(NORTH, this.hasBorder(world, pos, Direction.NORTH))
-                .with(EAST, this.hasBorder(world, pos, Direction.EAST));
-        
-        return state;
+        boolean south = this.hasBorder(world, pos, Direction.SOUTH);
+        boolean west = this.hasBorder(world, pos, Direction.WEST);
+        boolean north = this.hasBorder(world, pos, Direction.NORTH);
+        boolean east = this.hasBorder(world, pos, Direction.EAST);
+
+        if (!south && !west && !east && !north && world.getBlockState(pos.up()).isAir()) {
+            for (Direction dir : Direction.Type.HORIZONTAL) {
+                BlockPos upOffset = pos.up().offset(dir);
+                BlockState upOffsetState = world.getBlockState(upOffset);
+                Block upOffsetBlock = upOffsetState.getBlock();
+                if (upOffsetBlock == this || upOffsetBlock instanceof CatwalkConnectingBlock && ((CatwalkConnectingBlock) upOffsetBlock).shouldCatwalkConnect(upOffsetState, world, upOffset, dir)) {
+                    return IndConstr.Blocks.CATWALK_STAIRS.getDefaultState().with(CatwalkStairsBlock.FACING, dir);
+                }
+            }
+        }
+        return this.getDefaultState().with(SOUTH, south).with(WEST, west).with(NORTH, north).with(EAST, east);
     }
 
     public boolean hasBorder(BlockView world, BlockPos pos, Direction side) {
