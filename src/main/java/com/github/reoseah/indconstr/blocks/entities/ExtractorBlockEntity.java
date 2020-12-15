@@ -34,7 +34,7 @@ public class ExtractorBlockEntity extends ConduitBlockEntity {
                 Direction direction = this.getCachedState().get(AbstractExtractorBlock.DIRECTION);
                 if (!this.world.isReceivingRedstonePower(this.pos)) {
                     ItemExtractable extractable = ItemAttributes.EXTRACTABLE.getFromNeighbour(this, direction);
-                    ItemStack stack = extractable.attemptAnyExtraction(8, Simulation.ACTION);
+                    ItemStack stack = extractable.attemptAnyExtraction(1, Simulation.ACTION);
                     if (!stack.isEmpty()) {
                         this.doInsert(stack, direction);
                         this.transferCooldown = 8;
