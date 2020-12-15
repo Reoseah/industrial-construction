@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "indconstr:light_gray_dye_scrap"
+    }
+  },
+  "result": {
+    "item": "minecraft:light_gray_dye",
+    "count": 1
+  }
+}

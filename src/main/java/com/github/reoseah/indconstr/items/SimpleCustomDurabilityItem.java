@@ -16,10 +16,12 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.stat.Stats;
 
-public abstract class CustomDamageItem extends Item implements CustomDurabilityItem {
-    public CustomDamageItem(Item.Settings settings) {
+public abstract class SimpleCustomDurabilityItem extends Item implements CustomDurabilityItem {
+    public SimpleCustomDurabilityItem(Item.Settings settings) {
         super(settings);
     }
+
+    public abstract int getCustomMaxDamage();
 
     public boolean isDamageable(ItemStack stack) {
         if (!stack.isEmpty() && this.getCustomMaxDamage() > 0) {
@@ -28,8 +30,6 @@ public abstract class CustomDamageItem extends Item implements CustomDurabilityI
         }
         return false;
     }
-
-    public abstract int getCustomMaxDamage();
 
     public boolean isDamaged(ItemStack stack) {
         return this.isDamageable(stack) && this.getDamage(stack) > 0;

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "indconstr:orange_dye_scrap"
+    }
+  },
+  "result": {
+    "item": "minecraft:orange_dye",
+    "count": 1
+  }
+}

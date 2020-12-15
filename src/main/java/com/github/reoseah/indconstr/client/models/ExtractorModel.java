@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 import org.jetbrains.annotations.Nullable;
 
-import com.github.reoseah.indconstr.blocks.ExtractorBlock;
+import com.github.reoseah.indconstr.blocks.AbstractExtractorBlock;
 import com.github.reoseah.indconstr.blocks.SpecialConduitBlock;
 import com.github.reoseah.indconstr.blocks.SpecialConduitBlock.ConnectionType;
 import com.google.common.collect.ImmutableSet;
@@ -104,7 +104,7 @@ public class ExtractorModel implements UnbakedModel {
             ConnectionType south = state.get(SpecialConduitBlock.SOUTH);
             ConnectionType west = state.get(SpecialConduitBlock.WEST);
             ConnectionType east = state.get(SpecialConduitBlock.EAST);
-            Direction direction = state.get(ExtractorBlock.DIRECTION);
+            Direction direction = state.get(AbstractExtractorBlock.DIRECTION);
 
             context.fallbackConsumer().accept(this.extractors[direction.ordinal()]);
 

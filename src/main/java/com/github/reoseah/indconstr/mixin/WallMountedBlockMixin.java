@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import com.github.reoseah.indconstr.blocks.ExtractorBlock;
+import com.github.reoseah.indconstr.blocks.AbstractExtractorBlock;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.LeverBlock;
@@ -25,7 +25,7 @@ public class WallMountedBlockMixin {
         if ((Object) this instanceof LeverBlock) {
             Direction direction = getDirection(state).getOpposite();
             BlockPos offset = pos.offset(direction);
-            if (world.getBlockState(offset).getBlock() instanceof ExtractorBlock) {
+            if (world.getBlockState(offset).getBlock() instanceof AbstractExtractorBlock) {
                 callback.setReturnValue(true);
             }
         }

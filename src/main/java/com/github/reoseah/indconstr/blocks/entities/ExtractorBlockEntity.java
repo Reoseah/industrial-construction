@@ -1,7 +1,7 @@
 package com.github.reoseah.indconstr.blocks.entities;
 
 import com.github.reoseah.indconstr.IndConstr;
-import com.github.reoseah.indconstr.blocks.ExtractorBlock;
+import com.github.reoseah.indconstr.blocks.AbstractExtractorBlock;
 import com.github.reoseah.indconstr.blocks.SpecialConduitBlock;
 
 import alexiil.mc.lib.attributes.Simulation;
@@ -31,7 +31,7 @@ public class ExtractorBlockEntity extends ConduitBlockEntity {
         if (!this.world.isClient) {
             this.transferCooldown--;
             if (this.transferCooldown <= 0) {
-                Direction direction = this.getCachedState().get(ExtractorBlock.DIRECTION);
+                Direction direction = this.getCachedState().get(AbstractExtractorBlock.DIRECTION);
                 if (!this.world.isReceivingRedstonePower(this.pos)) {
                     ItemExtractable extractable = ItemAttributes.EXTRACTABLE.getFromNeighbour(this, direction);
                     ItemStack stack = extractable.attemptAnyExtraction(8, Simulation.ACTION);
@@ -60,7 +60,7 @@ public class ExtractorBlockEntity extends ConduitBlockEntity {
 
     @Override
     protected boolean canSendItems(Direction direction) {
-        return super.canSendItems(direction) && direction != this.getCachedState().get(ExtractorBlock.DIRECTION) && !(this.world.getBlockState(this.getPos().offset(direction)).getBlock() instanceof LeverBlock);
+        return super.canSendItems(direction) && direction != this.getCachedState().get(AbstractExtractorBlock.DIRECTION) && !(this.world.getBlockState(this.getPos().offset(direction)).getBlock() instanceof LeverBlock);
     }
 
     @Override

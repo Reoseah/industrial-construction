@@ -1,10 +1,12 @@
 package com.github.reoseah.indconstr.items;
 
-import com.github.reoseah.indconstr.api.blocks.ColorableBlock;
+import com.github.reoseah.indconstr.IndConstr;
+import com.github.reoseah.indconstr.api.blocks.ColorScrapableBlock;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
@@ -28,11 +30,27 @@ public class PaintScraperItem extends Item {
         BlockPos pos = context.getBlockPos();
         BlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
-        boolean success = false;
-        if (block instanceof ColorableBlock && ((ColorableBlock) block).canColor((DyeColor) null)) {
-            world.setBlockState(pos, ((ColorableBlock) block).getColoredState(state, world, pos, (DyeColor) null));
-            success = true;
-        } else if (block == Blocks.WHITE_STAINED_GLASS
+
+        if (block instanceof ColorScrapableBlock) {
+            ColorScrapableBlock scrapable = (ColorScrapableBlock) block;
+            if (scrapable.canScrapColor(state, world, pos)) {
+                if (EnchantmentHelper.get(context.getStack()).containsKey(IndConstr.Enchantments.PARSIMONY)) {
+                    DyeColor color = scrapable.getScrapColor(state, world, pos);
+                    int count = scrapable.getScrapCount(state, world, pos);
+                    if (count > 0 && !context.getPlayer().isCreative()) {
+                        context.getPlayer().inventory.offerOrDrop(world, new ItemStack(DyeScrapItem.byColor(color), count));
+                    }
+                }
+                scrapable.onScraped(state, world, pos);
+
+                context.getStack().damage(1, context.getPlayer(), player -> {
+                    player.sendToolBreakStatus(context.getHand());
+                });
+                return ActionResult.SUCCESS;
+            }
+            return ActionResult.FAIL;
+        }
+        if (block == Blocks.WHITE_STAINED_GLASS
                 || block == Blocks.ORANGE_STAINED_GLASS
                 || block == Blocks.MAGENTA_STAINED_GLASS
                 || block == Blocks.LIGHT_BLUE_STAINED_GLASS
@@ -49,9 +67,6 @@ public class PaintScraperItem extends Item {
                 || block == Blocks.RED_STAINED_GLASS
                 || block == Blocks.BLACK_STAINED_GLASS) {
             world.setBlockState(pos, Blocks.GLASS.getDefaultState());
-            success = true;
-        }
-        if (success) {
             context.getStack().damage(1, context.getPlayer(), player -> {
                 player.sendToolBreakStatus(context.getHand());
             });
@@ -62,7 +77,7 @@ public class PaintScraperItem extends Item {
 
     @Override
     public int getEnchantability() {
-        return 1;
+        return 15;
     }
 
     @Override

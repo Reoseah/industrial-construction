@@ -1,146 +1,94 @@
 package com.github.reoseah.indconstr.blocks;
 
-import com.github.reoseah.indconstr.api.blocks.ConduitConnectingBlock;
-import com.github.reoseah.indconstr.blocks.entities.ConduitBlockEntity;
-import com.github.reoseah.indconstr.blocks.entities.ConduitBlockEntity.TravellingItem;
+import com.github.reoseah.indconstr.IndConstr;
 
-import alexiil.mc.lib.attributes.AttributeList;
-import alexiil.mc.lib.attributes.AttributeProvider;
-import alexiil.mc.lib.attributes.SearchOptions;
-import alexiil.mc.lib.attributes.Simulation;
-import alexiil.mc.lib.attributes.item.ItemAttributes;
-import alexiil.mc.lib.attributes.item.ItemInsertable;
-import alexiil.mc.lib.attributes.item.impl.RejectingItemInsertable;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.InventoryProvider;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.ItemEntity;
+import net.minecraft.block.ShapeContext;
+import net.minecraft.block.Waterloggable;
+import net.minecraft.fluid.FluidState;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 
-public abstract class AbstractConduitBlock extends Block implements ConduitConnectingBlock, AttributeProvider {
-    public static final BooleanProperty DOWN = Properties.DOWN;
-    public static final BooleanProperty UP = Properties.UP;
-    public static final BooleanProperty NORTH = Properties.NORTH;
-    public static final BooleanProperty SOUTH = Properties.SOUTH;
-    public static final BooleanProperty EAST = Properties.EAST;
-    public static final BooleanProperty WEST = Properties.WEST;
+public abstract class AbstractConduitBlock extends SimpleConduitBlock implements BlockEntityProvider, Waterloggable {
+    public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 
-    public static BooleanProperty getConnectionProperty(Direction direction) {
-        switch (direction) {
-        case NORTH:
-            return NORTH;
-        case SOUTH:
-            return SOUTH;
-        case WEST:
-            return WEST;
-        case EAST:
-            return EAST;
-        case DOWN:
-            return DOWN;
-        case UP:
-        default:
-            return UP;
+    public static final VoxelShape[] SHAPES;
+    static {
+        SHAPES = new VoxelShape[64];
+        float min = 4;
+        float max = 12;
+        VoxelShape center = Block.createCuboidShape(min, min, min, max, max, max);
+        VoxelShape[] connections = new VoxelShape[] {
+                Block.createCuboidShape(min, 0, min, max, max, max),
+                Block.createCuboidShape(min, min, min, max, 16, max),
+                Block.createCuboidShape(min, min, 0, max, max, max),
+                Block.createCuboidShape(min, min, min, max, max, 16),
+                Block.createCuboidShape(0, min, min, max, max, max),
+                Block.createCuboidShape(min, min, min, 16, max, max)
+        };
+
+        for (int i = 0; i < 64; i++) {
+            VoxelShape shape = center;
+            for (int face = 0; face < 6; face++) {
+                if ((i & 1 << face) != 0) {
+                    shape = VoxelShapes.union(shape, connections[face]);
+                }
+            }
+            SHAPES[i] = shape;
         }
     }
 
     public AbstractConduitBlock(Block.Settings settings) {
         super(settings);
-        this.setDefaultState(this.getDefaultState()
-                .with(DOWN, false)
-                .with(UP, false)
-                .with(NORTH, false)
-                .with(SOUTH, false)
-                .with(EAST, false)
-                .with(WEST, false));
+        this.setDefaultState(this.getDefaultState().with(WATERLOGGED, false));
     }
 
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(DOWN, UP, NORTH, SOUTH, EAST, WEST);
+        super.appendProperties(builder);
+        builder.add(WATERLOGGED);
+    }
+
+    @Override
+    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        int i = (state.get(DOWN) ? 1 : 0) |
+                (state.get(UP) ? 2 : 0) |
+                (state.get(NORTH) ? 4 : 0) |
+                (state.get(SOUTH) ? 8 : 0) |
+                (state.get(WEST) ? 16 : 0) |
+                (state.get(EAST) ? 32 : 0);
+        return SHAPES[i];
     }
 
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        return this.getStateForPos(ctx.getWorld(), ctx.getBlockPos());
+        if (this == IndConstr.Blocks.CONDUIT && ctx.getWorld().getBlockState(ctx.getBlockPos()).getBlock() == IndConstr.Blocks.SCAFFOLDING) {
+            return IndConstr.Blocks.CONDUIT_IN_SCAFFOLDING.getPlacementState(ctx);
+        }
+        return super.getPlacementState(ctx);
     }
 
-    public BlockState getStateForPos(BlockView world, BlockPos pos) {
-        return this.getDefaultState()
-                .with(DOWN, this.connectsTo(world, pos, Direction.DOWN))
-                .with(UP, this.connectsTo(world, pos, Direction.UP))
-                .with(WEST, this.connectsTo(world, pos, Direction.WEST))
-                .with(EAST, this.connectsTo(world, pos, Direction.EAST))
-                .with(NORTH, this.connectsTo(world, pos, Direction.NORTH))
-                .with(SOUTH, this.connectsTo(world, pos, Direction.SOUTH));
-    }
-
-    protected boolean connectsTo(BlockView view, BlockPos pos, Direction side) {
-        BlockState neighbor = view.getBlockState(pos.offset(side));
-        Block block = neighbor.getBlock();
-        if (block instanceof ConduitConnectingBlock) {
-            ConduitConnectingBlock connectable = (ConduitConnectingBlock) block;
-            return ConduitConnectingBlock.canColorsConnect(connectable.getColor(), this.getColor()) && connectable.canConnect(neighbor, view, pos.offset(side), side);
-        }
-        if (view instanceof World) {
-            World world = (World) view;
-            ItemInsertable insertable = ItemAttributes.INSERTABLE.get(world, pos.offset(side), SearchOptions.inDirection(side));
-            return insertable != RejectingItemInsertable.NULL;
-        }
-        return block instanceof InventoryProvider;
+    @Override
+    public FluidState getFluidState(BlockState state) {
+        return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
     }
 
     @Override
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState newState, WorldAccess world, BlockPos pos, BlockPos posFrom) {
-        return state.with(getConnectionProperty(direction), this.connectsTo(world, pos, direction));
-    }
-
-    @Override
-    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-        if (newState.getBlock() instanceof AbstractConduitBlock) {
-            return;
+        if (state.get(WATERLOGGED)) {
+            world.getFluidTickScheduler().schedule(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
         }
-        BlockEntity be = world.getBlockEntity(pos);
-        if (be instanceof ConduitBlockEntity) {
-            ConduitBlockEntity conduit = (ConduitBlockEntity) be;
-            for (TravellingItem item : conduit.items) {
-                Vec3d offset = item.interpolatePosition(world.getTime(), 0, false);
-                ItemEntity entity = new ItemEntity(world, pos.getX() + offset.getX(), pos.getY() + offset.getY(), pos.getZ() + offset.getZ(), item.stack);
-                world.spawnEntity(entity);
-            }
-        }
-        super.onStateReplaced(state, world, pos, newState, moved);
-    }
-
-    @Override
-    public void addAllAttributes(World world, BlockPos pos, BlockState state, AttributeList<?> to) {
-        Direction direction = to.getSearchDirection();
-        if (direction == null || !state.get(getConnectionProperty(direction.getOpposite()))) {
-            return;
-        }
-        ConduitBlockEntity be = (ConduitBlockEntity) world.getBlockEntity(pos);
-        if (be == null) {
-            return;
-        }
-        to.offer(new ItemInsertable() {
-            @Override
-            public ItemStack attemptInsertion(ItemStack stack, Simulation simulation) {
-                if (simulation == Simulation.SIMULATE || stack.isEmpty()) {
-                    return ItemStack.EMPTY;
-                }
-                be.doInsert(stack, direction.getOpposite());
-                return ItemStack.EMPTY;
-            }
-        });
+        return super.getStateForNeighborUpdate(state, direction, newState, world, pos, posFrom);
     }
 }

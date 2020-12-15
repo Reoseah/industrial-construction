@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "indconstr:red_dye_scrap"
+    }
+  },
+  "result": {
+    "item": "minecraft:red_dye",
+    "count": 1
+  }
+}

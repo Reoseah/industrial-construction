@@ -2,14 +2,15 @@ package com.github.reoseah.indconstr;
 
 import com.github.reoseah.indconstr.blocks.CatwalkBlock;
 import com.github.reoseah.indconstr.blocks.CatwalkStairsBlock;
-import com.github.reoseah.indconstr.blocks.ColoredTransparentConduitBlock;
-import com.github.reoseah.indconstr.blocks.ColoredTransparentExtractorBlock;
+import com.github.reoseah.indconstr.blocks.ColoredConduitBlock;
+import com.github.reoseah.indconstr.blocks.ColoredExtractorBlock;
+import com.github.reoseah.indconstr.blocks.ConduitBlock;
 import com.github.reoseah.indconstr.blocks.ConduitInScaffoldingBlock;
+import com.github.reoseah.indconstr.blocks.ExtractorBlock;
 import com.github.reoseah.indconstr.blocks.ScaffoldingBlock;
-import com.github.reoseah.indconstr.blocks.TransparentConduitBlock;
-import com.github.reoseah.indconstr.blocks.TransparentExtractorBlock;
 import com.github.reoseah.indconstr.blocks.entities.ConduitBlockEntity;
 import com.github.reoseah.indconstr.blocks.entities.ExtractorBlockEntity;
+import com.github.reoseah.indconstr.enchantments.ParsimonyEnchantment;
 import com.github.reoseah.indconstr.items.DyeScrapItem;
 import com.github.reoseah.indconstr.items.PaintRollerItem;
 import com.github.reoseah.indconstr.items.PaintScraperItem;
@@ -27,6 +28,7 @@ import net.minecraft.block.Material;
 import net.minecraft.block.MaterialColor;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -38,6 +40,7 @@ import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.registry.Registry;
 
 /**
@@ -46,13 +49,22 @@ import net.minecraft.util.registry.Registry;
  * Using a class like a namespace in Java?! Yes.
  */
 public final class IndConstr {
-    public static final ItemGroup ITEMGROUP = FabricItemGroupBuilder.build(new Identifier("indconstr:main"), () -> new ItemStack(IndConstr.Items.SCAFFOLDING));
+    public static final ItemGroup ITEMGROUP = FabricItemGroupBuilder.create(new Identifier("indconstr:main")).icon(() -> new ItemStack(IndConstr.Items.CONDUIT)).appendItems(list -> {
+        for (Item item : Registry.ITEM) {
+            item.appendStacks(IndConstr.ITEMGROUP, (DefaultedList<ItemStack>) list);
+            if (item == IndConstr.Items.PAINT_SCRAPER) {
+                ItemStack parsimonyBook = new ItemStack(net.minecraft.item.Items.ENCHANTED_BOOK);
+                parsimonyBook.addEnchantment(Enchantments.PARSIMONY, 1);
+                list.add(parsimonyBook);
+            }
+        }
+    }).build();
 
     public static final class Blocks {
         private static final FabricBlockSettings INDCONSTR_IRON = FabricBlockSettings.of(Material.METAL, MaterialColor.GRAY).strength(2F, 10F).nonOpaque().sounds(BlockSoundGroup.LANTERN).breakByTool(FabricToolTags.PICKAXES);
 
-        public static final Block CONDUIT = register("conduit", new TransparentConduitBlock(INDCONSTR_IRON));
-        public static final Block EXTRACTOR = register("extractor", new TransparentExtractorBlock(INDCONSTR_IRON));
+        public static final Block CONDUIT = register("conduit", new ConduitBlock(INDCONSTR_IRON));
+        public static final Block EXTRACTOR = register("extractor", new ExtractorBlock(INDCONSTR_IRON));
 
         public static final Block SCAFFOLDING = register("scaffolding", new ScaffoldingBlock(INDCONSTR_IRON));
         public static final Block CONDUIT_IN_SCAFFOLDING = register("conduit_in_scaffolding", new ConduitInScaffoldingBlock(INDCONSTR_IRON));
@@ -60,39 +72,39 @@ public final class IndConstr {
         public static final Block CATWALK_STAIRS = register("catwalk_stairs", new CatwalkStairsBlock(INDCONSTR_IRON));
         public static final Block REINFORCED_GLASS = register("reinforced_glass", new GlassBlock(FabricBlockSettings.of(Material.GLASS).strength(2F, 10F).nonOpaque().sounds(BlockSoundGroup.GLASS).requiresTool().breakByTool(FabricToolTags.PICKAXES)));
 
-        public static final Block WHITE_CONDUIT = register("white_conduit", new ColoredTransparentConduitBlock(DyeColor.WHITE, INDCONSTR_IRON));
-        public static final Block ORANGE_CONDUIT = register("orange_conduit", new ColoredTransparentConduitBlock(DyeColor.ORANGE, INDCONSTR_IRON));
-        public static final Block MAGENTA_CONDUIT = register("magenta_conduit", new ColoredTransparentConduitBlock(DyeColor.MAGENTA, INDCONSTR_IRON));
-        public static final Block LIGHT_BLUE_CONDUIT = register("light_blue_conduit", new ColoredTransparentConduitBlock(DyeColor.LIGHT_BLUE, INDCONSTR_IRON));
-        public static final Block YELLOW_CONDUIT = register("yellow_conduit", new ColoredTransparentConduitBlock(DyeColor.YELLOW, INDCONSTR_IRON));
-        public static final Block LIME_CONDUIT = register("lime_conduit", new ColoredTransparentConduitBlock(DyeColor.LIME, INDCONSTR_IRON));
-        public static final Block PINK_CONDUIT = register("pink_conduit", new ColoredTransparentConduitBlock(DyeColor.PINK, INDCONSTR_IRON));
-        public static final Block GRAY_CONDUIT = register("gray_conduit", new ColoredTransparentConduitBlock(DyeColor.GRAY, INDCONSTR_IRON));
-        public static final Block LIGHT_GRAY_CONDUIT = register("light_gray_conduit", new ColoredTransparentConduitBlock(DyeColor.LIGHT_GRAY, INDCONSTR_IRON));
-        public static final Block CYAN_CONDUIT = register("cyan_conduit", new ColoredTransparentConduitBlock(DyeColor.CYAN, INDCONSTR_IRON));
-        public static final Block PURPLE_CONDUIT = register("purple_conduit", new ColoredTransparentConduitBlock(DyeColor.PURPLE, INDCONSTR_IRON));
-        public static final Block BLUE_CONDUIT = register("blue_conduit", new ColoredTransparentConduitBlock(DyeColor.BLUE, INDCONSTR_IRON));
-        public static final Block BROWN_CONDUIT = register("brown_conduit", new ColoredTransparentConduitBlock(DyeColor.BROWN, INDCONSTR_IRON));
-        public static final Block GREEN_CONDUIT = register("green_conduit", new ColoredTransparentConduitBlock(DyeColor.GREEN, INDCONSTR_IRON));
-        public static final Block RED_CONDUIT = register("red_conduit", new ColoredTransparentConduitBlock(DyeColor.RED, INDCONSTR_IRON));
-        public static final Block BLACK_CONDUIT = register("black_conduit", new ColoredTransparentConduitBlock(DyeColor.BLACK, INDCONSTR_IRON));
+        public static final Block WHITE_CONDUIT = register("white_conduit", new ColoredConduitBlock(DyeColor.WHITE, INDCONSTR_IRON));
+        public static final Block ORANGE_CONDUIT = register("orange_conduit", new ColoredConduitBlock(DyeColor.ORANGE, INDCONSTR_IRON));
+        public static final Block MAGENTA_CONDUIT = register("magenta_conduit", new ColoredConduitBlock(DyeColor.MAGENTA, INDCONSTR_IRON));
+        public static final Block LIGHT_BLUE_CONDUIT = register("light_blue_conduit", new ColoredConduitBlock(DyeColor.LIGHT_BLUE, INDCONSTR_IRON));
+        public static final Block YELLOW_CONDUIT = register("yellow_conduit", new ColoredConduitBlock(DyeColor.YELLOW, INDCONSTR_IRON));
+        public static final Block LIME_CONDUIT = register("lime_conduit", new ColoredConduitBlock(DyeColor.LIME, INDCONSTR_IRON));
+        public static final Block PINK_CONDUIT = register("pink_conduit", new ColoredConduitBlock(DyeColor.PINK, INDCONSTR_IRON));
+        public static final Block GRAY_CONDUIT = register("gray_conduit", new ColoredConduitBlock(DyeColor.GRAY, INDCONSTR_IRON));
+        public static final Block LIGHT_GRAY_CONDUIT = register("light_gray_conduit", new ColoredConduitBlock(DyeColor.LIGHT_GRAY, INDCONSTR_IRON));
+        public static final Block CYAN_CONDUIT = register("cyan_conduit", new ColoredConduitBlock(DyeColor.CYAN, INDCONSTR_IRON));
+        public static final Block PURPLE_CONDUIT = register("purple_conduit", new ColoredConduitBlock(DyeColor.PURPLE, INDCONSTR_IRON));
+        public static final Block BLUE_CONDUIT = register("blue_conduit", new ColoredConduitBlock(DyeColor.BLUE, INDCONSTR_IRON));
+        public static final Block BROWN_CONDUIT = register("brown_conduit", new ColoredConduitBlock(DyeColor.BROWN, INDCONSTR_IRON));
+        public static final Block GREEN_CONDUIT = register("green_conduit", new ColoredConduitBlock(DyeColor.GREEN, INDCONSTR_IRON));
+        public static final Block RED_CONDUIT = register("red_conduit", new ColoredConduitBlock(DyeColor.RED, INDCONSTR_IRON));
+        public static final Block BLACK_CONDUIT = register("black_conduit", new ColoredConduitBlock(DyeColor.BLACK, INDCONSTR_IRON));
 
-        public static final Block WHITE_EXTRACTOR = register("white_extractor", new ColoredTransparentExtractorBlock(DyeColor.WHITE, INDCONSTR_IRON));
-        public static final Block ORANGE_EXTRACTOR = register("orange_extractor", new ColoredTransparentExtractorBlock(DyeColor.ORANGE, INDCONSTR_IRON));
-        public static final Block MAGENTA_EXTRACTOR = register("magenta_extractor", new ColoredTransparentExtractorBlock(DyeColor.MAGENTA, INDCONSTR_IRON));
-        public static final Block LIGHT_BLUE_EXTRACTOR = register("light_blue_extractor", new ColoredTransparentExtractorBlock(DyeColor.LIGHT_BLUE, INDCONSTR_IRON));
-        public static final Block YELLOW_EXTRACTOR = register("yellow_extractor", new ColoredTransparentExtractorBlock(DyeColor.YELLOW, INDCONSTR_IRON));
-        public static final Block LIME_EXTRACTOR = register("lime_extractor", new ColoredTransparentExtractorBlock(DyeColor.LIME, INDCONSTR_IRON));
-        public static final Block PINK_EXTRACTOR = register("pink_extractor", new ColoredTransparentExtractorBlock(DyeColor.PINK, INDCONSTR_IRON));
-        public static final Block GRAY_EXTRACTOR = register("gray_extractor", new ColoredTransparentExtractorBlock(DyeColor.GRAY, INDCONSTR_IRON));
-        public static final Block LIGHT_GRAY_EXTRACTOR = register("light_gray_extractor", new ColoredTransparentExtractorBlock(DyeColor.LIGHT_GRAY, INDCONSTR_IRON));
-        public static final Block CYAN_EXTRACTOR = register("cyan_extractor", new ColoredTransparentExtractorBlock(DyeColor.CYAN, INDCONSTR_IRON));
-        public static final Block PURPLE_EXTRACTOR = register("purple_extractor", new ColoredTransparentExtractorBlock(DyeColor.PURPLE, INDCONSTR_IRON));
-        public static final Block BLUE_EXTRACTOR = register("blue_extractor", new ColoredTransparentExtractorBlock(DyeColor.BLUE, INDCONSTR_IRON));
-        public static final Block BROWN_EXTRACTOR = register("brown_extractor", new ColoredTransparentExtractorBlock(DyeColor.BROWN, INDCONSTR_IRON));
-        public static final Block GREEN_EXTRACTOR = register("green_extractor", new ColoredTransparentExtractorBlock(DyeColor.GREEN, INDCONSTR_IRON));
-        public static final Block RED_EXTRACTOR = register("red_extractor", new ColoredTransparentExtractorBlock(DyeColor.RED, INDCONSTR_IRON));
-        public static final Block BLACK_EXTRACTOR = register("black_extractor", new ColoredTransparentExtractorBlock(DyeColor.BLACK, INDCONSTR_IRON));
+        public static final Block WHITE_EXTRACTOR = register("white_extractor", new ColoredExtractorBlock(DyeColor.WHITE, INDCONSTR_IRON));
+        public static final Block ORANGE_EXTRACTOR = register("orange_extractor", new ColoredExtractorBlock(DyeColor.ORANGE, INDCONSTR_IRON));
+        public static final Block MAGENTA_EXTRACTOR = register("magenta_extractor", new ColoredExtractorBlock(DyeColor.MAGENTA, INDCONSTR_IRON));
+        public static final Block LIGHT_BLUE_EXTRACTOR = register("light_blue_extractor", new ColoredExtractorBlock(DyeColor.LIGHT_BLUE, INDCONSTR_IRON));
+        public static final Block YELLOW_EXTRACTOR = register("yellow_extractor", new ColoredExtractorBlock(DyeColor.YELLOW, INDCONSTR_IRON));
+        public static final Block LIME_EXTRACTOR = register("lime_extractor", new ColoredExtractorBlock(DyeColor.LIME, INDCONSTR_IRON));
+        public static final Block PINK_EXTRACTOR = register("pink_extractor", new ColoredExtractorBlock(DyeColor.PINK, INDCONSTR_IRON));
+        public static final Block GRAY_EXTRACTOR = register("gray_extractor", new ColoredExtractorBlock(DyeColor.GRAY, INDCONSTR_IRON));
+        public static final Block LIGHT_GRAY_EXTRACTOR = register("light_gray_extractor", new ColoredExtractorBlock(DyeColor.LIGHT_GRAY, INDCONSTR_IRON));
+        public static final Block CYAN_EXTRACTOR = register("cyan_extractor", new ColoredExtractorBlock(DyeColor.CYAN, INDCONSTR_IRON));
+        public static final Block PURPLE_EXTRACTOR = register("purple_extractor", new ColoredExtractorBlock(DyeColor.PURPLE, INDCONSTR_IRON));
+        public static final Block BLUE_EXTRACTOR = register("blue_extractor", new ColoredExtractorBlock(DyeColor.BLUE, INDCONSTR_IRON));
+        public static final Block BROWN_EXTRACTOR = register("brown_extractor", new ColoredExtractorBlock(DyeColor.BROWN, INDCONSTR_IRON));
+        public static final Block GREEN_EXTRACTOR = register("green_extractor", new ColoredExtractorBlock(DyeColor.GREEN, INDCONSTR_IRON));
+        public static final Block RED_EXTRACTOR = register("red_extractor", new ColoredExtractorBlock(DyeColor.RED, INDCONSTR_IRON));
+        public static final Block BLACK_EXTRACTOR = register("black_extractor", new ColoredExtractorBlock(DyeColor.BLACK, INDCONSTR_IRON));
 
         private static Block register(String name, Block block) {
             return Registry.register(Registry.BLOCK, "indconstr:" + name, block);
@@ -110,7 +122,6 @@ public final class IndConstr {
         private static final Tag<Item> IRON_INGOTS = TagRegistry.item(new Identifier("c:iron_ingots"));
         public static final Item IRON_BAR = register("iron_bar", new Item(new Item.Settings().group(ITEMGROUP)));
         public static final Item WRENCH = register("wrench", new WrenchItem(Items.IRON_INGOTS, new Item.Settings().maxDamage(512).group(ITEMGROUP)));
-        public static final Item PAINT_SCRAPER = register("paint_scraper", new PaintScraperItem(Items.IRON_INGOTS, new Item.Settings().maxDamage(256).group(ITEMGROUP)));
         public static final Item PAINT_ROLLER = register("paint_roller", new Item(new Item.Settings().maxCount(16).group(ITEMGROUP)));
 
         private static final Item.Settings PAINT_ROLLER_SETTINGS = new Item.Settings().maxCount(1).group(ITEMGROUP);
@@ -130,6 +141,8 @@ public final class IndConstr {
         public static final Item GREEN_PAINT_ROLLER = register("green_paint_roller", new PaintRollerItem(DyeColor.GREEN, PAINT_ROLLER_SETTINGS));
         public static final Item RED_PAINT_ROLLER = register("red_paint_roller", new PaintRollerItem(DyeColor.RED, PAINT_ROLLER_SETTINGS));
         public static final Item BLACK_PAINT_ROLLER = register("black_paint_roller", new PaintRollerItem(DyeColor.BLACK, PAINT_ROLLER_SETTINGS));
+
+        public static final Item PAINT_SCRAPER = register("paint_scraper", new PaintScraperItem(Items.IRON_INGOTS, new Item.Settings().maxDamage(256).group(ITEMGROUP)));
 
         public static final Item WHITE_DYE_SCRAP = register("white_dye_scrap", new DyeScrapItem(DyeColor.WHITE, new Item.Settings().group(IndConstr.ITEMGROUP)));
         public static final Item ORANGE_DYE_SCRAP = register("orange_dye_scrap", new DyeScrapItem(DyeColor.ORANGE, new Item.Settings().group(IndConstr.ITEMGROUP)));
@@ -187,11 +200,19 @@ public final class IndConstr {
         }
     }
 
+    public static final class Enchantments {
+        public static final Enchantment PARSIMONY = register("parsimony", new ParsimonyEnchantment());
+
+        private static Enchantment register(String name, Enchantment enchantment) {
+            return Registry.register(Registry.ENCHANTMENT, "indconstr:" + name, enchantment);
+        }
+    }
+
     public static final class BlockEntityTypes {
         public static final BlockEntityType<ConduitBlockEntity> CONDUIT = register("conduit",
-                new BlockEntityType<>(ConduitBlockEntity::createTransparent, ImmutableSet.<Block>builder().add(Blocks.CONDUIT, Blocks.CONDUIT_IN_SCAFFOLDING).addAll(ColoredTransparentConduitBlock.INSTANCES.values()).build(), null));
+                new BlockEntityType<>(ConduitBlockEntity::createTransparent, ImmutableSet.<Block>builder().add(Blocks.CONDUIT, Blocks.CONDUIT_IN_SCAFFOLDING).addAll(ColoredConduitBlock.INSTANCES.values()).build(), null));
         public static final BlockEntityType<ExtractorBlockEntity> EXTRACTOR = register("extractor",
-                new BlockEntityType<>(ExtractorBlockEntity::createTransparent, ImmutableSet.<Block>builder().add(Blocks.EXTRACTOR).addAll(ColoredTransparentExtractorBlock.INSTANCES.values()).build(), null));
+                new BlockEntityType<>(ExtractorBlockEntity::createTransparent, ImmutableSet.<Block>builder().add(Blocks.EXTRACTOR).addAll(ColoredExtractorBlock.INSTANCES.values()).build(), null));
 
         private static <T extends BlockEntity> BlockEntityType<T> register(String name, BlockEntityType<T> type) {
             return Registry.register(Registry.BLOCK_ENTITY_TYPE, "indconstr:" + name, type);

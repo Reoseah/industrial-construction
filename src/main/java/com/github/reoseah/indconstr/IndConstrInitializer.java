@@ -9,6 +9,7 @@ public class IndConstrInitializer implements ModInitializer {
 
         IndConstr.Blocks.CONDUIT.getClass();
         IndConstr.Items.CONDUIT.getClass();
+        IndConstr.Enchantments.PARSIMONY.getClass();
         IndConstr.BlockEntityTypes.CONDUIT.getClass();
         IndConstr.RecipeSerializers.PAINTROLLER_FILLING.getClass();
     }

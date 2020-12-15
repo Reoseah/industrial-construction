@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.github.reoseah.indconstr.IndConstr;
-import com.github.reoseah.indconstr.api.blocks.ColorableBlock;
+import com.github.reoseah.indconstr.api.blocks.PaintableBlock;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -23,10 +23,14 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class PaintRollerItem extends CustomDamageItem {
-    public static final Map<DyeColor, Item> INSTANCES = new EnumMap<>(DyeColor.class);
+public class PaintRollerItem extends SimpleCustomDurabilityItem {
+    public static final Map<DyeColor, PaintRollerItem> INSTANCES = new EnumMap<>(DyeColor.class);
 
     protected final DyeColor color;
+
+    public static PaintRollerItem byColor(DyeColor color) {
+        return INSTANCES.get(color);
+    }
 
     public PaintRollerItem(DyeColor color, Item.Settings settings) {
         super(settings);
@@ -50,23 +54,36 @@ public class PaintRollerItem extends CustomDamageItem {
         World world = context.getWorld();
         BlockPos pos = context.getBlockPos();
         BlockState state = world.getBlockState(pos);
-
         Block block = state.getBlock();
+
         if (block == Blocks.CAULDRON && state.get(CauldronBlock.LEVEL) > 0 && context.getPlayer() != null) {
             world.setBlockState(pos, state.with(CauldronBlock.LEVEL, state.get(CauldronBlock.LEVEL) - 1));
             context.getPlayer().setStackInHand(context.getHand(), new ItemStack(IndConstr.Items.PAINT_ROLLER));
+
             return ActionResult.SUCCESS;
         }
 
-        boolean success = false;
+        if (block instanceof PaintableBlock) {
+            PaintableBlock paintable = (PaintableBlock) block;
+
+            if (paintable.canPaintBlock(this.color, state, world, pos)) {
+                int amount = paintable.getPaintAmount(color, state, world, pos);
+                if (amount <= this.getCustomMaxDamage() - this.getDamage(context.getStack())) {
+                    paintable.onPainted(this.color, state, world, pos);
+
+                    this.damage(context.getStack(), amount, context.getPlayer(), player -> {
+                        player.sendToolBreakStatus(context.getHand());
+                        player.setStackInHand(context.getHand(), new ItemStack(IndConstr.Items.PAINT_ROLLER));
+                    });
+
+                    return ActionResult.SUCCESS;
+                }
+            }
+            return ActionResult.FAIL;
+        }
+
         if (block == Blocks.GLASS) {
             world.setBlockState(pos, getStainedGlass(this.color).getDefaultState());
-            success = true;
-        } else if (block instanceof ColorableBlock && ((ColorableBlock) block).canColor(this.color)) {
-            world.setBlockState(pos, ((ColorableBlock) block).getColoredState(state, world, pos, this.color));
-            success = true;
-        }
-        if (success) {
             this.damage(context.getStack(), 1, context.getPlayer(), player -> {
                 player.sendToolBreakStatus(context.getHand());
                 player.setStackInHand(context.getHand(), new ItemStack(IndConstr.Items.PAINT_ROLLER));

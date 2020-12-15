@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 import org.jetbrains.annotations.Nullable;
 
-import com.github.reoseah.indconstr.blocks.AbstractConduitBlock;
+import com.github.reoseah.indconstr.blocks.SimpleConduitBlock;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.datafixers.util.Pair;
 
@@ -87,12 +87,12 @@ public class ConduitModel implements UnbakedModel {
 
         @Override
         public void emitBlockQuads(BlockRenderView blockView, BlockState state, BlockPos pos, Supplier<Random> randomSupplier, RenderContext context) {
-            boolean down = state.get(AbstractConduitBlock.DOWN);
-            boolean up = state.get(AbstractConduitBlock.UP);
-            boolean north = state.get(AbstractConduitBlock.NORTH);
-            boolean south = state.get(AbstractConduitBlock.SOUTH);
-            boolean west = state.get(AbstractConduitBlock.WEST);
-            boolean east = state.get(AbstractConduitBlock.EAST);
+            boolean down = state.get(SimpleConduitBlock.DOWN);
+            boolean up = state.get(SimpleConduitBlock.UP);
+            boolean north = state.get(SimpleConduitBlock.NORTH);
+            boolean south = state.get(SimpleConduitBlock.SOUTH);
+            boolean west = state.get(SimpleConduitBlock.WEST);
+            boolean east = state.get(SimpleConduitBlock.EAST);
 
             context.fallbackConsumer().accept(down ? this.connections[0] : this.sides[0]);
             context.fallbackConsumer().accept(up ? this.connections[1] : this.sides[1]);

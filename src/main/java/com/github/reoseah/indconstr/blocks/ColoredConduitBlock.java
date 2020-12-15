@@ -1,10 +1,11 @@
 package com.github.reoseah.indconstr.blocks;
 
-import org.jetbrains.annotations.Nullable;
+import java.util.EnumMap;
+import java.util.Map;
 
 import com.github.reoseah.indconstr.IndConstr;
+import com.github.reoseah.indconstr.api.blocks.ColorScrapableBlock;
 import com.github.reoseah.indconstr.api.blocks.ConduitConnectingBlock;
-import com.github.reoseah.indconstr.api.blocks.PaintableBlock;
 import com.github.reoseah.indconstr.blocks.entities.ConduitBlockEntity;
 
 import net.fabricmc.api.EnvType;
@@ -12,16 +13,25 @@ import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldAccess;
 
-public class ConduitBlock extends AbstractConduitBlock implements PaintableBlock {
-    public ConduitBlock(Block.Settings settings) {
+public class ColoredConduitBlock extends AbstractConduitBlock implements ColorScrapableBlock {
+    public static final Map<DyeColor, ColoredConduitBlock> INSTANCES = new EnumMap<>(DyeColor.class);
+
+    protected final DyeColor color;
+
+    public static ColoredConduitBlock byColor(DyeColor color) {
+        return INSTANCES.get(color);
+    }
+
+    public ColoredConduitBlock(DyeColor color, Block.Settings settings) {
         super(settings);
+        this.color = color;
+        INSTANCES.put(color, this);
     }
 
     @Environment(EnvType.CLIENT)
@@ -32,8 +42,8 @@ public class ConduitBlock extends AbstractConduitBlock implements PaintableBlock
     }
 
     @Override
-    public @Nullable DyeColor getColor() {
-        return null;
+    public DyeColor getColor() {
+        return this.color;
     }
 
     @Override
@@ -42,26 +52,23 @@ public class ConduitBlock extends AbstractConduitBlock implements PaintableBlock
     }
 
     @Override
-    public boolean canReplace(BlockState state, ItemPlacementContext context) {
-        return super.canReplace(state, context)
-                || this == IndConstr.Blocks.CONDUIT
-                        && context.getStack().getItem() == IndConstr.Items.SCAFFOLDING
-                        && context.getPlayer() != null && !context.getPlayer().isSneaking();
-    }
-
-    @Override
-    public boolean canPaintBlock(DyeColor color, BlockState state, BlockView world, BlockPos pos) {
+    public boolean canScrapColor(BlockState state, BlockView world, BlockPos pos) {
         return true;
     }
 
     @Override
-    public int getPaintAmount(DyeColor color, BlockState state, BlockView world, BlockPos pos) {
+    public DyeColor getScrapColor(BlockState state, BlockView world, BlockPos pos) {
+        return this.color;
+    }
+
+    @Override
+    public int getScrapCount(BlockState state, BlockView world, BlockPos pos) {
         return 1;
     }
 
     @Override
-    public void onPainted(DyeColor color, BlockState state, WorldAccess world, BlockPos pos) {
-        BlockState painted = ColoredConduitBlock.byColor(color).getStateForPos(world, pos);
-        world.setBlockState(pos, painted, 3);
+    public void onScraped(BlockState state, WorldAccess world, BlockPos pos) {
+        BlockState uncolored = ((AbstractConduitBlock) IndConstr.Blocks.CONDUIT).getStateForPos(world, pos);
+        world.setBlockState(pos, uncolored, 3);
     }
 }

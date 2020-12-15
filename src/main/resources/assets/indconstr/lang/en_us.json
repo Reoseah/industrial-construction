@@ -79,5 +79,7 @@
     "item.indconstr.brown_dye_scrap": "Brown Dye Scrap",
     "item.indconstr.green_dye_scrap": "Green Dye Scrap",
     "item.indconstr.red_dye_scrap": "Red Dye Scrap",
-    "item.indconstr.black_dye_scrap": "Black Dye Scrap"
+    "item.indconstr.black_dye_scrap": "Black Dye Scrap",
+    
+    "enchantment.indconstr.parsimony": "Parsimony"
 }

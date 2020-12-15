@@ -14,8 +14,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 
-public class TransparentConduitBlockEntityRenderer<T extends ConduitBlockEntity> extends BlockEntityRenderer<T> {
-    public TransparentConduitBlockEntityRenderer(BlockEntityRenderDispatcher dispatcher) {
+public class ConduitBlockEntityRenderer<T extends ConduitBlockEntity> extends BlockEntityRenderer<T> {
+    public ConduitBlockEntityRenderer(BlockEntityRenderDispatcher dispatcher) {
         super(dispatcher);
     }
 
