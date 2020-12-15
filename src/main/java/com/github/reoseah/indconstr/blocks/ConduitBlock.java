@@ -38,7 +38,7 @@ public class ConduitBlock extends AbstractConduitBlock implements PaintableBlock
 
     @Override
     public BlockEntity createBlockEntity(BlockView world) {
-        return ConduitBlockEntity.createTransparent();
+        return new ConduitBlockEntity();
     }
 
     @Override
@@ -55,7 +55,7 @@ public class ConduitBlock extends AbstractConduitBlock implements PaintableBlock
     }
 
     @Override
-    public int getPaintAmount(DyeColor color, BlockState state, BlockView world, BlockPos pos) {
+    public int getPaintConsumption(DyeColor color, BlockState state, BlockView world, BlockPos pos) {
         return 1;
     }
 

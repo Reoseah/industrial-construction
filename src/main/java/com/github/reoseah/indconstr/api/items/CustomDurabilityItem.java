@@ -8,9 +8,8 @@ import net.minecraft.util.math.MathHelper;
 /**
  * An item that provides custom durability value.
  * <p>
- * It's common for items like batteries to override damage bar to show their
- * charge. Using normal damage, however, would allow for different things, e.g.
- * putting Mending in anvil.
+ * It's main use is to prevent Unbreaking/Mending enchantments where it doesn't
+ * make sense (e.g. a battery).
  * <p>
  * Taken from Cloth API under Unlicense license by Shedaniel
  */

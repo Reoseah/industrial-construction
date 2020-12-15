@@ -67,7 +67,7 @@ public class PaintRollerItem extends SimpleCustomDurabilityItem {
             PaintableBlock paintable = (PaintableBlock) block;
 
             if (paintable.canPaintBlock(this.color, state, world, pos)) {
-                int amount = paintable.getPaintAmount(color, state, world, pos);
+                int amount = paintable.getPaintConsumption(color, state, world, pos);
                 if (amount <= this.getCustomMaxDamage() - this.getDamage(context.getStack())) {
                     paintable.onPainted(this.color, state, world, pos);
 

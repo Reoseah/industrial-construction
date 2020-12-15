@@ -2,7 +2,6 @@ package com.github.reoseah.indconstr.blocks;
 
 import com.github.reoseah.indconstr.api.blocks.ConduitConnectingBlock;
 import com.github.reoseah.indconstr.blocks.entities.ConduitBlockEntity;
-import com.github.reoseah.indconstr.blocks.entities.ConduitBlockEntity.TravellingItem;
 
 import alexiil.mc.lib.attributes.AttributeList;
 import alexiil.mc.lib.attributes.AttributeProvider;
@@ -15,7 +14,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.InventoryProvider;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateManager;
@@ -23,7 +21,6 @@ import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
@@ -112,12 +109,7 @@ public abstract class SimpleConduitBlock extends Block implements ConduitConnect
         }
         BlockEntity be = world.getBlockEntity(pos);
         if (be instanceof ConduitBlockEntity) {
-            ConduitBlockEntity conduit = (ConduitBlockEntity) be;
-            for (TravellingItem item : conduit.items) {
-                Vec3d offset = item.interpolatePosition(world.getTime(), 0, false);
-                ItemEntity entity = new ItemEntity(world, pos.getX() + offset.getX(), pos.getY() + offset.getY(), pos.getZ() + offset.getZ(), item.stack);
-                world.spawnEntity(entity);
-            }
+            ((ConduitBlockEntity) be).onBroken();
         }
         super.onStateReplaced(state, world, pos, newState, moved);
     }

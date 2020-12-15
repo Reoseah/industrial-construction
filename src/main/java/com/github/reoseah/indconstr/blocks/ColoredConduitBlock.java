@@ -48,7 +48,7 @@ public class ColoredConduitBlock extends AbstractConduitBlock implements ColorSc
 
     @Override
     public BlockEntity createBlockEntity(BlockView world) {
-        return ConduitBlockEntity.createTransparent();
+        return new ConduitBlockEntity();
     }
 
     @Override

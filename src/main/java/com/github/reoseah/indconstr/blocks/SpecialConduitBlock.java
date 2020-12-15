@@ -14,6 +14,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.InventoryProvider;
 import net.minecraft.block.Waterloggable;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
@@ -124,6 +125,18 @@ public abstract class SpecialConduitBlock extends Block implements ConduitConnec
             world.getFluidTickScheduler().schedule(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
         }
         return state.with(getConnectionProperty(direction), this.getConnectionType(world, pos, direction));
+    }
+
+    @Override
+    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
+        if (newState.getBlock() instanceof SpecialConduitBlock) {
+            return;
+        }
+        BlockEntity be = world.getBlockEntity(pos);
+        if (be instanceof ConduitBlockEntity) {
+            ((ConduitBlockEntity) be).onBroken();
+        }
+        super.onStateReplaced(state, world, pos, newState, moved);
     }
 
     @Override

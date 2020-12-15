@@ -135,7 +135,7 @@ public class ConduitInScaffoldingBlock extends SimpleConduitBlock implements Sca
 
     @Override
     public BlockEntity createBlockEntity(BlockView world) {
-        return ConduitBlockEntity.createTransparent();
+        return new ConduitBlockEntity();
     }
 
     @Override

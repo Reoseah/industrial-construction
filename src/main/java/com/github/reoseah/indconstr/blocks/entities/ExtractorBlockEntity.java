@@ -21,8 +21,8 @@ public class ExtractorBlockEntity extends ConduitBlockEntity {
         super(type);
     }
 
-    public static ExtractorBlockEntity createTransparent() {
-        return new ExtractorBlockEntity(IndConstr.BlockEntityTypes.EXTRACTOR);
+    public ExtractorBlockEntity() {
+        super(IndConstr.BlockEntityTypes.EXTRACTOR);
     }
 
     @Override

@@ -47,7 +47,7 @@ public class ColoredExtractorBlock extends AbstractExtractorBlock implements Col
 
     @Override
     public BlockEntity createBlockEntity(BlockView world) {
-        return ExtractorBlockEntity.createTransparent();
+        return new ExtractorBlockEntity();
     }
 
     @Override

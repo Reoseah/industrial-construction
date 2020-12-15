@@ -35,7 +35,7 @@ public class ExtractorBlock extends AbstractExtractorBlock implements PaintableB
 
     @Override
     public BlockEntity createBlockEntity(BlockView world) {
-        return ExtractorBlockEntity.createTransparent();
+        return new ExtractorBlockEntity();
     }
 
     @Override
@@ -44,7 +44,7 @@ public class ExtractorBlock extends AbstractExtractorBlock implements PaintableB
     }
 
     @Override
-    public int getPaintAmount(DyeColor color, BlockState state, BlockView world, BlockPos pos) {
+    public int getPaintConsumption(DyeColor color, BlockState state, BlockView world, BlockPos pos) {
         return 1;
     }
 

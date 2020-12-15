@@ -12,7 +12,10 @@ import net.minecraft.world.WorldAccess;
 public interface PaintableBlock {
     boolean canPaintBlock(DyeColor color, BlockState state, BlockView world, BlockPos pos);
 
-    int getPaintAmount(DyeColor color, BlockState state, BlockView world, BlockPos pos);
+    /**
+     * @return 1 unit = 1/8 of a full dye
+     */
+    int getPaintConsumption(DyeColor color, BlockState state, BlockView world, BlockPos pos);
 
     void onPainted(DyeColor color, BlockState state, WorldAccess world, BlockPos pos);
 }

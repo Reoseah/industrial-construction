@@ -21,6 +21,7 @@ import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -40,8 +41,8 @@ public class ConduitBlockEntity extends BlockEntity implements Tickable {
         super(type);
     }
 
-    public static ConduitBlockEntity createTransparent() {
-        return new ConduitBlockEntity(IndConstr.BlockEntityTypes.CONDUIT);
+    public ConduitBlockEntity() {
+        super(IndConstr.BlockEntityTypes.CONDUIT);
     }
 
     @Override
@@ -129,7 +130,6 @@ public class ConduitBlockEntity extends BlockEntity implements Tickable {
     }
 
     public void sendToClient(List<TravellingItem> list) {
-//        if (this.getType() != IndConstr.BlockEntityTypes.OPAQUE_CONDUIT) {
         PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
         buf.writeBlockPos(this.pos);
         buf.writeInt(list.size());
@@ -147,7 +147,6 @@ public class ConduitBlockEntity extends BlockEntity implements Tickable {
         }
 
         PlayerStream.around(this.world, this.pos, 40).forEach(player -> ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, new Identifier("indconstr:conduit"), buf));
-//        }
     }
 
     public void doInsert(ItemStack stack, Direction from) {
@@ -162,6 +161,14 @@ public class ConduitBlockEntity extends BlockEntity implements Tickable {
 
     public boolean isConnected(Direction direction) {
         return this.getCachedState().get(SimpleConduitBlock.getConnectionProperty(direction));
+    }
+
+    public void onBroken() {
+        for (TravellingItem item : this.items) {
+            Vec3d offset = item.interpolatePosition(world.getTime(), 0, false);
+            ItemEntity entity = new ItemEntity(world, pos.getX() + offset.getX(), pos.getY() + offset.getY(), pos.getZ() + offset.getZ(), item.stack);
+            world.spawnEntity(entity);
+        }
     }
 
     public static class TravellingItem implements Comparable<TravellingItem> {

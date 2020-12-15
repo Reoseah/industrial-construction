@@ -13,16 +13,24 @@ import net.minecraft.world.BlockView;
  * itself.
  */
 public interface ConduitConnectingBlock {
+    /**
+     * Conduits can be color coded, in that case they only connect to conduits that
+     * are either uncolored or of the same color.
+     * 
+     * @return conduit color or null if not color-coded
+     */
     @Nullable
     DyeColor getColor();
 
+    /**
+     * @return false to prevent conduits from connecting to a given side of a block
+     */
     default boolean canConnect(BlockState state, BlockView world, BlockPos pos, Direction side) {
         return true;
     }
 
     /**
-     * A utility method for determining whether conduits can connect based on their
-     * colors.
+     * Returns whether conduits can connect based on their colors.
      */
     static boolean canColorsConnect(@Nullable DyeColor a, @Nullable DyeColor b) {
         return a == null || b == null || a == b;
