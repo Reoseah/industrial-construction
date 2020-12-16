@@ -1,5 +1,6 @@
 package com.github.reoseah.indconstr;
 
+import com.github.reoseah.indconstr.blocks.AxleBlock;
 import com.github.reoseah.indconstr.blocks.CatwalkBlock;
 import com.github.reoseah.indconstr.blocks.CatwalkStairsBlock;
 import com.github.reoseah.indconstr.blocks.ColoredConduitBlock;
@@ -72,6 +73,8 @@ public final class IndConstr {
         public static final Block CATWALK_STAIRS = register("catwalk_stairs", new CatwalkStairsBlock(INDCONSTR_IRON));
         public static final Block REINFORCED_GLASS = register("reinforced_glass", new GlassBlock(FabricBlockSettings.of(Material.GLASS).strength(2F, 10F).nonOpaque().sounds(BlockSoundGroup.GLASS).requiresTool().breakByTool(FabricToolTags.PICKAXES)));
 
+        public static final Block AXLE = register("axle", new AxleBlock(INDCONSTR_IRON));
+
         public static final Block WHITE_CONDUIT = register("white_conduit", new ColoredConduitBlock(DyeColor.WHITE, INDCONSTR_IRON));
         public static final Block ORANGE_CONDUIT = register("orange_conduit", new ColoredConduitBlock(DyeColor.ORANGE, INDCONSTR_IRON));
         public static final Block MAGENTA_CONDUIT = register("magenta_conduit", new ColoredConduitBlock(DyeColor.MAGENTA, INDCONSTR_IRON));
@@ -118,6 +121,8 @@ public final class IndConstr {
         public static final Item SCAFFOLDING = register("scaffolding", new BlockItem(IndConstr.Blocks.SCAFFOLDING, new Item.Settings().group(IndConstr.ITEMGROUP)));
         public static final Item CATWALK = register("catwalk", new BlockItem(IndConstr.Blocks.CATWALK, new Item.Settings().group(IndConstr.ITEMGROUP)));
         public static final Item REINFORCED_GLASS = register("reinforced_glass", new BlockItem(IndConstr.Blocks.REINFORCED_GLASS, new Item.Settings().group(IndConstr.ITEMGROUP)));
+
+        public static final Item AXLE = register("axle", new BlockItem(IndConstr.Blocks.AXLE, new Item.Settings().group(IndConstr.ITEMGROUP)));
 
         private static final Tag<Item> IRON_INGOTS = TagRegistry.item(new Identifier("c:iron_ingots"));
         public static final Item IRON_BAR = register("iron_bar", new Item(new Item.Settings().group(ITEMGROUP)));

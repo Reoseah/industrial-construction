@@ -1,6 +1,7 @@
 {
-    "parent": "block/cube_all",
+    "parent": "minecraft:block/cube_column",
     "textures": {
-        "all": "indconstr:block/reinforced_glass"
+        "end": "indconstr:block/reinforced_glass_top",
+        "side": "indconstr:block/reinforced_glass"
     }
 }

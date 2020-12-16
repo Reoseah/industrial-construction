@@ -126,6 +126,9 @@ public abstract class AbstractExtractorBlock extends SpecialConduitBlock impleme
         if (block instanceof AbstractExtractorBlock) {
             return ConnectionType.NONE;
         }
+        if (block instanceof AxleBlock) {
+            return neighbor.get(AxleBlock.AXIS) == side.getAxis() ? ConnectionType.SPECIAL : ConnectionType.NONE;
+        }
         if (block instanceof LeverBlock) {
             return getLeverDirection(neighbor) == side ? ConnectionType.SPECIAL : ConnectionType.NONE;
         }
