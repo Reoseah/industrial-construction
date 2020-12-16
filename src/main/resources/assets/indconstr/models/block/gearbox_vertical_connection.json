@@ -1,0 +1,30 @@
+{
+    "textures": {
+        "texture": "indconstr:block/gearbox_top",
+        "particle": "indconstr:block/gearbox_top",
+        "side": "indconstr:block/opaque_conduit",
+        "end": "indconstr:block/opaque_conduit_top",
+        "top": "indconstr:block/opaque_conduit"
+    },
+    "elements": [
+        {   
+            "from": [ 2, 2, 2 ],
+            "to": [ 14, 14, 14 ],
+            "faces": {
+                "north": { "texture": "#texture" }
+            }
+        },
+        {   
+			"from": [ 4, 4, 0 ],
+            "to": [ 12, 12, 4 ],
+            "faces": {
+                "down":  { "texture": "#top" },
+                "up":    { "texture": "#top" },
+                "west":  { "texture": "#side" },
+                "east":  { "texture": "#side" },
+                "north": { "texture": "#end", "cullface": "north" },
+                "south": { "texture": "#end"}
+            }
+        }
+    ]
+}

@@ -8,42 +8,8 @@
                 "up":    { "texture": "#top" },
                 "west":  { "texture": "#side" },
                 "east":  { "texture": "#side" },
-                "north": { "texture": "#end", "cullface": "north" }
-            }
-        },
-        {
-            "from": [ 4, 4, 0 ],
-            "to": [ 12, 4, 4 ],
-            "faces": {
-                "up":    { "texture": "#inside" }
-            }
-        },
-        {
-            "from": [ 4, 12, 0 ],
-            "to": [ 12, 12, 4 ],
-            "faces": {
-                "down":    { "texture": "#inside" }
-            }
-        },
-        {
-            "from": [ 4, 4, 0 ],
-            "to": [ 4, 12, 4 ],
-            "faces": {
-                "east":    { "texture": "#inside" }
-            }
-        },
-        {
-            "from": [ 12, 4, 0 ],
-            "to": [ 12, 12, 4 ],
-            "faces": {
-                "west":    { "texture": "#inside" }
-            }
-        },
-        {
-            "from": [ 4, 4, 4 ],
-            "to": [ 12, 12, 12 ],
-            "faces": {
-                "north":    { "texture": "#inside" }
+                "north": { "texture": "#end", "cullface": "north" },
+                "south": { "texture": "#inside"}
             }
         }
     ],
@@ -52,6 +18,6 @@
         "side": "indconstr:block/black_opaque_conduit",
         "end": "indconstr:block/black_opaque_conduit",
         "top": "indconstr:block/black_opaque_conduit_top",
-        "inside": "indconstr:block/opaque_conduit_inside"
+        "inside": "indconstr:block/opaque_conduit"
     }
 }

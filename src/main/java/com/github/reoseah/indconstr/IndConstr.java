@@ -8,6 +8,7 @@ import com.github.reoseah.indconstr.blocks.ColoredExtractorBlock;
 import com.github.reoseah.indconstr.blocks.ConduitBlock;
 import com.github.reoseah.indconstr.blocks.ConduitInScaffoldingBlock;
 import com.github.reoseah.indconstr.blocks.ExtractorBlock;
+import com.github.reoseah.indconstr.blocks.GearboxBlock;
 import com.github.reoseah.indconstr.blocks.ScaffoldingBlock;
 import com.github.reoseah.indconstr.blocks.entities.AxleBlockEntity;
 import com.github.reoseah.indconstr.blocks.entities.ConduitBlockEntity;
@@ -75,6 +76,7 @@ public final class IndConstr {
         public static final Block REINFORCED_GLASS = register("reinforced_glass", new GlassBlock(FabricBlockSettings.of(Material.GLASS).strength(2F, 10F).nonOpaque().sounds(BlockSoundGroup.GLASS).requiresTool().breakByTool(FabricToolTags.PICKAXES)));
 
         public static final Block AXLE = register("axle", new AxleBlock(INDCONSTR_IRON));
+        public static final Block GEARBOX = register("gearbox", new GearboxBlock(INDCONSTR_IRON));
 
         public static final Block WHITE_CONDUIT = register("white_conduit", new ColoredConduitBlock(DyeColor.WHITE, INDCONSTR_IRON));
         public static final Block ORANGE_CONDUIT = register("orange_conduit", new ColoredConduitBlock(DyeColor.ORANGE, INDCONSTR_IRON));
@@ -124,6 +126,7 @@ public final class IndConstr {
         public static final Item REINFORCED_GLASS = register("reinforced_glass", new BlockItem(IndConstr.Blocks.REINFORCED_GLASS, new Item.Settings().group(IndConstr.ITEMGROUP)));
 
         public static final Item AXLE = register("axle", new BlockItem(IndConstr.Blocks.AXLE, new Item.Settings().group(null)));
+        public static final Item GEARBOX = register("gearbox", new BlockItem(IndConstr.Blocks.GEARBOX, new Item.Settings().group(null)));
 
         private static final Tag<Item> IRON_INGOTS = TagRegistry.item(new Identifier("c:iron_ingots"));
         public static final Item IRON_BAR = register("iron_bar", new Item(new Item.Settings().group(ITEMGROUP)));
