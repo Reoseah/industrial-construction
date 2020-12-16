@@ -9,6 +9,7 @@ import com.github.reoseah.indconstr.blocks.ConduitBlock;
 import com.github.reoseah.indconstr.blocks.ConduitInScaffoldingBlock;
 import com.github.reoseah.indconstr.blocks.ExtractorBlock;
 import com.github.reoseah.indconstr.blocks.ScaffoldingBlock;
+import com.github.reoseah.indconstr.blocks.entities.AxleBlockEntity;
 import com.github.reoseah.indconstr.blocks.entities.ConduitBlockEntity;
 import com.github.reoseah.indconstr.blocks.entities.ExtractorBlockEntity;
 import com.github.reoseah.indconstr.enchantments.ParsimonyEnchantment;
@@ -122,7 +123,7 @@ public final class IndConstr {
         public static final Item CATWALK = register("catwalk", new BlockItem(IndConstr.Blocks.CATWALK, new Item.Settings().group(IndConstr.ITEMGROUP)));
         public static final Item REINFORCED_GLASS = register("reinforced_glass", new BlockItem(IndConstr.Blocks.REINFORCED_GLASS, new Item.Settings().group(IndConstr.ITEMGROUP)));
 
-        public static final Item AXLE = register("axle", new BlockItem(IndConstr.Blocks.AXLE, new Item.Settings().group(IndConstr.ITEMGROUP)));
+        public static final Item AXLE = register("axle", new BlockItem(IndConstr.Blocks.AXLE, new Item.Settings().group(null)));
 
         private static final Tag<Item> IRON_INGOTS = TagRegistry.item(new Identifier("c:iron_ingots"));
         public static final Item IRON_BAR = register("iron_bar", new Item(new Item.Settings().group(ITEMGROUP)));
@@ -218,6 +219,8 @@ public final class IndConstr {
                 new BlockEntityType<>(ConduitBlockEntity::new, ImmutableSet.<Block>builder().add(Blocks.CONDUIT, Blocks.CONDUIT_IN_SCAFFOLDING).addAll(ColoredConduitBlock.INSTANCES.values()).build(), null));
         public static final BlockEntityType<ExtractorBlockEntity> EXTRACTOR = register("extractor",
                 new BlockEntityType<>(ExtractorBlockEntity::new, ImmutableSet.<Block>builder().add(Blocks.EXTRACTOR).addAll(ColoredExtractorBlock.INSTANCES.values()).build(), null));
+
+        public static final BlockEntityType<AxleBlockEntity> AXLE = register("axle", new BlockEntityType<>(AxleBlockEntity::new, ImmutableSet.of(Blocks.AXLE), null));
 
         private static <T extends BlockEntity> BlockEntityType<T> register(String name, BlockEntityType<T> type) {
             return Registry.register(Registry.BLOCK_ENTITY_TYPE, "indconstr:" + name, type);

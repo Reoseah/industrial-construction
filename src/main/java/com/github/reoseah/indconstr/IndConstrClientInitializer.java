@@ -9,6 +9,7 @@ import com.github.reoseah.indconstr.api.blocks.WrenchableBlock;
 import com.github.reoseah.indconstr.blocks.entities.ConduitBlockEntity;
 import com.github.reoseah.indconstr.blocks.entities.ConduitBlockEntity.TravellingItem;
 import com.github.reoseah.indconstr.client.models.IndrConstrModelProvider;
+import com.github.reoseah.indconstr.client.render.AxleBlockEntityRenderer;
 import com.github.reoseah.indconstr.client.render.ConduitBlockEntityRenderer;
 
 import net.fabricmc.api.ClientModInitializer;
@@ -112,6 +113,7 @@ public class IndConstrClientInitializer implements ClientModInitializer {
 
         BlockEntityRendererRegistry.INSTANCE.register(IndConstr.BlockEntityTypes.CONDUIT, ConduitBlockEntityRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(IndConstr.BlockEntityTypes.EXTRACTOR, ConduitBlockEntityRenderer::new);
+        BlockEntityRendererRegistry.INSTANCE.register(IndConstr.BlockEntityTypes.AXLE, AxleBlockEntityRenderer::new);
 
         FabricModelPredicateProviderRegistry.register(IndConstr.Items.WRENCH, new Identifier("open"),
                 (ItemStack stack, @Nullable ClientWorld world, @Nullable LivingEntity entity) -> {
