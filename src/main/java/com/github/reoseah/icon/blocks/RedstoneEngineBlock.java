@@ -28,12 +28,11 @@ public class RedstoneEngineBlock extends Block implements BlockEntityProvider {
 
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        return this.getDefaultState().with(FACING, ctx.getSide().getOpposite());
+        return this.getDefaultState().with(FACING, ctx.getPlayerLookDirection());
     }
 
     @Override
     public BlockEntity createBlockEntity(BlockView world) {
         return new RedstoneEngineBlockEntity();
     }
-
 }
