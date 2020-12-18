@@ -11,6 +11,7 @@ import com.github.reoseah.icon.blocks.entities.ConduitBlockEntity.TravellingItem
 import com.github.reoseah.icon.client.models.IndrConstrModelProvider;
 import com.github.reoseah.icon.client.render.AxleBlockEntityRenderer;
 import com.github.reoseah.icon.client.render.ConduitBlockEntityRenderer;
+import com.github.reoseah.icon.client.render.EngineBlockEntityRenderer;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
@@ -113,6 +114,7 @@ public class IConClientInitializer implements ClientModInitializer {
         BlockEntityRendererRegistry.INSTANCE.register(ICon.BlockEntityTypes.CONDUIT, ConduitBlockEntityRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(ICon.BlockEntityTypes.EXTRACTOR, ConduitBlockEntityRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(ICon.BlockEntityTypes.AXLE, AxleBlockEntityRenderer::new);
+        BlockEntityRendererRegistry.INSTANCE.register(ICon.BlockEntityTypes.REDSTONE_ENGINE, EngineBlockEntityRenderer::new);
 
         FabricModelPredicateProviderRegistry.register(ICon.Items.WRENCH, new Identifier("open"),
                 (ItemStack stack, @Nullable ClientWorld world, @Nullable LivingEntity entity) -> {
