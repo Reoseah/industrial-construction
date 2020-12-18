@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PPP",
+    " BI",
+    " B "
+  ],
+  "key": {
+    "I": {
+      "tag": "c:iron_ingots"
+    },
+    "B": {
+      "tag": "c:iron_bars"
+    },
+    "P": {
+      "item": "minecraft:paper"
+    }
+  },
+  "result": {
+    "item": "icon:paint_roller",
+    "count": 1
+  }
+}

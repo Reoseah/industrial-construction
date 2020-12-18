@@ -1,0 +1,15 @@
+{
+    "textures": {
+        "texture": "icon:block/conduit_in_scaffolding_bottom",
+        "particle": "icon:block/conduit_in_scaffolding_bottom"
+    },
+    "elements": [
+        {   
+            "from": [ 0, 0, 0 ],
+            "to": [ 16, 16, 16 ],
+            "faces": {
+                "north": { "texture": "#texture", "cullface":"north" }
+            }
+        }
+    ]
+}

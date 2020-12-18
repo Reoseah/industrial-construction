@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "icon:colored_conduits"
+    }
+  ],
+  "result": {
+    "item": "icon:conduit"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "# #",
+    " # ",
+    " # "
+  ],
+  "key": {
+    "#": {
+      "tag": "c:iron_ingots"
+    }
+  },
+  "result": {
+    "item": "icon:wrench",
+    "count": 1
+  }
+}

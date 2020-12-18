@@ -1,6 +1,0 @@
-{
-    "variants": {
-        "attached=false": { "model": "indconstr:block/scaffolding" },
-        "attached=true": { "model": "indconstr:block/scaffolding_attached" }
-    }
-}

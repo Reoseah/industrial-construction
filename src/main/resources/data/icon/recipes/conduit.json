@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#G#"
+  ],
+  "key": {
+    "#": {
+      "tag": "c:iron_ingots"
+    },
+    "G": {
+      "item": "icon:reinforced_glass"
+    }
+  },
+  "result": {
+    "item": "icon:conduit",
+    "count": 8
+  }
+}

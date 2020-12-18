@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "attached=false": { "model": "icon:block/scaffolding" },
+        "attached=true": { "model": "icon:block/scaffolding_attached" }
+    }
+}

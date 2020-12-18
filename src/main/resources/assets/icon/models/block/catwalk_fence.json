@@ -1,0 +1,25 @@
+{
+    "textures": {
+        "texture": "icon:block/catwalk_side",
+        "particle": "icon:block/catwalk_side",
+        "top": "icon:block/catwalk_top"
+    },
+    "elements": [
+        {   
+            "from": [ 0, 0, 1 ],
+            "to": [ 16, 16, 1 ],
+            "faces": {
+                "north": { "texture": "#texture" },
+                "south": { "texture": "#texture" }
+            }
+        },
+        {   
+            "from": [ 0, 16, 0 ],
+            "to": [ 16, 16, 2 ],
+            "faces": {
+                "up": { "texture": "#top", "cullface": "up" },
+                "down": { "texture": "#top" }
+            }
+        }
+    ]
+}

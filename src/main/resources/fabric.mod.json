@@ -1,32 +1,32 @@
 {
   "schemaVersion": 1,
-  "id": "indconstr",
+  "id": "icon",
   "version": "${version}",
 
-  "name": "indconstr",
-  "description": "Small highly esthetic item transport and building mod.",
+  "name": "icon",
+  "description": "Minimalistic esthetics-focused tech mod.",
   "authors": [
     "Reoseah"
   ],
   "contact": {
-    "homepage": "https://github.com/Reoseah/indconstr",
-    "sources": "https://github.com/Reoseah/indconstr"
+    "homepage": "https://github.com/Reoseah/industrial-construction",
+    "sources": "https://github.com/Reoseah/industrial-construction"
   },
 
   "license": "CC0-1.0",
-  "icon": "assets/indconstr/icon.png",
+  "icon": "assets/icon/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.github.reoseah.indconstr.IndConstrInitializer"
+      "com.github.reoseah.icon.IConInitializer"
     ],
     "client": [
-      "com.github.reoseah.indconstr.IndConstrClientInitializer"
+      "com.github.reoseah.icon.IConClientInitializer"
     ]
   },
   "mixins": [
-    "indconstr.mixins.json"
+    "icon.mixins.json"
   ],
 
   "depends": {

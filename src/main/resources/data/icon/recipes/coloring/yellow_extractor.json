@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  
+  "pattern": [
+    "###",
+    "#X#",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "icon:extractor"
+    },
+    "X": {
+      "item": "minecraft:yellow_dye"
+    }
+  },
+  "result": {
+    "item": "icon:yellow_extractor",
+    "count": 8
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "icon:item/yellow_dye_scrap"
+  }
+}

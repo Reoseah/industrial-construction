@@ -1,0 +1,8 @@
+{
+    "parent": "icon:block/template_conduit_connection",
+    "textures": {
+        "side": "icon:block/light_blue_conduit",
+        "end": "icon:block/light_blue_conduit",
+        "top": "icon:block/light_blue_conduit_top"
+    }
+}

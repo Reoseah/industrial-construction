@@ -1,0 +1,6 @@
+{
+    "parent": "icon:block/template_conduit_side",
+    "textures": {
+        "texture": "icon:block/lime_conduit"
+    }
+}

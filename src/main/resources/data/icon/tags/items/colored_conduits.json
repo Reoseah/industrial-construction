@@ -1,0 +1,21 @@
+{
+    "replace": false,
+    "values": [
+        "icon:white_conduit",
+        "icon:orange_conduit",
+        "icon:magenta_conduit",
+        "icon:light_blue_conduit",
+        "icon:yellow_conduit",
+        "icon:lime_conduit",
+        "icon:pink_conduit",
+        "icon:light_gray_conduit",
+        "icon:gray_conduit",
+        "icon:cyan_conduit",
+        "icon:purple_conduit",
+        "icon:blue_conduit",
+        "icon:brown_conduit",
+        "icon:green_conduit",
+        "icon:red_conduit",
+        "icon:black_conduit"
+    ]
+}

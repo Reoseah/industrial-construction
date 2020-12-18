@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  
+  "pattern": [
+    "###",
+    "#X#",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "icon:extractor"
+    },
+    "X": {
+      "item": "minecraft:red_dye"
+    }
+  },
+  "result": {
+    "item": "icon:red_extractor",
+    "count": 8
+  }
+}
