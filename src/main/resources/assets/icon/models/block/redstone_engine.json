@@ -1,0 +1,34 @@
+{
+    "elements": [
+        {   
+			"from": [ 0, 0, 0 ],
+            "to": [ 16, 16, 8 ],
+            "faces": {
+                "down":  { "texture": "#side", "uv": [ 0, 12, 8, 16 ] },
+                "up":    { "texture": "#side", "uv": [ 8, 0, 16, 4 ] },
+                "west":  { "texture": "#side", "uv": [ 0, 0, 4, 8 ] },
+                "east":  { "texture": "#side", "uv": [ 12, 8, 16, 16 ] },
+                "north": { "texture": "#back", "cullface": "north" },
+                "south": { "texture": "#front"}
+            }
+        },
+        {   
+			"from": [ 4, 4, 8 ],
+            "to": [ 12, 12, 12 ],
+            "faces": {
+                "down":  { "texture": "#side", "uv": [ 4, 12, 12, 16 ] },
+                "up":    { "texture": "#side", "uv": [ 4, 0, 12, 4 ] },
+                "west":  { "texture": "#side", "uv": [ 0, 4, 4, 12 ] },
+                "east":  { "texture": "#side", "uv": [ 12, 4, 16, 12 ] },
+                "north": { "texture": "#back", "cullface": "north" },
+                "south": { "texture": "#front"}
+            }
+        }
+    ],
+    "textures": {
+        "particle": "icon:block/redstone_engine_side",
+        "side": "icon:block/redstone_engine_side",
+        "back": "icon:block/redstone_engine_back",
+        "front": "icon:block/redstone_engine_front"
+    }
+}
