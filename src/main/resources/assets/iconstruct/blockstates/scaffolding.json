@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "attached=false": { "model": "iconstruct:block/scaffolding" },
+        "attached=true": { "model": "iconstruct:block/scaffolding_attached" }
+    }
+}

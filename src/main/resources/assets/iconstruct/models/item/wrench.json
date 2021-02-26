@@ -1,0 +1,14 @@
+{
+    "parent": "minecraft:item/handheld",
+    "textures": {
+        "layer0": "iconstruct:item/wrench"
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "open": 1
+            },
+            "model": "iconstruct:item/wrench_open"
+        }
+    ]
+}

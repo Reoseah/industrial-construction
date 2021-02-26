@@ -1,0 +1,21 @@
+{
+    "replace": false,
+    "values": [
+        "iconstruct:white_extractor",
+        "iconstruct:orange_extractor",
+        "iconstruct:magenta_extractor",
+        "iconstruct:light_blue_extractor",
+        "iconstruct:yellow_extractor",
+        "iconstruct:lime_extractor",
+        "iconstruct:pink_extractor",
+        "iconstruct:light_gray_extractor",
+        "iconstruct:gray_extractor",
+        "iconstruct:cyan_extractor",
+        "iconstruct:purple_extractor",
+        "iconstruct:blue_extractor",
+        "iconstruct:brown_extractor",
+        "iconstruct:green_extractor",
+        "iconstruct:red_extractor",
+        "iconstruct:black_extractor"
+    ]
+}

@@ -1,0 +1,60 @@
+{
+	"parent": "block/block",
+	"display": {
+        "gui": {
+            "rotation": [ 30, 225, 0 ],
+            "translation": [ 0, 0.625, 0],
+            "scale":[ 0.625, 0.625, 0.625 ]
+        },
+        "fixed": {
+            "rotation": [ 0, 0, 0 ],
+            "translation": [ 0, 0, 0],
+            "scale":[ 0.5, 0.5, 0.5 ]
+        }
+    },
+    "elements": [
+        {   
+			"from": [ 0, 0, 0 ],
+            "to": [ 16, 9, 16 ],
+            "faces": {
+                "down":  { "texture": "#back" },
+                "up":    { "texture": "#front" },
+                "west":  { "texture": "#side", "uv": [ 0, 12, 8, 16 ] },
+                "east":  { "texture": "#side", "uv": [ 0, 12, 8, 16 ] },
+                "north": { "texture": "#side", "uv": [ 0, 12, 8, 16 ] },
+                "south": { "texture": "#side", "uv": [ 0, 12, 8, 16 ] }
+            }
+        }, 
+        {   
+			"from": [ 4, 9, 4 ],
+            "to": [ 12, 13, 12 ],
+            "faces": {
+                "north":  { "texture": "#side", "uv": [ 1, 10, 7, 12 ] },
+                "up":    { "texture": "#front"},
+                "west":  { "texture": "#side", "uv": [ 1, 10, 7, 12 ] },
+                "east":  { "texture": "#side", "uv": [ 1, 10, 7, 12 ] },
+                "south":  { "texture": "#side", "uv": [ 1, 10, 7, 12 ] }
+            }
+        }, 
+        {   "from": [ 6, 0, 6 ],
+            "to": [ 10, 16, 10 ],
+            "shade": false,
+            "faces": {
+                "up": { "texture": "#end" },
+                "down": { "texture": "#end" },
+                "west": { "texture": "#axle" },
+                "east": { "texture": "#axle" },
+                "south": { "texture": "#axle" },
+                "north": { "texture": "#axle" }
+            }
+        }
+    ],
+    "textures": {
+        "particle": "iconstruct:block/redstone_engine_side",
+        "side": "iconstruct:block/redstone_engine_side",
+        "back": "iconstruct:block/redstone_engine_back",
+        "front": "iconstruct:block/redstone_engine_front",
+        "axle": "iconstruct:block/axle",
+        "end": "iconstruct:block/axle_end"
+    }
+}

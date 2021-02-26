@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#G#"
+  ],
+  "key": {
+    "#": {
+      "tag": "c:iron_ingots"
+    },
+    "G": {
+      "item": "iconstruct:reinforced_glass"
+    }
+  },
+  "result": {
+    "item": "iconstruct:conduit",
+    "count": 8
+  }
+}

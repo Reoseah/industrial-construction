@@ -1,0 +1,28 @@
+{
+    "multipart": [
+        {   
+        	"when": { "facing": "north" },
+            "apply": { "model": "iconstruct:block/redstone_engine" }
+        },
+        {   
+        	"when": { "facing": "east" },
+            "apply": { "model": "iconstruct:block/redstone_engine", "uvlock": true, "y": 90 }
+        },
+        {   
+        	"when": { "facing": "south" },
+            "apply": { "model": "iconstruct:block/redstone_engine", "uvlock": true, "y": 180 }
+        },      
+        {   
+        	"when": { "facing": "west" },
+            "apply": { "model": "iconstruct:block/redstone_engine", "uvlock": true, "y": 270 }
+        },        
+        {   
+        	"when": { "facing": "up" },
+            "apply": { "model": "iconstruct:block/redstone_engine", "uvlock": true, "x": 270 }
+        },
+        {   
+        	"when": { "facing": "down" },
+            "apply": { "model": "iconstruct:block/redstone_engine", "uvlock": true, "x": 90 }  
+        }
+	]
+}

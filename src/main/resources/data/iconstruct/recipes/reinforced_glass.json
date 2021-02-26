@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#G#",
+    "GGG",
+    "#G#"
+  ],
+  "key": {
+    "#": {
+      "tag": "c:iron_bars"
+    },
+    "G": {
+      "item": "minecraft:glass"
+    }
+  },
+  "result": {
+    "item": "iconstruct:reinforced_glass",
+    "count": 5
+  }
+}

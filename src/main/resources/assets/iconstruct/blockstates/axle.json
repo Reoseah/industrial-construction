@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "iconstruct:block/axle",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "iconstruct:block/axle"
+    },
+    "axis=z": {
+      "model": "iconstruct:block/axle",
+      "x": 90
+    }
+  }
+}

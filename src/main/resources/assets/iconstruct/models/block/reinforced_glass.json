@@ -1,0 +1,7 @@
+{
+    "parent": "minecraft:block/cube_column",
+    "textures": {
+        "end": "iconstruct:block/reinforced_glass_top",
+        "side": "iconstruct:block/reinforced_glass"
+    }
+}

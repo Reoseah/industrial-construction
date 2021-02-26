@@ -1,0 +1,23 @@
+{
+    "elements": [
+        {   
+			"from": [ 4, 4, 0 ],
+            "to": [ 12, 12, 4 ],
+            "faces": {
+                "down":  { "texture": "#top" },
+                "up":    { "texture": "#top" },
+                "west":  { "texture": "#side" },
+                "east":  { "texture": "#side" },
+                "north": { "texture": "#end", "cullface": "north" },
+                "south": { "texture": "#inside"}
+            }
+        }
+    ],
+    "textures": {
+        "particle": "#side",
+        "side": "iconstruct:block/white_opaque_conduit",
+        "end": "iconstruct:block/white_opaque_conduit",
+        "top": "iconstruct:block/white_opaque_conduit_top",
+        "inside": "iconstruct:block/opaque_conduit"
+    }
+}

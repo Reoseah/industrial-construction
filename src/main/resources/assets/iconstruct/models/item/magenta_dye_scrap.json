@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "iconstruct:item/magenta_dye_scrap"
+  }
+}

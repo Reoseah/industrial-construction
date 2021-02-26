@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "iconstruct:brown_dye_scrap"
+    }
+  },
+  "result": {
+    "item": "minecraft:brown_dye",
+    "count": 1
+  }
+}

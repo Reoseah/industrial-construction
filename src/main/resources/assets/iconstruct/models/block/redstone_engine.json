@@ -1,0 +1,41 @@
+{
+    "elements": [
+        {   
+			"from": [ 0, 0, 0 ],
+            "to": [ 16, 16, 9 ],
+            "faces": {
+                "down":  { "texture": "#side", "uv": [ 0, 12, 8, 16 ] },
+                "up":    { "texture": "#side", "uv": [ 8, 0, 16, 4 ] },
+                "west":  { "texture": "#side", "uv": [ 0, 0, 4, 8 ] },
+                "east":  { "texture": "#side", "uv": [ 12, 8, 16, 16 ] },
+                "north": { "texture": "#back", "cullface": "north" },
+                "south": { "texture": "#front"}
+            }
+        }, 
+        {   
+			"from": [ 0, 0, -0.01 ],
+            "to": [ 16, 16, 1 ],
+            "faces": {
+                "north": { "texture": "#back", "cullface": "north" }
+            }
+        },
+        {   
+			"from": [ 4, 4, 9 ],
+            "to": [ 12, 12, 13 ],
+            "faces": {
+                "down":  { "texture": "#side", "uv": [ 1, 10, 7, 12 ] },
+                "up":    { "texture": "#side", "uv": [ 9, 4, 15, 6 ] },
+                "west":  { "texture": "#side", "uv": [ 4, 1, 6, 7 ] },
+                "east":  { "texture": "#side", "uv": [ 10, 9, 12, 15 ] },
+                "south": { "texture": "#front"}
+            }
+        }
+    ],
+    "textures": {
+        "particle": "iconstruct:block/redstone_engine_side",
+        "side": "iconstruct:block/redstone_engine_side",
+        "back": "iconstruct:block/redstone_engine_back",
+        "front": "iconstruct:block/redstone_engine_front",
+        "end": "iconstruct:block/opaque_conduit"
+    }
+}

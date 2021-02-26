@@ -1,0 +1,6 @@
+{
+    "parent": "iconstruct:block/template_conduit_side",
+    "textures": {
+        "texture": "iconstruct:block/cyan_conduit_top"
+    }
+}

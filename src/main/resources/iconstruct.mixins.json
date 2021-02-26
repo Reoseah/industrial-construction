@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.github.reoseah.iconstruct.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+  	"WallMountedBlockMixin"
+  ],
+  "client": [
+    "client.MixinItemRenderer"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

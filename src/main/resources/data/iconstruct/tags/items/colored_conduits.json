@@ -1,0 +1,21 @@
+{
+    "replace": false,
+    "values": [
+        "iconstruct:white_conduit",
+        "iconstruct:orange_conduit",
+        "iconstruct:magenta_conduit",
+        "iconstruct:light_blue_conduit",
+        "iconstruct:yellow_conduit",
+        "iconstruct:lime_conduit",
+        "iconstruct:pink_conduit",
+        "iconstruct:light_gray_conduit",
+        "iconstruct:gray_conduit",
+        "iconstruct:cyan_conduit",
+        "iconstruct:purple_conduit",
+        "iconstruct:blue_conduit",
+        "iconstruct:brown_conduit",
+        "iconstruct:green_conduit",
+        "iconstruct:red_conduit",
+        "iconstruct:black_conduit"
+    ]
+}
