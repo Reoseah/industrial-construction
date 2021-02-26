@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.jetbrains.annotations.Nullable;
 
-import com.github.reoseah.iconstruct.api.blocks.WrenchableBlock;
+import com.github.reoseah.iconstruct.blocks.WrenchableBlock;
 import com.github.reoseah.iconstruct.blocks.entities.ConduitBlockEntity;
 import com.github.reoseah.iconstruct.blocks.entities.ConduitBlockEntity.TravellingItem;
 import com.github.reoseah.iconstruct.client.models.IConstructModels;
@@ -41,47 +41,48 @@ public class IConstructClientInitializer implements ClientModInitializer {
     @Environment(EnvType.CLIENT)
     public void onInitializeClient() {
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutoutMipped(),
-                IConstruct.Blocks.CONDUIT,
-                IConstruct.Blocks.EXTRACTOR,
-                IConstruct.Blocks.WHITE_CONDUIT,
-                IConstruct.Blocks.ORANGE_CONDUIT,
-                IConstruct.Blocks.MAGENTA_CONDUIT,
-                IConstruct.Blocks.YELLOW_CONDUIT,
-                IConstruct.Blocks.LIGHT_BLUE_CONDUIT,
-                IConstruct.Blocks.LIME_CONDUIT,
-                IConstruct.Blocks.PINK_CONDUIT,
-                IConstruct.Blocks.LIGHT_GRAY_CONDUIT,
-                IConstruct.Blocks.GRAY_CONDUIT,
-                IConstruct.Blocks.CYAN_CONDUIT,
-                IConstruct.Blocks.PURPLE_CONDUIT,
-                IConstruct.Blocks.BLUE_CONDUIT,
-                IConstruct.Blocks.BROWN_CONDUIT,
-                IConstruct.Blocks.GREEN_CONDUIT,
-                IConstruct.Blocks.RED_CONDUIT,
-                IConstruct.Blocks.BLACK_CONDUIT,
+                IConstruct.CONDUIT,
+                IConstruct.EXTRACTOR,
 
-                IConstruct.Blocks.WHITE_EXTRACTOR,
-                IConstruct.Blocks.ORANGE_EXTRACTOR,
-                IConstruct.Blocks.MAGENTA_EXTRACTOR,
-                IConstruct.Blocks.YELLOW_EXTRACTOR,
-                IConstruct.Blocks.LIGHT_BLUE_EXTRACTOR,
-                IConstruct.Blocks.LIME_EXTRACTOR,
-                IConstruct.Blocks.PINK_EXTRACTOR,
-                IConstruct.Blocks.LIGHT_GRAY_EXTRACTOR,
-                IConstruct.Blocks.GRAY_EXTRACTOR,
-                IConstruct.Blocks.CYAN_EXTRACTOR,
-                IConstruct.Blocks.PURPLE_EXTRACTOR,
-                IConstruct.Blocks.BLUE_EXTRACTOR,
-                IConstruct.Blocks.BROWN_EXTRACTOR,
-                IConstruct.Blocks.GREEN_EXTRACTOR,
-                IConstruct.Blocks.RED_EXTRACTOR,
-                IConstruct.Blocks.BLACK_EXTRACTOR,
+                IConstruct.SCAFFOLDING,
+                IConstruct.CONDUIT_IN_SCAFFOLDING,
+                IConstruct.CATWALK,
+                IConstruct.CATWALK_STAIRS,
+                IConstruct.REINFORCED_GLASS,
 
-                IConstruct.Blocks.SCAFFOLDING,
-                IConstruct.Blocks.CONDUIT_IN_SCAFFOLDING,
-                IConstruct.Blocks.CATWALK,
-                IConstruct.Blocks.CATWALK_STAIRS,
-                IConstruct.Blocks.REINFORCED_GLASS);
+                IConstruct.ColoredConduits.WHITE.block,
+                IConstruct.ColoredConduits.ORANGE.block,
+                IConstruct.ColoredConduits.MAGENTA.block,
+                IConstruct.ColoredConduits.YELLOW.block,
+                IConstruct.ColoredConduits.LIGHT_BLUE.block,
+                IConstruct.ColoredConduits.LIME.block,
+                IConstruct.ColoredConduits.PINK.block,
+                IConstruct.ColoredConduits.LIGHT_GRAY.block,
+                IConstruct.ColoredConduits.GRAY.block,
+                IConstruct.ColoredConduits.CYAN.block,
+                IConstruct.ColoredConduits.PURPLE.block,
+                IConstruct.ColoredConduits.BLUE.block,
+                IConstruct.ColoredConduits.BROWN.block,
+                IConstruct.ColoredConduits.GREEN.block,
+                IConstruct.ColoredConduits.RED.block,
+                IConstruct.ColoredConduits.BLACK.block,
+
+                IConstruct.ColoredExtractors.WHITE.block,
+                IConstruct.ColoredExtractors.ORANGE.block,
+                IConstruct.ColoredExtractors.MAGENTA.block,
+                IConstruct.ColoredExtractors.YELLOW.block,
+                IConstruct.ColoredExtractors.LIGHT_BLUE.block,
+                IConstruct.ColoredExtractors.LIME.block,
+                IConstruct.ColoredExtractors.PINK.block,
+                IConstruct.ColoredExtractors.LIGHT_GRAY.block,
+                IConstruct.ColoredExtractors.GRAY.block,
+                IConstruct.ColoredExtractors.CYAN.block,
+                IConstruct.ColoredExtractors.PURPLE.block,
+                IConstruct.ColoredExtractors.BLUE.block,
+                IConstruct.ColoredExtractors.BROWN.block,
+                IConstruct.ColoredExtractors.GREEN.block,
+                IConstruct.ColoredExtractors.RED.block,
+                IConstruct.ColoredExtractors.BLACK.block);
 
         ClientSidePacketRegistry.INSTANCE.register(new Identifier("icon:conduit"),
                 (PacketContext context, PacketByteBuf buffer) -> {
@@ -111,12 +112,12 @@ public class IConstructClientInitializer implements ClientModInitializer {
 
                 });
 
-        BlockEntityRendererRegistry.INSTANCE.register(IConstruct.BlockEntityTypes.CONDUIT, ConduitBlockEntityRenderer::new);
-        BlockEntityRendererRegistry.INSTANCE.register(IConstruct.BlockEntityTypes.EXTRACTOR, ConduitBlockEntityRenderer::new);
-        BlockEntityRendererRegistry.INSTANCE.register(IConstruct.BlockEntityTypes.AXLE, AxleBlockEntityRenderer::new);
-        BlockEntityRendererRegistry.INSTANCE.register(IConstruct.BlockEntityTypes.REDSTONE_ENGINE, EngineBlockEntityRenderer::new);
+        BlockEntityRendererRegistry.INSTANCE.register(IConstruct.ICBlockEntities.CONDUIT, ConduitBlockEntityRenderer::new);
+        BlockEntityRendererRegistry.INSTANCE.register(IConstruct.ICBlockEntities.EXTRACTOR, ConduitBlockEntityRenderer::new);
+        BlockEntityRendererRegistry.INSTANCE.register(IConstruct.ICBlockEntities.AXLE, AxleBlockEntityRenderer::new);
+        BlockEntityRendererRegistry.INSTANCE.register(IConstruct.ICBlockEntities.REDSTONE_ENGINE, EngineBlockEntityRenderer::new);
 
-        FabricModelPredicateProviderRegistry.register(IConstruct.Items.WRENCH, new Identifier("open"),
+        FabricModelPredicateProviderRegistry.register(IConstruct.WRENCH, new Identifier("open"),
                 (ItemStack stack, @Nullable ClientWorld world, @Nullable LivingEntity entity) -> {
                     if (entity instanceof PlayerEntity) {
                         PlayerEntity player = (PlayerEntity) entity;

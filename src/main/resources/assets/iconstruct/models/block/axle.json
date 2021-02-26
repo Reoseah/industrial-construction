@@ -6,7 +6,8 @@
         "end": "iconstruct:block/axle_end"
     },
     "elements": [
-        {   "from": [ 6, 0, 6 ],
+        {   
+            "from": [ 6, 0, 6 ],
             "to": [ 10, 16, 10 ],
             "shade": false,
             "faces": {

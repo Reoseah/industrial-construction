@@ -2,7 +2,6 @@ package com.github.reoseah.iconstruct.blocks;
 
 import org.jetbrains.annotations.Nullable;
 
-import com.github.reoseah.iconstruct.api.blocks.PaintableBlock;
 import com.github.reoseah.iconstruct.blocks.entities.ExtractorBlockEntity;
 
 import net.fabricmc.api.EnvType;

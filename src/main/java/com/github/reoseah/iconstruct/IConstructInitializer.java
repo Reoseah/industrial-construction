@@ -7,10 +7,11 @@ public class IConstructInitializer implements ModInitializer {
     public void onInitialize() {
         IConstruct.ITEMGROUP.getClass();
 
-        IConstruct.Blocks.CONDUIT.getClass();
-        IConstruct.Items.CONDUIT.getClass();
-        IConstruct.BlockEntityTypes.CONDUIT.getClass();
-        IConstruct.RecipeSerializers.PAINTROLLER_FILLING.getClass();
+        IConstruct.CONDUIT.getClass();
+        IConstruct.ColoredConduits.WHITE.getClass();
+        IConstruct.ColoredExtractors.WHITE.getClass();
+        IConstruct.ICBlockEntities.CONDUIT.getClass();
+        IConstruct.ICRecipeSerializers.PAINTROLLER_FILLING.getClass();
     }
 
 }

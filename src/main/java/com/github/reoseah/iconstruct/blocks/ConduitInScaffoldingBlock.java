@@ -119,7 +119,7 @@ public class ConduitInScaffoldingBlock extends SimpleConduitBlock implements Sca
 
     @Override
     public void onBroken(WorldAccess world, BlockPos pos, BlockState state) {
-        world.setBlockState(pos, IConstruct.Blocks.CONDUIT.getDefaultState()
+        world.setBlockState(pos, IConstruct.CONDUIT.getDefaultState()
                 .with(DOWN, state.get(DOWN))
                 .with(UP, state.get(UP))
                 .with(WEST, state.get(WEST))
@@ -130,7 +130,7 @@ public class ConduitInScaffoldingBlock extends SimpleConduitBlock implements Sca
 
     @Override
     public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
-        return IConstruct.Blocks.SCAFFOLDING.getDroppedStacks(state, builder);
+        return IConstruct.SCAFFOLDING.getDroppedStacks(state, builder);
     }
 
     @Override
@@ -141,7 +141,7 @@ public class ConduitInScaffoldingBlock extends SimpleConduitBlock implements Sca
     @Override
     @Environment(EnvType.CLIENT)
     public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
-        return new ItemStack(IConstruct.Blocks.SCAFFOLDING);
+        return new ItemStack(IConstruct.SCAFFOLDING);
     }
 
     @Override

@@ -22,7 +22,7 @@ public class ExtractorBlockEntity extends ConduitBlockEntity {
     }
 
     public ExtractorBlockEntity() {
-        super(IConstruct.BlockEntityTypes.EXTRACTOR);
+        super(IConstruct.ICBlockEntities.EXTRACTOR);
     }
 
     @Override

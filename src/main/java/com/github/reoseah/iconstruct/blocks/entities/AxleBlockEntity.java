@@ -13,7 +13,7 @@ public class AxleBlockEntity extends BlockEntity implements Tickable {
     public boolean isRotating = false;
 
     public AxleBlockEntity() {
-        super(IConstruct.BlockEntityTypes.AXLE);
+        super(IConstruct.ICBlockEntities.AXLE);
     }
 
     @Override

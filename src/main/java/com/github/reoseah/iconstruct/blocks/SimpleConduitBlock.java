@@ -1,6 +1,5 @@
 package com.github.reoseah.iconstruct.blocks;
 
-import com.github.reoseah.iconstruct.api.blocks.ConduitConnectingBlock;
 import com.github.reoseah.iconstruct.blocks.entities.ConduitBlockEntity;
 
 import alexiil.mc.lib.attributes.AttributeList;

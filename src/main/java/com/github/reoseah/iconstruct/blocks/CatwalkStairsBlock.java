@@ -2,9 +2,6 @@ package com.github.reoseah.iconstruct.blocks;
 
 import org.jetbrains.annotations.Nullable;
 
-import com.github.reoseah.iconstruct.api.blocks.CatwalkConnectingBlock;
-import com.github.reoseah.iconstruct.api.blocks.WrenchableBlock;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;

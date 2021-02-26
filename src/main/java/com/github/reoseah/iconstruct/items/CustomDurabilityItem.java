@@ -1,4 +1,4 @@
-package com.github.reoseah.iconstruct.api.items;
+package com.github.reoseah.iconstruct.items;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

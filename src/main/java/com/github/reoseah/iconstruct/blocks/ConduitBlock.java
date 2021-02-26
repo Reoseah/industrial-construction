@@ -3,8 +3,6 @@ package com.github.reoseah.iconstruct.blocks;
 import org.jetbrains.annotations.Nullable;
 
 import com.github.reoseah.iconstruct.IConstruct;
-import com.github.reoseah.iconstruct.api.blocks.ConduitConnectingBlock;
-import com.github.reoseah.iconstruct.api.blocks.PaintableBlock;
 import com.github.reoseah.iconstruct.blocks.entities.ConduitBlockEntity;
 
 import net.fabricmc.api.EnvType;
@@ -44,8 +42,8 @@ public class ConduitBlock extends AbstractConduitBlock implements PaintableBlock
     @Override
     public boolean canReplace(BlockState state, ItemPlacementContext context) {
         return super.canReplace(state, context)
-                || this == IConstruct.Blocks.CONDUIT
-                        && context.getStack().getItem() == IConstruct.Items.SCAFFOLDING
+                || this == IConstruct.CONDUIT
+                        && context.getStack().getItem() == IConstruct.SCAFFOLDING.asItem()
                         && context.getPlayer() != null && !context.getPlayer().isSneaking();
     }
 

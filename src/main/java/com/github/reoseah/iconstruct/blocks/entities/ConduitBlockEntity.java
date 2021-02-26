@@ -42,14 +42,14 @@ public class ConduitBlockEntity extends BlockEntity implements Tickable {
     }
 
     public ConduitBlockEntity() {
-        super(IConstruct.BlockEntityTypes.CONDUIT);
+        super(IConstruct.ICBlockEntities.CONDUIT);
     }
 
     @Override
     public void fromTag(BlockState state, CompoundTag tag) {
         super.fromTag(state, tag);
         this.items.clear();
-        ListTag list = tag.getList("Items", NbtType.COMPOUND);
+        ListTag list = tag.getList("ICItems", NbtType.COMPOUND);
         long time = this.world != null ? this.world.getTime() : 0;
         for (int i = 0; i < list.size(); i++) {
             CompoundTag tag2 = list.getCompound(i);
@@ -69,7 +69,7 @@ public class ConduitBlockEntity extends BlockEntity implements Tickable {
         for (TravellingItem item : this.items) {
             list.add(item.toTag(time));
         }
-        tag.put("Items", list);
+        tag.put("ICItems", list);
 
         return tag;
     }

@@ -32,7 +32,7 @@ public class PaintRollerFillingRecipe extends SpecialCraftingRecipe {
             if (stack.isEmpty()) {
                 continue;
             }
-            if (stack.getItem() == IConstruct.Items.PAINT_ROLLER || stack.getItem() instanceof PaintRollerItem) {
+            if (stack.getItem() == IConstruct.PAINT_ROLLER || stack.getItem() instanceof PaintRollerItem) {
                 if (paintroller.isEmpty()) {
                     paintroller = stack;
                 } else {
@@ -77,7 +77,7 @@ public class PaintRollerFillingRecipe extends SpecialCraftingRecipe {
             if (stack.isEmpty()) {
                 continue;
             }
-            if (stack.getItem() == IConstruct.Items.PAINT_ROLLER || stack.getItem() instanceof PaintRollerItem) {
+            if (stack.getItem() == IConstruct.PAINT_ROLLER || stack.getItem() instanceof PaintRollerItem) {
                 if (paintroller.isEmpty()) {
                     paintroller = stack;
                 } else {
@@ -131,7 +131,7 @@ public class PaintRollerFillingRecipe extends SpecialCraftingRecipe {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return IConstruct.RecipeSerializers.PAINTROLLER_FILLING;
+        return IConstruct.ICRecipeSerializers.PAINTROLLER_FILLING;
     }
 
 }

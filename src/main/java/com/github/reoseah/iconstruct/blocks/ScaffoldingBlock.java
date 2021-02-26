@@ -1,7 +1,6 @@
 package com.github.reoseah.iconstruct.blocks;
 
 import com.github.reoseah.iconstruct.IConstruct;
-import com.github.reoseah.iconstruct.api.blocks.WrenchableBlock;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -66,8 +65,9 @@ public class ScaffoldingBlock extends Block implements ScaffoldingConnectable, W
 
     @Override
     public boolean canReplace(BlockState state, ItemPlacementContext context) {
-        return context.getStack().getItem() == IConstruct.Items.CONDUIT
-                && context.getPlayer() != null && !context.getPlayer().isSneaking() || super.canReplace(state, context);
+        return context.getStack().getItem() == IConstruct.CONDUIT.asItem()
+                && context.getPlayer() != null && !context.getPlayer().isSneaking()
+                || super.canReplace(state, context);
     }
 
     @Override
@@ -75,8 +75,8 @@ public class ScaffoldingBlock extends Block implements ScaffoldingConnectable, W
         BlockView world = ctx.getWorld();
         BlockPos pos = ctx.getBlockPos();
         BlockState state = world.getBlockState(pos);
-        if (state.getBlock() == IConstruct.Blocks.CONDUIT) {
-            return IConstruct.Blocks.CONDUIT_IN_SCAFFOLDING.getPlacementState(ctx);
+        if (state.getBlock() == IConstruct.CONDUIT) {
+            return IConstruct.CONDUIT_IN_SCAFFOLDING.getPlacementState(ctx);
         }
         return this.getDefaultState()
                 .with(ATTACHED, this.isFrame(world, pos.up(), Direction.UP, world.getBlockState(pos.up())));

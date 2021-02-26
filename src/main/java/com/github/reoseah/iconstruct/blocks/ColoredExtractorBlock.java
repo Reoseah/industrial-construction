@@ -4,7 +4,6 @@ import java.util.EnumMap;
 import java.util.Map;
 
 import com.github.reoseah.iconstruct.IConstruct;
-import com.github.reoseah.iconstruct.api.blocks.ColorScrapableBlock;
 import com.github.reoseah.iconstruct.blocks.entities.ExtractorBlockEntity;
 
 import net.fabricmc.api.EnvType;
@@ -67,7 +66,7 @@ public class ColoredExtractorBlock extends AbstractExtractorBlock implements Col
 
     @Override
     public void onScraped(BlockState state, WorldAccess world, BlockPos pos) {
-        BlockState uncolored = ((AbstractExtractorBlock) IConstruct.Blocks.EXTRACTOR).getStateForPos(world, pos).with(DIRECTION, state.get(DIRECTION));
+        BlockState uncolored = ((AbstractExtractorBlock) IConstruct.EXTRACTOR).getStateForPos(world, pos).with(DIRECTION, state.get(DIRECTION));
         world.setBlockState(pos, uncolored, 3);
     }
 }

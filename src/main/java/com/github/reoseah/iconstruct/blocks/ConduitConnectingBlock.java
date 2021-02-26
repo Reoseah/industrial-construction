@@ -1,4 +1,4 @@
-package com.github.reoseah.iconstruct.api.blocks;
+package com.github.reoseah.iconstruct.blocks;
 
 import org.jetbrains.annotations.Nullable;
 

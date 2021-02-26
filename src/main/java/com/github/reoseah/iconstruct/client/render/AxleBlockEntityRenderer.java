@@ -17,9 +17,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction.Axis;
 
 public class AxleBlockEntityRenderer extends BlockEntityRenderer<AxleBlockEntity> {
-    private static final ModelIdentifier MODEL_ID_Y = new ModelIdentifier(new Identifier("icon:axle"), "axis=y");
-    private static final ModelIdentifier MODEL_ID_X = new ModelIdentifier(new Identifier("icon:axle"), "axis=x");
-    private static final ModelIdentifier MODEL_ID_Z = new ModelIdentifier(new Identifier("icon:axle"), "axis=z");
+    private static final ModelIdentifier MODEL_ID_Y = new ModelIdentifier(new Identifier("iconstruct:axle"), "axis=y");
+    private static final ModelIdentifier MODEL_ID_X = new ModelIdentifier(new Identifier("iconstruct:axle"), "axis=x");
+    private static final ModelIdentifier MODEL_ID_Z = new ModelIdentifier(new Identifier("iconstruct:axle"), "axis=z");
 
     public AxleBlockEntityRenderer(BlockEntityRenderDispatcher dispatcher) {
         super(dispatcher);

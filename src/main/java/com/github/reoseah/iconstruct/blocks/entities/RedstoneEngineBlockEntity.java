@@ -17,7 +17,7 @@ public class RedstoneEngineBlockEntity extends BlockEntity implements Tickable {
     public boolean isRotating = true;
 
     public RedstoneEngineBlockEntity() {
-        super(IConstruct.BlockEntityTypes.REDSTONE_ENGINE);
+        super(IConstruct.ICBlockEntities.REDSTONE_ENGINE);
     }
 
     @Override
@@ -36,6 +36,8 @@ public class RedstoneEngineBlockEntity extends BlockEntity implements Tickable {
                         axle.startAngle = this.angle;
                         axle.startTime = this.world.getTime();
                         axle.isRotating = true;
+                    } else {
+                        break;
                     }
                 }
             } else {
@@ -50,6 +52,8 @@ public class RedstoneEngineBlockEntity extends BlockEntity implements Tickable {
                 if (be instanceof AxleBlockEntity && be.getCachedState().get(AxleBlock.AXIS) == facing.getAxis()) {
                     AxleBlockEntity axle = (AxleBlockEntity) be;
                     axle.isRotating = false;
+                } else {
+                    break;
                 }
             }
         }

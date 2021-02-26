@@ -1,22 +1,19 @@
 package com.github.reoseah.iconstruct.items;
 
-import com.github.reoseah.iconstruct.api.blocks.WrenchableBlock;
+import com.github.reoseah.iconstruct.blocks.WrenchableBlock;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
-import net.minecraft.tag.Tag;
+import net.minecraft.item.Items;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class WrenchItem extends Item {
-    protected final Tag<Item> material;
-
-    public WrenchItem(Tag<Item> material, Item.Settings settings) {
+    public WrenchItem(Item.Settings settings) {
         super(settings);
-        this.material = material;
     }
 
     @Override
@@ -43,6 +40,6 @@ public class WrenchItem extends Item {
 
     @Override
     public boolean canRepair(ItemStack stack, ItemStack ingredient) {
-        return this.material.contains(ingredient.getItem());
+        return ingredient.getItem() == Items.IRON_INGOT;
     }
 }

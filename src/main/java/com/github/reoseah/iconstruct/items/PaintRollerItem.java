@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.github.reoseah.iconstruct.IConstruct;
-import com.github.reoseah.iconstruct.api.blocks.PaintableBlock;
+import com.github.reoseah.iconstruct.blocks.PaintableBlock;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -40,7 +40,7 @@ public class PaintRollerItem extends SimpleCustomDurabilityItem {
 
     @Override
     public String getTranslationKey() {
-        return IConstruct.Items.PAINT_ROLLER.getTranslationKey();
+        return IConstruct.PAINT_ROLLER.getTranslationKey();
     }
 
     @Override
@@ -58,7 +58,7 @@ public class PaintRollerItem extends SimpleCustomDurabilityItem {
 
         if (block == Blocks.CAULDRON && state.get(CauldronBlock.LEVEL) > 0 && context.getPlayer() != null) {
             world.setBlockState(pos, state.with(CauldronBlock.LEVEL, state.get(CauldronBlock.LEVEL) - 1));
-            context.getPlayer().setStackInHand(context.getHand(), new ItemStack(IConstruct.Items.PAINT_ROLLER));
+            context.getPlayer().setStackInHand(context.getHand(), new ItemStack(IConstruct.PAINT_ROLLER));
 
             return ActionResult.SUCCESS;
         }
@@ -73,7 +73,7 @@ public class PaintRollerItem extends SimpleCustomDurabilityItem {
 
                     this.damage(context.getStack(), amount, context.getPlayer(), player -> {
                         player.sendToolBreakStatus(context.getHand());
-                        player.setStackInHand(context.getHand(), new ItemStack(IConstruct.Items.PAINT_ROLLER));
+                        player.setStackInHand(context.getHand(), new ItemStack(IConstruct.PAINT_ROLLER));
                     });
 
                     return ActionResult.SUCCESS;
@@ -86,7 +86,7 @@ public class PaintRollerItem extends SimpleCustomDurabilityItem {
             world.setBlockState(pos, getStainedGlass(this.color).getDefaultState());
             this.damage(context.getStack(), 1, context.getPlayer(), player -> {
                 player.sendToolBreakStatus(context.getHand());
-                player.setStackInHand(context.getHand(), new ItemStack(IConstruct.Items.PAINT_ROLLER));
+                player.setStackInHand(context.getHand(), new ItemStack(IConstruct.PAINT_ROLLER));
             });
             return ActionResult.SUCCESS;
         }

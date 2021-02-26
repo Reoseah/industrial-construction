@@ -1,8 +1,6 @@
 package com.github.reoseah.iconstruct.blocks;
 
 import com.github.reoseah.iconstruct.IConstruct;
-import com.github.reoseah.iconstruct.api.blocks.CatwalkConnectingBlock;
-import com.github.reoseah.iconstruct.api.blocks.WrenchableBlock;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -132,21 +130,22 @@ public class CatwalkBlock extends Block implements Waterloggable, WrenchableBloc
         BlockView world = ctx.getWorld();
         BlockPos pos = ctx.getBlockPos();
 
+        if (world.getBlockState(pos.up()).isAir()) {
+            for (Direction side : Direction.Type.HORIZONTAL) {
+                BlockPos neighborAbove = pos.up().offset(side);
+                BlockState neighborAboveState = world.getBlockState(neighborAbove);
+                Block neighborAboveBlock = neighborAboveState.getBlock();
+                if (neighborAboveBlock == this || neighborAboveBlock instanceof CatwalkConnectingBlock && ((CatwalkConnectingBlock) neighborAboveBlock).shouldCatwalkConnect(neighborAboveState, world, neighborAbove, side)) {
+                    return IConstruct.CATWALK_STAIRS.getDefaultState().with(CatwalkStairsBlock.FACING, side.getOpposite());
+                }
+            }
+        }
+
         boolean south = this.hasBorder(world, pos, Direction.SOUTH);
         boolean west = this.hasBorder(world, pos, Direction.WEST);
         boolean north = this.hasBorder(world, pos, Direction.NORTH);
         boolean east = this.hasBorder(world, pos, Direction.EAST);
 
-        if (world.getBlockState(pos.up()).isAir()) {
-            for (Direction dir : Direction.Type.HORIZONTAL) {
-                BlockPos upOffset = pos.up().offset(dir);
-                BlockState upOffsetState = world.getBlockState(upOffset);
-                Block upOffsetBlock = upOffsetState.getBlock();
-                if (upOffsetBlock == this || upOffsetBlock instanceof CatwalkConnectingBlock && ((CatwalkConnectingBlock) upOffsetBlock).shouldCatwalkConnect(upOffsetState, world, upOffset, dir)) {
-                    return IConstruct.Blocks.CATWALK_STAIRS.getDefaultState().with(CatwalkStairsBlock.FACING, dir.getOpposite());
-                }
-            }
-        }
         return this.getDefaultState().with(SOUTH, south).with(WEST, west).with(NORTH, north).with(EAST, east);
     }
 
@@ -157,7 +156,7 @@ public class CatwalkBlock extends Block implements Waterloggable, WrenchableBloc
             CatwalkConnectingBlock connectable = (CatwalkConnectingBlock) block;
             return !connectable.shouldCatwalkConnect(neighbor, world, pos.offset(side), side);
         }
-        if (block instanceof CatwalkBlock || block == IConstruct.Blocks.SCAFFOLDING || block == IConstruct.Blocks.CONDUIT_IN_SCAFFOLDING || block == Blocks.CAULDRON) {
+        if (block instanceof CatwalkBlock || block == IConstruct.SCAFFOLDING || block == IConstruct.CONDUIT_IN_SCAFFOLDING || block == Blocks.CAULDRON) {
             return false;
         }
         if (neighbor.isSideSolidFullSquare(world, pos.offset(side), side.getOpposite()) && neighbor.getMaterial() != Material.AGGREGATE) {

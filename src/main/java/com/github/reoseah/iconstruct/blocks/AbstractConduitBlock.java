@@ -73,8 +73,8 @@ public abstract class AbstractConduitBlock extends SimpleConduitBlock implements
 
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        if (this == IConstruct.Blocks.CONDUIT && ctx.getWorld().getBlockState(ctx.getBlockPos()).getBlock() == IConstruct.Blocks.SCAFFOLDING) {
-            return IConstruct.Blocks.CONDUIT_IN_SCAFFOLDING.getPlacementState(ctx);
+        if (this == IConstruct.CONDUIT && ctx.getWorld().getBlockState(ctx.getBlockPos()).getBlock() == IConstruct.SCAFFOLDING) {
+            return IConstruct.CONDUIT_IN_SCAFFOLDING.getPlacementState(ctx);
         }
         return super.getPlacementState(ctx);
     }

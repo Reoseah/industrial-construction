@@ -4,8 +4,6 @@ import java.util.EnumMap;
 import java.util.Map;
 
 import com.github.reoseah.iconstruct.IConstruct;
-import com.github.reoseah.iconstruct.api.blocks.ColorScrapableBlock;
-import com.github.reoseah.iconstruct.api.blocks.ConduitConnectingBlock;
 import com.github.reoseah.iconstruct.blocks.entities.ConduitBlockEntity;
 
 import net.fabricmc.api.EnvType;
@@ -68,7 +66,7 @@ public class ColoredConduitBlock extends AbstractConduitBlock implements ColorSc
 
     @Override
     public void onScraped(BlockState state, WorldAccess world, BlockPos pos) {
-        BlockState uncolored = ((AbstractConduitBlock) IConstruct.Blocks.CONDUIT).getStateForPos(world, pos);
+        BlockState uncolored = ((AbstractConduitBlock) IConstruct.CONDUIT).getStateForPos(world, pos);
         world.setBlockState(pos, uncolored, 3);
     }
 }
